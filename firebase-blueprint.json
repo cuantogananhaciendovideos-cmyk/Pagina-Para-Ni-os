@@ -1,0 +1,255 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile for child or parent in Cluky Book",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Unique identifier of the user"
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of parent or user account"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["child", "parent", "teacher"],
+          "description": "Active role in the application"
+        },
+        "firstName": {
+          "type": "string",
+          "maxLength": 60,
+          "description": "First name of child or parent"
+        },
+        "avatar": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Chosen animal avatar"
+        },
+        "theme": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Active notebook color theme"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp string of creation"
+        }
+      },
+      "required": ["userId", "role", "firstName", "avatar"]
+    },
+    "Post": {
+      "title": "Post",
+      "description": "Post published to the feed or child notebook",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique post identifier"
+        },
+        "authorId": {
+          "type": "string",
+          "description": "Author UID"
+        },
+        "authorName": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Author display name"
+        },
+        "authorAvatar": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Author animal avatar key"
+        },
+        "authorRole": {
+          "type": "string",
+          "enum": ["child", "teacher", "parent"],
+          "description": "Role of the post author"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["photo", "video", "gif", "text", "drawing"],
+          "description": "Content type of the post"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Optional title for the post"
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 3000,
+          "description": "Post text content"
+        },
+        "mediaUrl": {
+          "type": "string",
+          "maxLength": 500000,
+          "description": "Optional media or drawing data URL"
+        },
+        "likes": {
+          "type": "number",
+          "description": "Number of likes received"
+        },
+        "commentsCount": {
+          "type": "number",
+          "description": "Number of comments"
+        },
+        "isApprovedByParent": {
+          "type": "boolean",
+          "description": "Whether the post has been approved"
+        },
+        "badge": {
+          "type": "string",
+          "maxLength": 60,
+          "description": "Badge description"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["class", "friends", "family"],
+          "description": "Category of the post"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of creation"
+        }
+      },
+      "required": ["id", "authorId", "authorName", "authorAvatar", "authorRole", "type", "content"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "Comment attached to a post",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique comment identifier"
+        },
+        "postId": {
+          "type": "string",
+          "description": "ID of the target post"
+        },
+        "authorId": {
+          "type": "string",
+          "description": "Author user UID"
+        },
+        "authorName": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Author display name"
+        },
+        "authorAvatar": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Author animal avatar key"
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Comment text"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp"
+        }
+      },
+      "required": ["id", "postId", "authorId", "authorName", "authorAvatar", "text"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "Conversation between kids or family members",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Conversation identifier"
+        },
+        "participants": {
+          "type": "array",
+          "description": "List of participant IDs"
+        },
+        "lastMessage": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Last preview message in conversation"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "description": "Timestamp of the last message"
+        }
+      },
+      "required": ["id", "participants"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Single chat message inside a conversation",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique message identifier"
+        },
+        "conversationId": {
+          "type": "string",
+          "description": "Target conversation ID"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "UID of the message sender"
+        },
+        "senderName": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Sender display name"
+        },
+        "senderAvatar": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Sender animal avatar"
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Message content"
+        },
+        "mediaUrl": {
+          "type": "string",
+          "maxLength": 500000,
+          "description": "Optional media or drawing"
+        },
+        "isSafe": {
+          "type": "boolean",
+          "description": "RedCode evaluation outcome"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp"
+        }
+      },
+      "required": ["id", "conversationId", "senderId", "senderName", "senderAvatar", "text"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Collection of user profiles for authenticated kids and parents"
+    },
+    "/posts/{postId}": {
+      "schema": "Post",
+      "description": "Collection of kid-safe social posts across feed and notebooks"
+    },
+    "/posts/{postId}/comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Comments left on feed posts"
+    },
+    "/conversations/{conversationId}": {
+      "schema": "Conversation",
+      "description": "Conversations between approved friends or family"
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Real-time chat messages inside a conversation"
+    }
+  }
+}

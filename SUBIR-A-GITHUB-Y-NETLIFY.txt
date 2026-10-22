@@ -1,0 +1,91 @@
+CLUKYBOOK FOR KIDS — GUÍA COMPLETA: GITHUB, NETLIFY Y FIREBASE
+==============================================================
+
+PARTE A — EL PUSH A GITHUB (repo NUEVO, no mezclar con QuanticTube)
+
+A0. Usa este ZIP. Si no tienes Git en tu Windows: instálalo de git-scm.com
+    (todo en "Next" sin cambiar nada).
+
+A1. Crea el repo VACÍO: github.com → botón + → New repository →
+    nombre: clukybook-for-kids → NO marques README, ni .gitignore, ni
+    licencia (debe nacer vacío o el push choca) → Create repository.
+
+A2. Extrae este ZIP y entra a la carpeta clukybook-for-kids. Verifica que
+    AHÍ MISMO se vean package.json, index.html, netlify.toml,
+    firestore.rules y la carpeta src. El push se hace desde donde está
+    package.json.
+
+A3. Abre la terminal en esa carpeta: clic derecho dentro → Open Git Bash here.
+
+A4. Los comandos, uno por uno (la identificación solo la primera vez en tu PC):
+
+    git config --global user.name "Memento"
+    git config --global user.email "el-correo-de-tu-cuenta-github"
+    git init
+    git add .
+    git commit -m "ClukyBook For Kids: primera subida completa"
+    git branch -M main
+    git remote add origin https://github.com/memo866lopez-dot/clukybook-for-kids.git
+    git push -u origin main
+
+A5. El login: al hacer push se abre una ventana del navegador para iniciar
+    sesión y autorizar — es normal, GitHub ya no acepta contraseña en la terminal.
+
+A6. Verifica: recarga el repo. Debe verse la carpeta src y decenas de archivos.
+    Si ves archivos con "(1)" o "(2)", o no se ve src, salió mal.
+    node_modules no debe aparecer (el proyecto ya lo excluye solo).
+
+    Para cambios futuros: git add . → git commit -m "qué cambió" → git push.
+    Netlify se actualiza solo con cada push.
+
+PARTE B — NETLIFY (el puente, cortito)
+
+netlify.com → Add new site → Import an existing project → GitHub →
+eliges clukybook-for-kids → Deploy sin tocar nada: el netlify.toml ya trae
+build command (npm run build), Publish directory (dist), NODE_VERSION=22 y
+NPM_FLAGS=--legacy-peer-deps (por el conflicto de versiones heredado de AI
+Studio; sin esto la instalación se frena). Al terminar te da tu URL pública
+para calarlo desde cualquier dispositivo.
+
+PARTE C — FIREBASE PASO A PASO (el paso que no hay que saltar)
+
+C0. EL DATO CLAVE: la app NO usa la base de datos (default), sino una con
+    nombre propio que creó AI Studio:
+    ai-studio-clukybookforkids-8a7e9d52-aa61-4488-b131-091e42d8b73b
+    Pegar las reglas en la base equivocada es lo que dio el error 400 en
+    QuanticTube. Sin este paso, la página se ve y se cala completa (diseño,
+    juegos, filtros, paneles), pero cada dispositivo trabaja con sus propios
+    datos locales; con las reglas publicadas, la supervisión de papás ya
+    funciona entre dispositivos distintos.
+
+C1. Entra a console.firebase.google.com con la misma cuenta de Google de
+    AI Studio y abre el proyecto de ClukyBook.
+
+C2. Menú izquierdo → Firestore Database → en el selector de base de datos de
+    arriba elige la del NOMBRE LARGO (ai-studio-clukybookforkids-...), no la
+    (default). Si solo existe (default), detente y avisa antes de seguir.
+
+C3. Pestaña Rules → en tu PC abre firestore.rules de la carpeta extraída,
+    Ctrl+A, Ctrl+C → en el editor de la consola Ctrl+A (borra lo anterior)
+    y Ctrl+V → botón Publish. Ojo: editar el archivo en tu PC no activa nada;
+    solo este Publish las pone a gobernar.
+
+C4. Menú → Authentication → Sign-in method: Google y Email/Password deben
+    decir Enabled; si no, entra a cada uno, actívalo y guarda.
+
+C5. LA PRUEBA DE VERDAD: abre tu página de Netlify, inicia sesión, publica
+    algo. Vuelve a Firestore → pestaña Data (con la base del nombre largo) →
+    deben aparecer colecciones como users, posts o conversations con tu
+    actividad. Si aparecen, la nube quedó conectada. Si F12 muestra 400 en
+    el canal Listen, es la base equivocada o reglas sin publicar: repite C2–C3.
+
+Si algo se atora, copia el error TAL CUAL y anota en qué paso ibas.
+
+
+CARGA DE FOTOS, VIDEOS Y GIFS (actualización 2026-10-20)
+1. Para guardar archivos multimedia en línea, habilita Firebase Storage en el proyecto de Firebase.
+2. Publica las reglas del archivo storage.rules desde Firebase Console > Storage > Rules (o mediante Firebase CLI).
+3. Los usuarios deben iniciar sesión para subir archivos; cada archivo se guarda bajo users/<UID>/media.
+4. Límites del formulario: imágenes 15 MB, GIF 20 MB y videos 100 MB.
+5. La app muestra vista previa antes de publicar. Los archivos se almacenan en Firebase Storage; Firestore guarda únicamente la URL.
+6. En Netlify, el comando de build sigue siendo `npm run build` y la carpeta publicada sigue siendo `dist`.
