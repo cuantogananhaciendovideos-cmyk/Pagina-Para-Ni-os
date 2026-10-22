@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Gamepad2,
+  Hand,
   Trophy,
   RotateCcw,
   Sparkles,
@@ -19,10 +20,12 @@ import { AnimalAvatarIcon } from './AnimalAvatarIcon';
 import { AnimalAvatar } from '../types';
 import { sounds } from '../services/soundEffects';
 import confetti from 'canvas-confetti';
+import { HandGestureController } from './HandGestureController';
 
 export const GamesView: React.FC = () => {
   const { publishPost, childProfile } = useApp();
   const [selectedGame, setSelectedGame] = useState<'hub' | 'memory' | 'paint' | 'music' | 'stars' | 'hands'>('hub');
+  const [handControlEnabled, setHandControlEnabled] = useState(false);
 
   return (
     <div className="flex-1 flex flex-col gap-6 select-none max-w-4xl mx-auto w-full">
@@ -40,6 +43,15 @@ export const GamesView: React.FC = () => {
             </p>
           </div>
 
+          <button
+            type="button"
+            onClick={() => { sounds.playPop(); setHandControlEnabled(v => !v); }}
+            className={`px-4 py-2.5 rounded-2xl ${handControlEnabled ? 'bg-cyan-300 text-slate-900' : 'bg-white/15 text-white border border-white/50'} hover:bg-cyan-100 hover:text-cyan-900 font-black text-xs shadow-md cursor-pointer shrink-0`}
+            aria-pressed={handControlEnabled}
+          >
+            <Hand className="w-4 h-4 inline mr-1.5" />{handControlEnabled ? 'Disable Hands & Camera' : 'Game With Hands & Camera 🤏 🖐️📸'}
+          </button>
+
           {selectedGame !== 'hub' && (
             <button
               onClick={() => { sounds.playPop(); setSelectedGame('hub'); }}
@@ -51,28 +63,11 @@ export const GamesView: React.FC = () => {
         </div>
       </div>
 
+      {handControlEnabled && <HandGestureController onClose={() => setHandControlEnabled(false)} />}
+
       {/* Main Game Hub */}
       {selectedGame === 'hub' && (
-        <div className="flex flex-col gap-4">
-          {/* ACCESO DIRECTO DESTACADO: JUEGO CON MANOS Y CÁMARA */}
-          <button
-            type="button"
-            onClick={() => { sounds.playPop(); setSelectedGame('hands'); }}
-            className="w-full rounded-3xl border-4 border-cyan-400 bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 p-5 text-left text-white shadow-lg transition hover:brightness-105 active:scale-[0.99] focus:outline-none focus:ring-4 focus:ring-cyan-300"
-          >
-            <span className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <span className="flex items-center gap-3">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-3xl">🤏 🖐️</span>
-                <span>
-                  <span className="block text-lg font-black">Game With Hands &amp; Camera 📸</span>
-                  <span className="block text-sm font-semibold text-white/95">¡Nuevo! Juega usando los gestos de tus manos y la cámara.</span>
-                </span>
-              </span>
-              <span className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-black text-cyan-700 shadow">ABRIR JUEGO →</span>
-            </span>
-          </button>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           {/* Game 1: Memorama */}
           <div
             onClick={() => { sounds.playPop(); setSelectedGame('memory'); }}
@@ -88,6 +83,14 @@ export const GamesView: React.FC = () => {
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 Encuentra parejas de zorritos y pandas.
               </p>
+              <button
+                type="button"
+                onClick={(event) => { event.stopPropagation(); sounds.playPop(); setHandControlEnabled(v => !v); }}
+                aria-pressed={handControlEnabled}
+                className={`mt-3 w-full px-3 py-2 rounded-xl text-[10px] sm:text-xs font-black border transition-colors ${handControlEnabled ? 'bg-cyan-200 text-slate-900 border-cyan-400' : 'bg-cyan-50 text-cyan-800 border-cyan-200 hover:bg-cyan-100 dark:bg-cyan-950/40 dark:text-cyan-200 dark:border-cyan-800'}`}
+              >
+                🤏 🖐️📸 {handControlEnabled ? 'Disable Hands & Camera' : 'Game With Hands & Camera'}
+              </button>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
               <span className="text-[10px] font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-xl">
@@ -115,6 +118,14 @@ export const GamesView: React.FC = () => {
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 Mueve a Cluky para atrapar las estrellas que caen.
               </p>
+              <button
+                type="button"
+                onClick={(event) => { event.stopPropagation(); sounds.playPop(); setHandControlEnabled(v => !v); }}
+                aria-pressed={handControlEnabled}
+                className={`mt-3 w-full px-3 py-2 rounded-xl text-[10px] sm:text-xs font-black border transition-colors ${handControlEnabled ? 'bg-cyan-200 text-slate-900 border-cyan-400' : 'bg-cyan-50 text-cyan-800 border-cyan-200 hover:bg-cyan-100 dark:bg-cyan-950/40 dark:text-cyan-200 dark:border-cyan-800'}`}
+              >
+                🤏 🖐️📸 {handControlEnabled ? 'Disable Hands & Camera' : 'Game With Hands & Camera'}
+              </button>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
               <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 px-2 py-0.5 rounded-xl">
@@ -139,6 +150,14 @@ export const GamesView: React.FC = () => {
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 Dibuja y guarda en tu cuaderno con 1 clic.
               </p>
+              <button
+                type="button"
+                onClick={(event) => { event.stopPropagation(); sounds.playPop(); setHandControlEnabled(v => !v); }}
+                aria-pressed={handControlEnabled}
+                className={`mt-3 w-full px-3 py-2 rounded-xl text-[10px] sm:text-xs font-black border transition-colors ${handControlEnabled ? 'bg-cyan-200 text-slate-900 border-cyan-400' : 'bg-cyan-50 text-cyan-800 border-cyan-200 hover:bg-cyan-100 dark:bg-cyan-950/40 dark:text-cyan-200 dark:border-cyan-800'}`}
+              >
+                🤏 🖐️📸 {handControlEnabled ? 'Disable Hands & Camera' : 'Game With Hands & Camera'}
+              </button>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
               <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-xl">
@@ -163,6 +182,14 @@ export const GamesView: React.FC = () => {
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 Piano con sonidos reales de animalitos.
               </p>
+              <button
+                type="button"
+                onClick={(event) => { event.stopPropagation(); sounds.playPop(); setHandControlEnabled(v => !v); }}
+                aria-pressed={handControlEnabled}
+                className={`mt-3 w-full px-3 py-2 rounded-xl text-[10px] sm:text-xs font-black border transition-colors ${handControlEnabled ? 'bg-cyan-200 text-slate-900 border-cyan-400' : 'bg-cyan-50 text-cyan-800 border-cyan-200 hover:bg-cyan-100 dark:bg-cyan-950/40 dark:text-cyan-200 dark:border-cyan-800'}`}
+              >
+                🤏 🖐️📸 {handControlEnabled ? 'Disable Hands & Camera' : 'Game With Hands & Camera'}
+              </button>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
               <span className="text-[10px] font-bold text-amber-600 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded-xl">
@@ -185,10 +212,10 @@ export const GamesView: React.FC = () => {
                 ¡Manos libres!
               </div>
               <h3 className="text-base font-black text-slate-800 dark:text-white">
-                Game With Hands & Camera 🤏 🖐️📸
+                Juega con tus Manos
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Controla el juego con gestos de tus manos frente a la cámara. Los demás juegos siguen disponibles en este menú.
+                Usa gestos frente a la cámara y apunta viendo los botones en pantalla.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
@@ -198,7 +225,6 @@ export const GamesView: React.FC = () => {
               <span className="text-xs font-black text-cyan-700">¡Probar! →</span>
             </div>
           </div>
-        </div>
         </div>
       )}
 
@@ -218,14 +244,14 @@ export const GamesView: React.FC = () => {
       {selectedGame === 'hands' && (
         <div className="w-full rounded-3xl overflow-hidden border-2 border-cyan-200 dark:border-cyan-800 bg-slate-950 shadow-xl">
           <div className="p-4 bg-cyan-50 dark:bg-cyan-950/50">
-            <h3 className="text-lg font-black text-cyan-900 dark:text-cyan-100">🤏 🖐️ Game With Hands & Camera 📸</h3>
+            <h3 className="text-lg font-black text-cyan-900 dark:text-cyan-100">🖐️ Juega con tus Manos</h3>
             <p className="text-sm text-cyan-800 dark:text-cyan-200">
               Permite el acceso a la cámara. Apunta con el índice y mantén el dedo sobre un botón durante un momento, o haz una pinza con los dedos.
             </p>
           </div>
           <iframe
             src="/Botones-Con-La-Mano-v2-EnLaCamara.html"
-            title="Game With Hands & Camera: controles por gestos de la mano"
+            title="Controles de juego con gestos de la mano"
             allow="camera; autoplay"
             className="block w-full border-0 bg-slate-950"
             style={{ height: 'min(78vh, 760px)', minHeight: '540px' }}

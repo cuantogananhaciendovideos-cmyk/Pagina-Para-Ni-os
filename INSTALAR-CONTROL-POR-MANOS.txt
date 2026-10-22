@@ -1,0 +1,24 @@
+CLUKYBOOK FOR KIDS — CONTROL POR MANOS Y CÁMARA
+
+Qué incluye
+- Proyecto completo de ClukyBook For Kids.
+- Control opcional de cámara con MediaPipe en src/components/HandGestureController.tsx.
+- Integración del control desde la Zona de Juegos en src/components/GamesView.tsx.
+- Instrucciones de control en CONTROL-POR-MANOS.md.
+
+Cómo probar localmente
+1. Descomprime el ZIP.
+2. Abre una terminal en la carpeta del proyecto (donde está package.json).
+3. Ejecuta: npm ci
+4. Ejecuta: npm run build
+5. Ejecuta: npm run dev
+6. Abre la dirección local que muestra Vite.
+7. En Zona de Juegos, pulsa “Game With Hands & Camera” y concede permiso de cámara.
+
+Requisitos y notas
+- La cámara requiere permiso del navegador y HTTPS en producción (localhost está permitido para pruebas).
+- Se necesita conexión a Internet para cargar MediaPipe desde jsDelivr.
+- El control es opcional; los controles habituales de mouse/táctiles se conservan.
+- El video se procesa en el navegador; esta función no lo envía a un servidor.
+- Esta copia no modifica automáticamente GitHub ni publica cambios en Netlify.
+- La compilación no pudo verificarse en este entorno: npm ci excedió el tiempo disponible. Ejecuta npm ci y npm run build antes de publicar.
