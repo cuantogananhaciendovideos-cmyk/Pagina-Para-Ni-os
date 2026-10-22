@@ -53,7 +53,26 @@ export const GamesView: React.FC = () => {
 
       {/* Main Game Hub */}
       {selectedGame === 'hub' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="flex flex-col gap-4">
+          {/* ACCESO DIRECTO DESTACADO: JUEGO CON MANOS Y CÁMARA */}
+          <button
+            type="button"
+            onClick={() => { sounds.playPop(); setSelectedGame('hands'); }}
+            className="w-full rounded-3xl border-4 border-cyan-400 bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 p-5 text-left text-white shadow-lg transition hover:brightness-105 active:scale-[0.99] focus:outline-none focus:ring-4 focus:ring-cyan-300"
+          >
+            <span className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <span className="flex items-center gap-3">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-3xl">🤏 🖐️</span>
+                <span>
+                  <span className="block text-lg font-black">Game With Hands &amp; Camera 📸</span>
+                  <span className="block text-sm font-semibold text-white/95">¡Nuevo! Juega usando los gestos de tus manos y la cámara.</span>
+                </span>
+              </span>
+              <span className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-black text-cyan-700 shadow">ABRIR JUEGO →</span>
+            </span>
+          </button>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           {/* Game 1: Memorama */}
           <div
             onClick={() => { sounds.playPop(); setSelectedGame('memory'); }}
@@ -166,10 +185,10 @@ export const GamesView: React.FC = () => {
                 ¡Manos libres!
               </div>
               <h3 className="text-base font-black text-slate-800 dark:text-white">
-                Juega con tus Manos
+                Game With Hands & Camera 🤏 🖐️📸
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Usa gestos frente a la cámara y apunta viendo los botones en pantalla.
+                Controla el juego con gestos de tus manos frente a la cámara. Los demás juegos siguen disponibles en este menú.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
@@ -179,6 +198,7 @@ export const GamesView: React.FC = () => {
               <span className="text-xs font-black text-cyan-700">¡Probar! →</span>
             </div>
           </div>
+        </div>
         </div>
       )}
 
@@ -198,14 +218,14 @@ export const GamesView: React.FC = () => {
       {selectedGame === 'hands' && (
         <div className="w-full rounded-3xl overflow-hidden border-2 border-cyan-200 dark:border-cyan-800 bg-slate-950 shadow-xl">
           <div className="p-4 bg-cyan-50 dark:bg-cyan-950/50">
-            <h3 className="text-lg font-black text-cyan-900 dark:text-cyan-100">🖐️ Juega con tus Manos</h3>
+            <h3 className="text-lg font-black text-cyan-900 dark:text-cyan-100">🤏 🖐️ Game With Hands & Camera 📸</h3>
             <p className="text-sm text-cyan-800 dark:text-cyan-200">
               Permite el acceso a la cámara. Apunta con el índice y mantén el dedo sobre un botón durante un momento, o haz una pinza con los dedos.
             </p>
           </div>
           <iframe
             src="/Botones-Con-La-Mano-v2-EnLaCamara.html"
-            title="Controles de juego con gestos de la mano"
+            title="Game With Hands & Camera: controles por gestos de la mano"
             allow="camera; autoplay"
             className="block w-full border-0 bg-slate-950"
             style={{ height: 'min(78vh, 760px)', minHeight: '540px' }}
