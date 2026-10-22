@@ -1,5 +1,5 @@
 /**
- * ClukyBook For Kids
+ * Clayckey Bookly For Kids
  * Subnombre: For Kids
  * Red social y cuaderno vivo seguro para niños desde 5 años
  */
@@ -112,7 +112,7 @@ const MainLayout: React.FC = () => {
       {/* Minimalistic Kid Safe Footer */}
       <footer className="w-full py-4 text-center text-xs text-slate-400 dark:text-slate-500 select-none border-t border-slate-200/50 dark:border-slate-800/50">
         <div className="flex items-center justify-center gap-2 font-semibold">
-          <span>ClukyBook For Kids</span>
+          <span>Clayckey Bookly For Kids</span>
           <span>•</span>
           <span>El Cuaderno Vivo</span>
           <span>•</span>

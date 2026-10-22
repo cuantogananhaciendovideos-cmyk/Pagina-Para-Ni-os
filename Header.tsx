@@ -81,17 +81,17 @@ export const Header: React.FC = () => {
         <div 
           onClick={() => { sounds.playPop(); setActiveTab('feed'); }}
           className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group select-none shrink-0"
-          title="Ir al Inicio de ClukyBook For Kids"
+          title="Ir al Inicio de Clayckey Bookly For Kids"
         >
           {/* Mascot icon: Adorable Fox as in the user's uploaded mockup */}
           <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-950/60 dark:to-orange-950/60 p-1 shadow-inner flex items-center justify-center transition-transform group-hover:scale-105">
-            <AnimalAvatarIcon animal="fox" className="w-8 h-8 sm:w-10 sm:h-10 drop-shadow-sm" />
+            <img src="https://i.ibb.co/4R7SnLWD/Bebe-Arletita.png" alt="Logo de Clayckey Bookly" className="w-full h-full rounded-xl object-cover drop-shadow-sm" />
             <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white dark:border-slate-900" />
           </div>
 
           <div className="flex flex-col">
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 via-blue-600 to-indigo-700 dark:from-indigo-400 dark:via-blue-400 dark:to-indigo-300 bg-clip-text text-transparent leading-none">
-              ClukyBook
+              Clayckey Bookly
             </h1>
             <span className="text-[11px] sm:text-xs lg:text-sm font-bold text-indigo-500/90 dark:text-indigo-400 tracking-wide mt-0.5">
               For Kids
