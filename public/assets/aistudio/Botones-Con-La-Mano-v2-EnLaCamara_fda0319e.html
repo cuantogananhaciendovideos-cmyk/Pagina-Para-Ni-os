@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Botones con la Mano v2 — Botones dentro de tu cámara</title>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+<style>
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{margin:0; font-family:'Segoe UI',system-ui,Arial,sans-serif; color:#dff6ff; background:#010409;
+    display:flex; flex-direction:column; overflow:hidden;}
+  header{padding:12px 18px; display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+    background:rgba(2,16,30,.85); border-bottom:1px solid rgba(56,214,255,.35);}
+  header h1{margin:0; font-size:19px; color:#8ceaff; text-shadow:0 0 14px rgba(56,214,255,.8); white-space:nowrap;}
+  header p{margin:0; font-size:13.5px; color:#a9dcf5; line-height:1.45;}
+  #stage{flex:1; position:relative; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(1200px 700px at 20% 0%, #0b3556 0%, #04101f 55%, #010409 100%);
+    transition:background .6s;}
+  #glow{position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .5s;
+    background:radial-gradient(700px 420px at 50% 38%, rgba(255,214,120,.4), rgba(255,180,60,.12) 55%, transparent 75%);}
+  .grid{position:relative; z-index:2; display:grid; grid-template-columns:1fr 1fr; gap:26px; width:min(900px,94vw);}
+  .vbtn{position:relative; height:132px; border-radius:20px; border:2px solid rgba(56,214,255,.55);
+    background:rgba(4,26,46,.55); color:#eafaff; font-size:20px; font-weight:700; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+    transition:transform .15s, box-shadow .15s, border-color .15s; font-family:inherit;}
+  .vbtn .ico{font-size:38px; line-height:1;}
+  .vbtn.hover{box-shadow:0 0 34px rgba(56,214,255,.75); transform:scale(1.04); border-color:#8ceaff;}
+  .vbtn.fired{animation:flash .35s;}
+  @keyframes flash{0%{background:rgba(56,214,255,.9); color:#02263a;}100%{}}
+  .vbtn .cnt{position:absolute; top:10px; right:14px; background:rgba(56,214,255,.18);
+    border:1px solid rgba(56,214,255,.6); border-radius:999px; padding:2px 11px; font-size:14px; font-weight:700;}
+  .vbtn .bignum{font-size:30px; color:#8ceaff; line-height:1;}
+  #cursor{position:fixed; left:0; top:0; width:0; height:0; z-index:50; pointer-events:none; opacity:0; transition:opacity .25s;}
+  #ring{position:absolute; width:56px; height:56px; left:-28px; top:-28px; border-radius:50%;
+    background:conic-gradient(#38f2ff 0deg, rgba(140,220,255,.15) 0deg);}
+  #ringIn{position:absolute; inset:7px; border-radius:50%; background:rgba(2,16,30,.88);}
+  #dot{position:absolute; width:13px; height:13px; left:-6.5px; top:-6.5px; border-radius:50%;
+    background:#8ceaff; box-shadow:0 0 14px #38d6ff; transition:background .12s, transform .12s;}
+  #dot.pinch{background:#ffd23e; transform:scale(1.5); box-shadow:0 0 18px #ffd23e;}
+  /* ---------- recuadro de la cámara con la réplica de botones ---------- */
+  #camBox{position:fixed; right:16px; bottom:56px; width:min(470px,52vw); z-index:40; border-radius:14px; overflow:hidden;
+    border:1px solid rgba(56,214,255,.55); background:rgba(2,16,30,.9); box-shadow:0 10px 30px rgba(0,0,0,.5);}
+  #camWrap{position:relative; width:100%; aspect-ratio:4/3; background:#000;}
+  #cam{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scaleX(-1);}
+  #overlay{position:absolute; inset:0; width:100%; height:100%; transform:scaleX(-1); z-index:2;}
+  #mirrorBtns{position:absolute; inset:0; z-index:3; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
+    gap:10px; padding:10px; pointer-events:none;}
+  .mbtn{position:relative; pointer-events:auto; border-radius:12px; border:2px solid rgba(56,214,255,.65);
+    background:rgba(4,26,46,.45); color:#eafaff; font-size:14px; font-weight:700; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+    font-family:inherit; transition:box-shadow .15s, border-color .15s, transform .15s; text-shadow:0 1px 4px #000;}
+  .mbtn .ico{font-size:22px; line-height:1;}
+  .mbtn.hover{box-shadow:0 0 22px rgba(56,214,255,.85); border-color:#8ceaff; transform:scale(1.03);}
+  .mbtn.fired{animation:flash .35s;}
+  .mbtn .mcnt{position:absolute; top:5px; right:8px; background:rgba(56,214,255,.22);
+    border:1px solid rgba(56,214,255,.6); border-radius:999px; padding:0 8px; font-size:11.5px;}
+  #camStatus{padding:7px 10px; font-size:12px; color:#a9dcf5; line-height:1.4;}
+  footer{padding:10px 18px; background:rgba(2,16,30,.9); border-top:1px solid rgba(56,214,255,.35);
+    font-size:15px; min-height:42px; display:flex; align-items:center;}
+  footer b{color:#8ceaff; margin-right:8px;}
+</style>
+</head>
+<body>
+  <header>
+    <h1>🖐️ BOTONES CON LA MANO · V2</h1>
+    <p>Ahora los botones viven <b>dentro del recuadro donde te ves</b>: mírate en la cámara de abajo a la derecha,
+       apunta con tu dedo índice <b>viendo tu mano junto a los botones</b> y oprímelos sin atinarle a ciegas.
+       Deja el dedo <b>0,7 s</b> sobre el botón o haz <b>pinza 🤏</b>. La pantalla grande y la réplica están sincronizadas.</p>
+  </header>
+
+  <main id="stage">
+    <div id="glow"></div>
+    <div class="grid">
+      <button class="vbtn" id="bColor" data-name="Cambiar fondo"><span class="cnt">0</span><span class="ico">🎨</span>Cambiar fondo</button>
+      <button class="vbtn" id="bSound" data-name="Sonido"><span class="cnt">0</span><span class="ico">🔊</span>Sonido</button>
+      <button class="vbtn" id="bLights" data-name="Luces"><span class="cnt">0</span><span class="ico">💡</span>Luces</button>
+      <button class="vbtn" id="bCount" data-name="Contador"><span class="cnt">0</span><span class="ico">🔢</span>Contador<span class="bignum" id="bigNum">0</span></button>
+    </div>
+  </main>
+
+  <div id="cursor"><div id="ring"><div id="ringIn"></div></div><div id="dot"></div></div>
+
+  <div id="camBox">
+    <div id="camWrap">
+      <video id="cam" autoplay playsinline muted></video>
+      <canvas id="overlay"></canvas>
+      <div id="mirrorBtns">
+        <button class="mbtn" data-target="bColor"><span class="mcnt">0</span><span class="ico">🎨</span>Fondo</button>
+        <button class="mbtn" data-target="bSound"><span class="mcnt">0</span><span class="ico">🔊</span>Sonido</button>
+        <button class="mbtn" data-target="bLights"><span class="mcnt">0</span><span class="ico">💡</span>Luces</button>
+        <button class="mbtn" data-target="bCount"><span class="mcnt">0</span><span class="ico">🔢</span>Contador</button>
+      </div>
+    </div>
+    <div id="camStatus">📷 Cámara: iniciando…</div>
+  </div>
+
+  <footer><b>Última acción:</b><span id="logText">—</span></footer>
+
+<script>
+(function(){
+  'use strict';
+  var stage = document.getElementById('stage');
+  var cursor = document.getElementById('cursor');
+  var ring = document.getElementById('ring');
+  var dot = document.getElementById('dot');
+  var logEl = document.getElementById('logText');
+  var camStatus = document.getElementById('camStatus');
+  var video = document.getElementById('cam');
+  var overlay = document.getElementById('overlay');
+  var octx = overlay.getContext('2d');
+
+  /* ---------- sonido (WebAudio, sin archivos) ---------- */
+  var audioCtx = null;
+  function beep(freq, t0, dur){
+    try{
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      var o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      o.type = 'sine'; o.frequency.value = freq;
+      var t = audioCtx.currentTime + t0;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.22, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start(t); o.stop(t + dur + 0.05);
+    }catch(e){}
+  }
+
+  /* ---------- acciones: UNA sola función para la pantalla grande y la réplica ---------- */
+  var gradients = [
+    'radial-gradient(1200px 700px at 20% 0%, #0b3556 0%, #04101f 55%, #010409 100%)',
+    'radial-gradient(1200px 700px at 80% 0%, #3d0b56 0%, #16041f 55%, #050109 100%)',
+    'radial-gradient(1200px 700px at 50% 100%, #0b5636 0%, #041f14 55%, #010905 100%)',
+    'radial-gradient(1200px 700px at 50% 0%, #562b0b 0%, #1f1004 55%, #090401 100%)'
+  ];
+  var gradIdx = 0, lightsOn = false, bigCount = 0, counts = {};
+  function log(msg){ logEl.textContent = msg; }
+  function fireById(id, via){
+    counts[id] = (counts[id] || 0) + 1;
+    var main = document.getElementById(id);
+    var mir = document.querySelector('.mbtn[data-target="' + id + '"]');
+    if (main) main.querySelector('.cnt').textContent = counts[id];
+    if (mir) mir.querySelector('.mcnt').textContent = counts[id];
+    [main, mir].forEach(function(el){
+      if (el){ el.classList.remove('fired'); void el.offsetWidth; el.classList.add('fired'); }
+    });
+    if (id === 'bColor'){
+      gradIdx = (gradIdx + 1) % gradients.length;
+      stage.style.background = gradients[gradIdx];
+      beep(392, 0, 0.14);
+      log('🎨 Fondo cambiado (' + via + ') · veces: ' + counts[id]);
+    } else if (id === 'bSound'){
+      beep(523, 0, 0.16); beep(659, 0.12, 0.16); beep(784, 0.24, 0.28);
+      log('🔊 Sonido reproducido (' + via + ') · veces: ' + counts[id]);
+    } else if (id === 'bLights'){
+      lightsOn = !lightsOn;
+      document.getElementById('glow').style.opacity = lightsOn ? '1' : '0';
+      beep(lightsOn ? 880 : 440, 0, 0.15);
+      log('💡 Luces ' + (lightsOn ? 'ENCENDIDAS' : 'APAGADAS') + ' (' + via + ')');
+    } else if (id === 'bCount'){
+      bigCount++;
+      document.getElementById('bigNum').textContent = bigCount;
+      beep(300 + bigCount * 40, 0, 0.12);
+      log('🔢 Contador: ' + bigCount + ' (' + via + ')');
+    }
+  }
+
+  /* Blancos apuntables: los 4 grandes + los 4 de la réplica, todos con su id real */
+  var targets = [];
+  Array.prototype.forEach.call(document.querySelectorAll('.vbtn'), function(el){
+    targets.push({ el: el, id: el.id });
+    el.addEventListener('click', function(){ fireById(el.id, 'clic del mouse'); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.mbtn'), function(el){
+    var id = el.getAttribute('data-target');
+    targets.push({ el: el, id: id });
+    el.addEventListener('click', function(){ fireById(id, 'clic en la réplica'); });
+  });
+
+  /* ---------- cursor virtual (dedo o mouse) ---------- */
+  var target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  var pos = { x: target.x, y: target.y };
+  var cursorOn = false, usingHand = false, pinchNow = false;
+  var hoverT = null, hoverStart = 0, lastPinchFire = 0;
+  var DWELL_MS = 700, dwellP = 0;
+
+  window.addEventListener('mousemove', function(e){
+    target.x = e.clientX; target.y = e.clientY;
+    cursorOn = true; usingHand = false;
+  });
+
+  function targetAt(x, y){
+    for (var i = 0; i < targets.length; i++){
+      var r = targets[i].el.getBoundingClientRect();
+      if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return targets[i];
+    }
+    return null;
+  }
+
+  function loop(){
+    requestAnimationFrame(loop);
+    pos.x += (target.x - pos.x) * 0.35;
+    pos.y += (target.y - pos.y) * 0.35;
+    cursor.style.transform = 'translate(' + pos.x + 'px,' + pos.y + 'px)';
+    cursor.style.opacity = cursorOn ? '1' : '0';
+    dot.classList.toggle('pinch', pinchNow);
+    var t = cursorOn ? targetAt(pos.x, pos.y) : null;
+    if (t !== hoverT){ hoverT = t; hoverStart = performance.now(); }
+    targets.forEach(function(x){ x.el.classList.toggle('hover', x === t); });
+    dwellP = 0;
+    if (t && usingHand){
+      dwellP = Math.min(1, (performance.now() - hoverStart) / DWELL_MS);
+      if (dwellP >= 1){ fireById(t.id, 'dedo sobre el botón'); hoverStart = performance.now(); dwellP = 0; }
+    }
+    ring.style.background = 'conic-gradient(#38f2ff ' + (dwellP * 360) + 'deg, rgba(140,220,255,.15) 0deg)';
+  }
+  loop();
+
+  /* ---------- detección de la mano (MediaPipe Hands, Apache 2.0) ---------- */
+  function setCamStatus(t){ camStatus.textContent = t; }
+  function onResults(res){
+    var lm = res.multiHandLandmarks && res.multiHandLandmarks[0];
+    if (video.videoWidth && overlay.width !== video.videoWidth){
+      overlay.width = video.videoWidth; overlay.height = video.videoHeight;
+    }
+    octx.clearRect(0, 0, overlay.width, overlay.height);
+    if (!lm){
+      if (usingHand){ cursorOn = false; usingHand = false; }
+      pinchNow = false;
+      return;
+    }
+    if (window.drawConnectors && window.HAND_CONNECTIONS){
+      drawConnectors(octx, lm, HAND_CONNECTIONS, { color: '#38d6ff', lineWidth: 2 });
+      drawLandmarks(octx, lm, { color: '#bffbff', lineWidth: 1, radius: 2 });
+    }
+    var tip = lm[8]; // punta del dedo índice
+    target.x = (1 - tip.x) * window.innerWidth;   // espejo: como en un espejo real
+    target.y = tip.y * window.innerHeight;
+    cursorOn = true; usingHand = true;
+    /* Punto y anillo de progreso DIBUJADOS sobre tu imagen, junto a tu dedo.
+       El lienzo está volteado en espejo por CSS, por eso se dibuja en coordenadas crudas. */
+    var px = tip.x * overlay.width, py = tip.y * overlay.height;
+    octx.beginPath();
+    octx.arc(px, py, 30, -Math.PI / 2, -Math.PI / 2 + dwellP * Math.PI * 2);
+    octx.strokeStyle = '#38f2ff'; octx.lineWidth = 6; octx.stroke();
+    octx.beginPath();
+    octx.arc(px, py, 8, 0, Math.PI * 2);
+    octx.fillStyle = pinchNow ? '#ffd23e' : '#8ceaff'; octx.fill();
+    var dx = lm[4].x - lm[8].x, dy = lm[4].y - lm[8].y;
+    pinchNow = Math.sqrt(dx * dx + dy * dy) < 0.055;
+    if (pinchNow){
+      var now = performance.now();
+      if (now - lastPinchFire > 700){
+        var t = targetAt(pos.x, pos.y);
+        if (t){ fireById(t.id, 'pinza 🤏'); lastPinchFire = now; }
+      }
+    }
+  }
+
+  if (typeof Hands === 'undefined' || typeof Camera === 'undefined'){
+    setCamStatus('❌ No cargó MediaPipe (revisa tu internet y recarga la página). El mouse sí funciona.');
+  } else {
+    try{
+      var hands = new Hands({ locateFile: function(f){ return 'https://cdn.jsdelivr.net/npm/@mediapipe/hands/' + f; } });
+      hands.setOptions({ maxNumHands: 1, modelComplexity: 0, minDetectionConfidence: 0.6, minTrackingConfidence: 0.5 });
+      hands.onResults(onResults);
+      var camera = new Camera(video, {
+        onFrame: function(){ return hands.send({ image: video }); },
+        width: 640, height: 480
+      });
+      var pr = camera.start();
+      if (pr && pr.catch) pr.catch(function(err){ setCamStatus('❌ Cámara bloqueada: ' + err.message + ' · El mouse sí funciona.'); });
+      setCamStatus('📷 Cámara activa — apunta a los botones DENTRO de este recuadro 🖐️');
+    }catch(err){
+      setCamStatus('❌ Error de cámara: ' + err.message + ' · El mouse sí funciona.');
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+ClukyBook For Kids — Little World addition
+
+Added without replacing existing screens:
+- Little World navigation entry
+- Little Pages: sample pages and create-page form
+- Little Groups: sample groups, privacy/access selection, create-group form
+- The Little Market Place: category filters, search, product listing form, image preview, price, condition and adult-responsible field
+- Browser-local persistence under cluky_little_pages, cluky_little_groups, cluky_little_market
+- Adult-authentication/role guard on create forms and safety notices
+
+IMPORTANT LIMITATIONS
+This is a front-end MVP/prototype. Newly created pages, groups, and listings are saved only in the current browser's localStorage and are NOT shared with other users or devices. It does not implement payment processing, order management, shipping, seller messaging, server-side moderation, Firebase collections for pages/groups/listings, or marketplace-specific Firestore rules. Do not advertise it as a live marketplace until those backend pieces and security rules are implemented and tested. A signed-in adult account is required by the current UI to create entries; the account role must be parent or teacher.
+
+Deploy/build checks: run `npm ci`, then `npm run build`, then `npm run lint`. In this build environment npm dependency installation timed out, so a production build could not be confirmed here.

@@ -1,0 +1,6 @@
+{
+  "name": "ClukyBook For Kids",
+  "description": "El cuaderno vivo y red social segura para niños desde 5 años, con navegación de un solo clic, supervisión total de padres y protección extrema Código Rojo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

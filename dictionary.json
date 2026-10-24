@@ -1,0 +1,2554 @@
+{
+ "exact": {
+  "Inicio": {
+   "en": "Home",
+   "pt": "Início"
+  },
+  "Mi Cuaderno": {
+   "en": "My Notebook",
+   "pt": "Meu Caderno"
+  },
+  "Mensajes": {
+   "en": "Messages",
+   "pt": "Mensagens"
+  },
+  "Amigos": {
+   "en": "Friends",
+   "pt": "Amigos"
+  },
+  "Mi Clase": {
+   "en": "My Class",
+   "pt": "Minha Turma"
+  },
+  "Fotos": {
+   "en": "Photos",
+   "pt": "Fotos"
+  },
+  "Videos": {
+   "en": "Videos",
+   "pt": "Vídeos"
+  },
+  "Juegos": {
+   "en": "Games",
+   "pt": "Jogos"
+  },
+  "Aprender": {
+   "en": "Learn",
+   "pt": "Aprender"
+  },
+  "Navegación": {
+   "en": "Navigation",
+   "pt": "Navegação"
+  },
+  "Panel Padres": {
+   "en": "Parent Panel",
+   "pt": "Painel dos Pais"
+  },
+  "Área de Padres": {
+   "en": "Parents Area",
+   "pt": "Área dos Pais"
+  },
+  "Cerrar Sesión": {
+   "en": "Log Out",
+   "pt": "Sair"
+  },
+  "Ingresar": {
+   "en": "Log In",
+   "pt": "Entrar"
+  },
+  "Entrar": {
+   "en": "Log In",
+   "pt": "Entrar"
+  },
+  "Iniciar Sesión": {
+   "en": "Log In",
+   "pt": "Entrar"
+  },
+  "Iniciar Sesión 🚀": {
+   "en": "Log In 🚀",
+   "pt": "Entrar 🚀"
+  },
+  "Crear Cuenta": {
+   "en": "Create Account",
+   "pt": "Criar Conta"
+  },
+  "Crear Cuenta Segura": {
+   "en": "Create Safe Account",
+   "pt": "Criar Conta Segura"
+  },
+  "¿Quién eres?": {
+   "en": "Who are you?",
+   "pt": "Quem é você?"
+  },
+  "Niño / Niña": {
+   "en": "Boy / Girl",
+   "pt": "Menino / Menina"
+  },
+  "Papá / Mamá": {
+   "en": "Dad / Mom",
+   "pt": "Papai / Mamãe"
+  },
+  "ClukyBook For Kids": {
+   "en": "ClukyBook For Kids",
+   "pt": "ClukyBook For Kids"
+  },
+  "El Cuaderno Vivo": {
+   "en": "The Living Notebook",
+   "pt": "O Caderno Vivo"
+  },
+  "Mi Cuaderno Vivo": {
+   "en": "My Living Notebook",
+   "pt": "Meu Caderno Vivo"
+  },
+  "100% Protegido": {
+   "en": "100% Protected",
+   "pt": "100% Protegido"
+  },
+  "For Kids": {
+   "en": "For Kids",
+   "pt": "For Kids"
+  },
+  "Cambiar de Perfil": {
+   "en": "Switch Profile",
+   "pt": "Trocar de Perfil"
+  },
+  "Cambiar perfil o modo adulto": {
+   "en": "Switch profile or adult mode",
+   "pt": "Trocar perfil ou modo adulto"
+  },
+  "Ir al Inicio de ClukyBook For Kids": {
+   "en": "Go to the ClukyBook For Kids Home",
+   "pt": "Ir ao Início do ClukyBook For Kids"
+  },
+  "Abrir Mi Cuaderno": {
+   "en": "Open My Notebook",
+   "pt": "Abrir Meu Caderno"
+  },
+  "Abrir Mi Cuaderno →": {
+   "en": "Open My Notebook →",
+   "pt": "Abrir Meu Caderno →"
+  },
+  "Abrir Cuaderno ➔": {
+   "en": "Open Notebook ➔",
+   "pt": "Abrir Caderno ➔"
+  },
+  "Toca para abrir el perfil de Mi Cuaderno": {
+   "en": "Tap to open the My Notebook profile",
+   "pt": "Toque para abrir o perfil do Meu Caderno"
+  },
+  "Toca para abrir tu perfil de Mi Cuaderno Vivo": {
+   "en": "Tap to open your My Living Notebook profile",
+   "pt": "Toque para abrir seu perfil do Meu Caderno Vivo"
+  },
+  "Toca aquí para ver tu perfil, fotos, tareas y personalizar tu portada": {
+   "en": "Tap here to see your profile, photos, homework and customize your cover",
+   "pt": "Toque aqui para ver seu perfil, fotos, tarefas e personalizar sua capa"
+  },
+  "Cambiar a modo Día": {
+   "en": "Switch to Day mode",
+   "pt": "Mudar para o modo Dia"
+  },
+  "Cambiar a modo Noche": {
+   "en": "Switch to Night mode",
+   "pt": "Mudar para o modo Noite"
+  },
+  "Pausar Pantalla Ahora": {
+   "en": "Pause Screen Now",
+   "pt": "Pausar a Tela Agora"
+  },
+  "Reanudar Pantalla": {
+   "en": "Resume Screen",
+   "pt": "Retomar a Tela"
+  },
+  "Pausar Video": {
+   "en": "Pause Video",
+   "pt": "Pausar Vídeo"
+  },
+  "Reanudar Video": {
+   "en": "Resume Video",
+   "pt": "Retomar Vídeo"
+  },
+  "¡Hora de descansar la vista! 🌟": {
+   "en": "Time to rest your eyes! 🌟",
+   "pt": "Hora de descansar a vista! 🌟"
+  },
+  "Tus papás han puesto una pausa para que estires tus brazos, bebas agua o juegues un ratito con tus juguetes. ¡Volvemos pronto!": {
+   "en": "Your parents set a pause so you can stretch your arms, drink water or play with your toys for a bit. We'll be right back!",
+   "pt": "Seus pais colocaram uma pausa para você esticar os braços, beber água ou brincar um pouquinho com seus brinquedos. Já voltamos!"
+  },
+  "🔓 Desbloquear con autorización de papá o mamá": {
+   "en": "🔓 Unlock with dad or mom's permission",
+   "pt": "🔓 Desbloquear com autorização do papai ou da mamãe"
+  },
+  "Cuenta de {} en modo de protección preventiva por sus padres. (Solo lectura activa).": {
+   "en": "{}'s account is in preventive protection mode set by their parents. (Read-only is on).",
+   "pt": "A conta de {} está em modo de proteção preventiva colocado pelos pais. (Somente leitura ativa)."
+  },
+  "Continuar con Google": {
+   "en": "Continue with Google",
+   "pt": "Continuar com o Google"
+  },
+  "o con correo": {
+   "en": "or with email",
+   "pt": "ou com e-mail"
+  },
+  "Correo electrónico:": {
+   "en": "Email:",
+   "pt": "E-mail:"
+  },
+  "Contraseña:": {
+   "en": "Password:",
+   "pt": "Senha:"
+  },
+  "Ingresa tu correo y contraseña.": {
+   "en": "Enter your email and password.",
+   "pt": "Digite seu e-mail e senha."
+  },
+  "Mínimo 6 caracteres": {
+   "en": "Minimum 6 characters",
+   "pt": "Mínimo de 6 caracteres"
+  },
+  "La contraseña debe tener al menos 6 caracteres.": {
+   "en": "The password must be at least 6 characters.",
+   "pt": "A senha deve ter pelo menos 6 caracteres."
+  },
+  "Por favor completa todos los campos requeridos.": {
+   "en": "Please fill in all the required fields.",
+   "pt": "Por favor, preencha todos os campos obrigatórios."
+  },
+  "Error al iniciar sesión": {
+   "en": "Error logging in",
+   "pt": "Erro ao entrar"
+  },
+  "Error al iniciar sesión con Google": {
+   "en": "Error logging in with Google",
+   "pt": "Erro ao entrar com o Google"
+  },
+  "Error al registrarse": {
+   "en": "Error signing up",
+   "pt": "Erro ao se cadastrar"
+  },
+  "Has cerrado sesión correctamente.": {
+   "en": "You have logged out successfully.",
+   "pt": "Você saiu da conta com sucesso."
+  },
+  "¡Hola de nuevo! Sesión iniciada correctamente 🚀": {
+   "en": "Welcome back! Logged in successfully 🚀",
+   "pt": "Oi de novo! Sessão iniciada com sucesso 🚀"
+  },
+  "¡Bienvenido a Cluky Book! Sesión iniciada con éxito 🌟": {
+   "en": "Welcome to Cluky Book! Logged in successfully 🌟",
+   "pt": "Bem-vindo ao Cluky Book! Sessão iniciada com sucesso 🌟"
+  },
+  "¡Cuenta creada y guardada en Firebase exitosamente! 🎉": {
+   "en": "Account created and saved to Firebase successfully! 🎉",
+   "pt": "Conta criada e salva no Firebase com sucesso! 🎉"
+  },
+  "Crear Cuenta y Guardar en la Nube 🌟": {
+   "en": "Create Account and Save to the Cloud 🌟",
+   "pt": "Criar Conta e Salvar na Nuvem 🌟"
+  },
+  "Iniciar sesión o registrarse en Firebase": {
+   "en": "Log in or sign up with Firebase",
+   "pt": "Entrar ou se cadastrar no Firebase"
+  },
+  "Firebase Login": {
+   "en": "Firebase Login",
+   "pt": "Login do Firebase"
+  },
+  "🔐 Conectar Firebase": {
+   "en": "🔐 Connect Firebase",
+   "pt": "🔐 Conectar o Firebase"
+  },
+  "Firebase Activo": {
+   "en": "Firebase Active",
+   "pt": "Firebase Ativo"
+  },
+  "✅ Autenticado con Firebase": {
+   "en": "✅ Authenticated with Firebase",
+   "pt": "✅ Autenticado com o Firebase"
+  },
+  "✅ Conexión con Firebase Firestore verificada con éxito.": {
+   "en": "✅ Firebase Firestore connection verified successfully.",
+   "pt": "✅ Conexão com o Firebase Firestore verificada com sucesso."
+  },
+  "Conectado a Firebase en la nube": {
+   "en": "Connected to Firebase in the cloud",
+   "pt": "Conectado ao Firebase na nuvem"
+  },
+  "Firebase en modo offline o esperando red activa.": {
+   "en": "Firebase offline or waiting for an active network.",
+   "pt": "Firebase offline ou aguardando rede ativa."
+  },
+  "Procesando en Firebase...": {
+   "en": "Processing in Firebase...",
+   "pt": "Processando no Firebase..."
+  },
+  "Firestore Operation Notice:": {
+   "en": "Firestore Operation Notice:",
+   "pt": "Aviso de Operação do Firestore:"
+  },
+  "the client is offline": {
+   "en": "the client is offline",
+   "pt": "o cliente está offline"
+  },
+  "¿Qué hiciste hoy de lindo?": {
+   "en": "What nice thing did you do today?",
+   "pt": "Que coisa legal você fez hoje?"
+  },
+  "Presiona el botón de Foto, Video, GIF o Escribir arriba para poner tu primera publicación.": {
+   "en": "Press the Photo, Video, GIF or Write button above to make your first post.",
+   "pt": "Aperte o botão de Foto, Vídeo, GIF ou Escrever acima para fazer sua primeira publicação."
+  },
+  "Escribe algo bonito para acompañar (opcional)...": {
+   "en": "Write something nice to go with it (optional)...",
+   "pt": "Escreva algo bonito para acompanhar (opcional)..."
+  },
+  "Escribe algo lindo y seguro...": {
+   "en": "Write something nice and safe...",
+   "pt": "Escreva algo legal e seguro..."
+  },
+  "Escribe un comentario lindo...": {
+   "en": "Write a nice comment...",
+   "pt": "Escreva um comentário legal..."
+  },
+  "¡Comentario publicado con éxito! 🎉": {
+   "en": "Comment posted successfully! 🎉",
+   "pt": "Comentário publicado com sucesso! 🎉"
+  },
+  "¡Guardado y publicado en tu cuaderno con éxito! ⭐": {
+   "en": "Saved and posted to your notebook successfully! ⭐",
+   "pt": "Salvo e publicado no seu caderno com sucesso! ⭐"
+  },
+  "¡Publicar en mi Cuaderno!": {
+   "en": "Post to my Notebook!",
+   "pt": "Publicar no meu Caderno!"
+  },
+  "Publicar Aviso": {
+   "en": "Post Notice",
+   "pt": "Publicar Aviso"
+  },
+  "Guardar en Mi Cuaderno": {
+   "en": "Save to My Notebook",
+   "pt": "Salvar no Meu Caderno"
+  },
+  "Compartir": {
+   "en": "Share",
+   "pt": "Compartilhar"
+  },
+  "Compartir mi logro": {
+   "en": "Share my achievement",
+   "pt": "Compartilhar minha conquista"
+  },
+  "Compartir con tu familia aprobada": {
+   "en": "Share with your approved family",
+   "pt": "Compartilhar com sua família aprovada"
+  },
+  "Compartido con tu círculo familiar aprobado ❤️": {
+   "en": "Shared with your approved family circle ❤️",
+   "pt": "Compartilhado com seu círculo familiar aprovado ❤️"
+  },
+  "Compartido en el álbum seguro de tu familia 💖": {
+   "en": "Shared in your family's safe album 💖",
+   "pt": "Compartilhado no álbum seguro da sua família 💖"
+  },
+  "Contenido seguro de ClukyBook": {
+   "en": "Safe ClukyBook content",
+   "pt": "Conteúdo seguro do ClukyBook"
+  },
+  "Sin algoritmos adictivos • Orden de tiempo": {
+   "en": "No addictive algorithms • Time order",
+   "pt": "Sem algoritmos viciantes • Ordem de tempo"
+  },
+  "Hace un momento": {
+   "en": "Just now",
+   "pt": "Agora mesmo"
+  },
+  "Justo ahora": {
+   "en": "Just now",
+   "pt": "Agora mesmo"
+  },
+  "Justo ahora en chat": {
+   "en": "Just now in chat",
+   "pt": "Agora mesmo no chat"
+  },
+  "Hoy": {
+   "en": "Today",
+   "pt": "Hoje"
+  },
+  "Ayer": {
+   "en": "Yesterday",
+   "pt": "Ontem"
+  },
+  "Foto Aprobada por Papá": {
+   "en": "Photo Approved by Dad",
+   "pt": "Foto Aprovada pelo Papai"
+  },
+  "Video Aprobado": {
+   "en": "Approved Video",
+   "pt": "Vídeo Aprovado"
+  },
+  "Foto de Ejemplo • Sin Ubicación": {
+   "en": "Sample Photo • No Location",
+   "pt": "Foto de Exemplo • Sem Localização"
+  },
+  "Video de Ejemplo • Audio Revisado": {
+   "en": "Sample Video • Audio Checked",
+   "pt": "Vídeo de Exemplo • Áudio Revisado"
+  },
+  "Protegidas con 1 solo clic y sin ubicación": {
+   "en": "Protected with 1 click and no location",
+   "pt": "Protegidas com 1 clique e sem localização"
+  },
+  "Tus fotos, videos y GIFs seguros para ver y compartir con un solo clic.": {
+   "en": "Your safe photos, videos and GIFs to watch and share with a single click.",
+   "pt": "Suas fotos, vídeos e GIFs seguros para ver e compartilhar com um só clique."
+  },
+  "Subir Foto con 1 Clic": {
+   "en": "Upload Photo with 1 Click",
+   "pt": "Enviar Foto com 1 Clique"
+  },
+  "Subir Video Seguro con 1 Clic": {
+   "en": "Upload Safe Video with 1 Click",
+   "pt": "Enviar Vídeo Seguro com 1 Clique"
+  },
+  "📷 Subir Foto al Cuaderno": {
+   "en": "📷 Upload Photo to the Notebook",
+   "pt": "📷 Enviar Foto para o Caderno"
+  },
+  "+ Subir Foto": {
+   "en": "+ Upload Photo",
+   "pt": "+ Enviar Foto"
+  },
+  "+ Subir Video": {
+   "en": "+ Upload Video",
+   "pt": "+ Enviar Vídeo"
+  },
+  "+ Elegir GIF": {
+   "en": "+ Choose GIF",
+   "pt": "+ Escolher GIF"
+  },
+  "+ Foto": {
+   "en": "+ Photo",
+   "pt": "+ Foto"
+  },
+  "+ Video": {
+   "en": "+ Video",
+   "pt": "+ Vídeo"
+  },
+  "+ GIF": {
+   "en": "+ GIF",
+   "pt": "+ GIF"
+  },
+  "O sube una foto desde tu dispositivo": {
+   "en": "Or upload a photo from your device",
+   "pt": "Ou envie uma foto do seu aparelho"
+  },
+  "Elige una foto para tu cuaderno:": {
+   "en": "Choose a photo for your notebook:",
+   "pt": "Escolha uma foto para o seu caderno:"
+  },
+  "Elegir Sticker GIF Divertido": {
+   "en": "Choose a Fun GIF Sticker",
+   "pt": "Escolher um Sticker GIF Divertido"
+  },
+  "👾 GIFs y Stickers": {
+   "en": "👾 GIFs and Stickers",
+   "pt": "👾 GIFs e Stickers"
+  },
+  "Stickers Divertidos": {
+   "en": "Fun Stickers",
+   "pt": "Stickers Divertidos"
+  },
+  "Colección de GIFs y Stickers Animados": {
+   "en": "Collection of Animated GIFs and Stickers",
+   "pt": "Coleção de GIFs e Stickers Animados"
+  },
+  "¡Sticker animado favorito! ✨": {
+   "en": "Favorite animated sticker! ✨",
+   "pt": "Sticker animado favorito! ✨"
+  },
+  "¡Miren esta foto bonita en mi cuaderno! 📷": {
+   "en": "Look at this pretty photo in my notebook! 📷",
+   "pt": "Olhem que foto bonita no meu caderno! 📷"
+  },
+  "¡Miren este video divertido! 🎬": {
+   "en": "Look at this fun video! 🎬",
+   "pt": "Olhem que vídeo divertido! 🎬"
+  },
+  "Cancelar": {
+   "en": "Cancel",
+   "pt": "Cancelar"
+  },
+  "Cerrar": {
+   "en": "Close",
+   "pt": "Fechar"
+  },
+  "✕ Cerrar": {
+   "en": "✕ Close",
+   "pt": "✕ Fechar"
+  },
+  "Cerrar modal": {
+   "en": "Close window",
+   "pt": "Fechar janela"
+  },
+  "Entendido": {
+   "en": "Got it",
+   "pt": "Entendi"
+  },
+  "Enviar": {
+   "en": "Send",
+   "pt": "Enviar"
+  },
+  "Enviar mensaje": {
+   "en": "Send message",
+   "pt": "Enviar mensagem"
+  },
+  "Foto": {
+   "en": "Photo",
+   "pt": "Foto"
+  },
+  "Video": {
+   "en": "Video",
+   "pt": "Vídeo"
+  },
+  "Dibujo": {
+   "en": "Drawing",
+   "pt": "Desenho"
+  },
+  "Contenido en revisión": {
+   "en": "Content under review",
+   "pt": "Conteúdo em revisão"
+  },
+  "Tu foto/video quedó en revisión: un adulto debe aprobarlo antes de que se vea en ClukyBook.": {
+   "en": "Your photo/video is under review: an adult must approve it before it can be seen on ClukyBook.",
+   "pt": "Sua foto/vídeo ficou em revisão: um adulto precisa aprovar antes de aparecer no ClukyBook."
+  },
+  "Este contenido no se puede compartir porque infringe las reglas de la plataforma.": {
+   "en": "This content cannot be shared because it breaks the platform's rules.",
+   "pt": "Este conteúdo não pode ser compartilhado porque viola as regras da plataforma."
+  },
+  "🚫 Este mensaje no se puede compartir porque infringe las reglas de la plataforma.": {
+   "en": "🚫 This message cannot be shared because it breaks the platform's rules.",
+   "pt": "🚫 Esta mensagem não pode ser compartilhada porque viola as regras da plataforma."
+  },
+  "Mis Amigos": {
+   "en": "My Friends",
+   "pt": "Meus Amigos"
+  },
+  "Ver Círculo de Amigos": {
+   "en": "See Friends Circle",
+   "pt": "Ver Círculo de Amigos"
+  },
+  "Ver todas": {
+   "en": "See all",
+   "pt": "Ver todas"
+  },
+  "Ver todos": {
+   "en": "See all",
+   "pt": "Ver todos"
+  },
+  "+ Agregar Amigo": {
+   "en": "+ Add Friend",
+   "pt": "+ Adicionar Amigo"
+  },
+  "Agregar Nuevo Amigo Seguro": {
+   "en": "Add New Safe Friend",
+   "pt": "Adicionar Novo Amigo Seguro"
+  },
+  "+ Agregar a mi Cuaderno": {
+   "en": "+ Add to my Notebook",
+   "pt": "+ Adicionar ao meu Caderno"
+  },
+  "Amigo Aprobado": {
+   "en": "Approved Friend",
+   "pt": "Amigo Aprovado"
+  },
+  "● Amigo Verificado": {
+   "en": "● Verified Friend",
+   "pt": "● Amigo Verificado"
+  },
+  "Amigos de Mi Clase": {
+   "en": "Friends from My Class",
+   "pt": "Amigos da Minha Turma"
+  },
+  "Compañero de Clase": {
+   "en": "Classmate",
+   "pt": "Colega de Turma"
+  },
+  "Amigo del Parque": {
+   "en": "Park Friend",
+   "pt": "Amigo do Parque"
+  },
+  "Círculo 100% Aprobado por Padres": {
+   "en": "Circle 100% Approved by Parents",
+   "pt": "Círculo 100% Aprovado pelos Pais"
+  },
+  "Solo tus amigos aprobados por papá y mamá pueden saludarte y ver tus dibujos.": {
+   "en": "Only your friends approved by dad and mom can greet you and see your drawings.",
+   "pt": "Somente seus amigos aprovados pelo papai e pela mamãe podem te cumprimentar e ver seus desenhos."
+  },
+  "Primer nombre de tu amigo/a:": {
+   "en": "Your friend's first name:",
+   "pt": "Primeiro nome do seu amigo/a:"
+  },
+  "Ej. Mateo, Sofía, Lucas...": {
+   "en": "E.g. Mateo, Sofia, Lucas...",
+   "pt": "Ex.: Mateo, Sofia, Lucas..."
+  },
+  "Ej: Luna, Papá Carlos...": {
+   "en": "E.g. Luna, Dad Carlos...",
+   "pt": "Ex.: Luna, Papai Carlos..."
+  },
+  "Ej. Mateo, Emma, Lucas, Valentina...": {
+   "en": "E.g. Mateo, Emma, Lucas, Valentina...",
+   "pt": "Ex.: Mateo, Emma, Lucas, Valentina..."
+  },
+  "Código de Amigo o Clase (opcional):": {
+   "en": "Friend or Class Code (optional):",
+   "pt": "Código de Amigo ou Turma (opcional):"
+  },
+  "Ej. CLUKY-AMIGO-492": {
+   "en": "E.g. CLUKY-FRIEND-492",
+   "pt": "Ex.: CLUKY-AMIGO-492"
+  },
+  "Para tu seguridad, esta solicitud llegará directo a tus papás para que la aprueben con un solo clic.": {
+   "en": "For your safety, this request goes straight to your parents so they can approve it with a single click.",
+   "pt": "Para sua segurança, este pedido vai direto para seus pais aprovarem com um só clique."
+  },
+  "¡Solicitud enviada a tus papás!": {
+   "en": "Request sent to your parents!",
+   "pt": "Pedido enviado para seus pais!"
+  },
+  "En cuanto la acepten, aparecerá en tus amigos.": {
+   "en": "As soon as they accept it, they'll appear in your friends.",
+   "pt": "Assim que aceitarem, aparecerá nos seus amigos."
+  },
+  "Pedir a Papá Aprobación": {
+   "en": "Ask Dad for Approval",
+   "pt": "Pedir Aprovação ao Papai"
+  },
+  "Chatear 💬": {
+   "en": "Chat 💬",
+   "pt": "Conversar 💬"
+  },
+  "Chatear Seguro 💬": {
+   "en": "Safe Chat 💬",
+   "pt": "Conversa Segura 💬"
+  },
+  "Mensajería Segura para Niños 💬": {
+   "en": "Safe Messaging for Kids 💬",
+   "pt": "Mensagens Seguras para Crianças 💬"
+  },
+  "Supervisada en tiempo real con Código Rojo • Guardada en Firebase": {
+   "en": "Supervised in real time by Red Code • Saved in Firebase",
+   "pt": "Supervisionado em tempo real pelo Código Vermelho • Salvo no Firebase"
+  },
+  "Mensajes privados y supervisados por los padres": {
+   "en": "Private messages supervised by parents",
+   "pt": "Mensagens privadas e supervisionadas pelos pais"
+  },
+  "Conexión segura infantil y supervisión parental": {
+   "en": "Safe kids connection and parental supervision",
+   "pt": "Conexão infantil segura e supervisão dos pais"
+  },
+  "Comparte stickers divertidos, emojis o platiquen de las tareas de la escuela.": {
+   "en": "Share fun stickers, emojis, or chat about school homework.",
+   "pt": "Compartilhe stickers divertidos, emojis ou conversem sobre as tarefas da escola."
+  },
+  "Iniciando conversación segura...": {
+   "en": "Starting safe conversation...",
+   "pt": "Iniciando conversa segura..."
+  },
+  "Empieza a platicar...": {
+   "en": "Start chatting...",
+   "pt": "Comece a conversar..."
+  },
+  "Escribe un mensaje seguro a {}...": {
+   "en": "Write a safe message to {}...",
+   "pt": "Escreva uma mensagem segura para {}..."
+  },
+  "⚠️ El mensaje fue bloqueado por seguridad infantil (Código Rojo).": {
+   "en": "⚠️ The message was blocked for child safety (Red Code).",
+   "pt": "⚠️ A mensagem foi bloqueada por segurança infantil (Código Vermelho)."
+  },
+  "¡Ayuda!": {
+   "en": "Help!",
+   "pt": "Ajuda!"
+  },
+  "SOS": {
+   "en": "SOS",
+   "pt": "SOS"
+  },
+  "Pedir ayuda a papá y mamá": {
+   "en": "Ask dad and mom for help",
+   "pt": "Pedir ajuda ao papai e à mamãe"
+  },
+  "Alerta de Ayuda enviada a tus padres": {
+   "en": "Help Alert sent to your parents",
+   "pt": "Alerta de Ajuda enviado aos seus pais"
+  },
+  "Tus papás recibieron una alerta inmediata en sus teléfonos. Todo está seguro y nadie puede molestarte aquí. ❤️": {
+   "en": "Your parents received an immediate alert on their phones. Everything is safe and nobody can bother you here. ❤️",
+   "pt": "Seus pais receberam um alerta imediato nos telefones deles. Está tudo seguro e ninguém pode te incomodar aqui. ❤️"
+  },
+  "¡Todo está bien ahora!": {
+   "en": "Everything is fine now!",
+   "pt": "Está tudo bem agora!"
+  },
+  "¡Pío pío! Todo está cuidado aquí": {
+   "en": "Chirp chirp! Everything is taken care of here",
+   "pt": "Piu piu! Está tudo cuidado aqui"
+  },
+  "¡Miau! ClukyBook es seguro para ti": {
+   "en": "Meow! ClukyBook is safe for you",
+   "pt": "Miau! O ClukyBook é seguro para você"
+  },
+  "1° Primaria — Los Exploradores": {
+   "en": "1st Grade — The Explorers",
+   "pt": "1º Ano — Os Exploradores"
+  },
+  "1° Primaria": {
+   "en": "1st Grade",
+   "pt": "1º Ano"
+  },
+  "1° de Primaria": {
+   "en": "1st Grade",
+   "pt": "1º Ano do Fundamental"
+  },
+  "2° de Primaria": {
+   "en": "2nd Grade",
+   "pt": "2º Ano do Fundamental"
+  },
+  "3° de Primaria": {
+   "en": "3rd Grade",
+   "pt": "3º Ano do Fundamental"
+  },
+  "Kinder / Preescolar": {
+   "en": "Kindergarten / Preschool",
+   "pt": "Jardim / Pré-escola"
+  },
+  "Preescolar / Kinder": {
+   "en": "Preschool / Kindergarten",
+   "pt": "Pré-escola / Jardim"
+  },
+  "Preescolar / Kinder (5 años)": {
+   "en": "Preschool / Kindergarten (5 years old)",
+   "pt": "Pré-escola / Jardim (5 anos)"
+  },
+  "Tareas y Actividades de la Clase": {
+   "en": "Class Homework and Activities",
+   "pt": "Tarefas e Atividades da Turma"
+  },
+  "Mi Clase — Tarea de la maestra": {
+   "en": "My Class — Teacher's homework",
+   "pt": "Minha Turma — Tarefa da professora"
+  },
+  "1° Primaria • Tareas y Avisos": {
+   "en": "1st Grade • Homework and Notices",
+   "pt": "1º Ano • Tarefas e Avisos"
+  },
+  "Página de Clase Cerrada": {
+   "en": "Closed Class Page",
+   "pt": "Página de Turma Fechada"
+  },
+  "Seguridad de Clase": {
+   "en": "Class Safety",
+   "pt": "Segurança da Turma"
+  },
+  "Maestra": {
+   "en": "Teacher",
+   "pt": "Professora"
+  },
+  "Maestra Elena": {
+   "en": "Teacher Elena",
+   "pt": "Professora Elena"
+  },
+  "Maestra Verificada": {
+   "en": "Verified Teacher",
+   "pt": "Professora Verificada"
+  },
+  "Modo Maestro Verificado": {
+   "en": "Verified Teacher Mode",
+   "pt": "Modo Professora Verificada"
+  },
+  "Panel de la Maestra Elena": {
+   "en": "Teacher Elena's Panel",
+   "pt": "Painel da Professora Elena"
+  },
+  "Tarea de hoy: Dibujar tu animal favorito ⭐": {
+   "en": "Today's homework: Draw your favorite animal ⭐",
+   "pt": "Tarefa de hoje: Desenhar seu animal favorito ⭐"
+  },
+  "Tarea de Ejemplo: Dibuja o fotografía una plantita o flor 🌸": {
+   "en": "Sample Homework: Draw or photograph a little plant or flower 🌸",
+   "pt": "Tarefa de Exemplo: Desenhe ou fotografe uma plantinha ou flor 🌸"
+  },
+  "¡Observa una plantita o flor en casa o jardín! Sube su foto o dibujo con 1 clic y gana +15 estrellitas mágicas.": {
+   "en": "Look at a little plant or flower at home or in the garden! Upload its photo or drawing with 1 click and earn +15 magic stars.",
+   "pt": "Observe uma plantinha ou flor em casa ou no jardim! Envie a foto ou desenho com 1 clique e ganhe +15 estrelinhas mágicas."
+  },
+  "Sube tu dibujo en Foto o GIF antes de mañana • ¡Ganas 10 estrellitas!": {
+   "en": "Upload your drawing as a Photo or GIF before tomorrow • You earn 10 stars!",
+   "pt": "Envie seu desenho em Foto ou GIF antes de amanhã • Você ganha 10 estrelinhas!"
+  },
+  "¡Entregar mi Tarea con 1 Clic!": {
+   "en": "Hand in my Homework with 1 Click!",
+   "pt": "Entregar minha Tarefa com 1 Clique!"
+  },
+  "¡Entregar con 1 Clic!": {
+   "en": "Hand in with 1 Click!",
+   "pt": "Entregar com 1 Clique!"
+  },
+  "¡Entregada!": {
+   "en": "Handed in!",
+   "pt": "Entregue!"
+  },
+  "Trabajo entregado": {
+   "en": "Work handed in",
+   "pt": "Trabalho entregue"
+  },
+  "Hoy, entregado con 1 clic": {
+   "en": "Today, handed in with 1 click",
+   "pt": "Hoje, entregue com 1 clique"
+  },
+  "Publicar Aviso para la Clase y Padres": {
+   "en": "Post a Notice for the Class and Parents",
+   "pt": "Publicar Aviso para a Turma e os Pais"
+  },
+  "Escribe un aviso para los alumnos y sus familias...": {
+   "en": "Write a notice for the students and their families...",
+   "pt": "Escreva um aviso para os alunos e suas famílias..."
+  },
+  "¡Aviso publicado en el muro de toda la clase y visible para los padres! 🎓": {
+   "en": "Notice posted on the whole class wall and visible to parents! 🎓",
+   "pt": "Aviso publicado no mural de toda a turma e visível para os pais! 🎓"
+  },
+  "Visible en el muro de alumnos y padres": {
+   "en": "Visible on the students' and parents' wall",
+   "pt": "Visível no mural dos alunos e dos pais"
+  },
+  "Premiar con Estrellitas a tus Alumnos": {
+   "en": "Reward your Students with Stars",
+   "pt": "Premiar seus Alunos com Estrelinhas"
+  },
+  "¡Le diste una estrellita de felicitación a {}! ⭐": {
+   "en": "You gave a congratulation star to {}! ⭐",
+   "pt": "Você deu uma estrelinha de parabéns para {}! ⭐"
+  },
+  "¡Felicidades a todos los exploradores por su gran esfuerzo en lectura hoy! Recuerden que mañana tenemos la clase divertida de música. 🎶📚🌟": {
+   "en": "Congratulations to all the explorers for their great reading effort today! Remember tomorrow we have the fun music class. 🎶📚🌟",
+   "pt": "Parabéns a todos os exploradores pelo grande esforço na leitura hoje! Lembrem que amanhã temos a divertida aula de música. 🎶📚🌟"
+  },
+  "Aprender la canción de las vocales 🎶": {
+   "en": "Learn the vowel song 🎶",
+   "pt": "Aprender a canção das vogais 🎶"
+  },
+  "Canta con tus papás la canción de la A, E, I, O, U y marca como completada.": {
+   "en": "Sing the A, E, I, O, U song with your parents and mark it as done.",
+   "pt": "Cante com seus pais a canção do A, E, I, O, U e marque como concluída."
+  },
+  "Día de Bloques en la Escuela": {
+   "en": "Blocks Day at School",
+   "pt": "Dia de Blocos na Escola"
+  },
+  "Viernes, 12:00 PM": {
+   "en": "Friday, 12:00 PM",
+   "pt": "Sexta-feira, 12:00"
+  },
+  "Mañana, 2:00 PM": {
+   "en": "Tomorrow, 2:00 PM",
+   "pt": "Amanhã, 14:00"
+  },
+  "Hora exacta:": {
+   "en": "Exact time:",
+   "pt": "Hora exata:"
+  },
+  "Esta semana • Ejemplo": {
+   "en": "This week • Sample",
+   "pt": "Esta semana • Exemplo"
+  },
+  "Información del Cuaderno": {
+   "en": "Notebook Information",
+   "pt": "Informações do Caderno"
+  },
+  "Fotos del Cuaderno": {
+   "en": "Notebook Photos",
+   "pt": "Fotos do Caderno"
+  },
+  "Galería del Cuaderno": {
+   "en": "Notebook Gallery",
+   "pt": "Galeria do Caderno"
+  },
+  "Dibujo de Mi Cuaderno": {
+   "en": "Drawing from My Notebook",
+   "pt": "Desenho do Meu Caderno"
+  },
+  "Cambiar Color de Portada": {
+   "en": "Change Cover Color",
+   "pt": "Mudar a Cor da Capa"
+  },
+  "¡Elige tu color favorito!": {
+   "en": "Choose your favorite color!",
+   "pt": "Escolha sua cor favorita!"
+  },
+  "Elige el color de tu Cuaderno Vivo:": {
+   "en": "Choose the color of your Living Notebook:",
+   "pt": "Escolha a cor do seu Caderno Vivo:"
+  },
+  "Elige tu animalito": {
+   "en": "Choose your little animal",
+   "pt": "Escolha seu bichinho"
+  },
+  "Elige tu animalito favorito": {
+   "en": "Choose your favorite little animal",
+   "pt": "Escolha seu bichinho favorito"
+  },
+  "Elige tu animalito favorito para tu foto de perfil:": {
+   "en": "Choose your favorite little animal for your profile photo:",
+   "pt": "Escolha seu bichinho favorito para sua foto de perfil:"
+  },
+  "Elige su animalito favorito:": {
+   "en": "Choose their favorite little animal:",
+   "pt": "Escolha o bichinho favorito dele/dela:"
+  },
+  "Elige su animalito avatar favorito:": {
+   "en": "Choose their favorite avatar animal:",
+   "pt": "Escolha o bichinho avatar favorito dele/dela:"
+  },
+  "Elige tu animalito guardián:": {
+   "en": "Choose your guardian animal:",
+   "pt": "Escolha seu bichinho guardião:"
+  },
+  "Toca para cambiar de animalito": {
+   "en": "Tap to change your animal",
+   "pt": "Toque para trocar de bichinho"
+  },
+  "Toca para cambiar tu animalito favorito": {
+   "en": "Tap to change your favorite animal",
+   "pt": "Toque para trocar seu bichinho favorito"
+  },
+  "Toca para ver su perfil o clase": {
+   "en": "Tap to see their profile or class",
+   "pt": "Toque para ver o perfil ou a turma"
+  },
+  "Crear Nuevo Cuaderno Vivo": {
+   "en": "Create New Living Notebook",
+   "pt": "Criar Novo Caderno Vivo"
+  },
+  "¡Crear Cuaderno con 1 Clic!": {
+   "en": "Create Notebook with 1 Click!",
+   "pt": "Criar Caderno com 1 Clique!"
+  },
+  "+ Crear Otro Cuaderno": {
+   "en": "+ Create Another Notebook",
+   "pt": "+ Criar Outro Caderno"
+  },
+  "Crea el perfil de un hermanito o nuevo niño administrado por ti": {
+   "en": "Create the profile of a little sibling or a new child managed by you",
+   "pt": "Crie o perfil de um irmãozinho ou de uma nova criança administrado por você"
+  },
+  "¡Tu cuaderno está listo para tus recuerdos!": {
+   "en": "Your notebook is ready for your memories!",
+   "pt": "Seu caderno está pronto para suas lembranças!"
+  },
+  "1. Solo el primer nombre del niño (Regla #3 de Seguridad):": {
+   "en": "1. Only the child's first name (Safety Rule #3):",
+   "pt": "1. Somente o primeiro nome da criança (Regra de Segurança nº 3):"
+  },
+  "Nombre de niño o papá/mamá:": {
+   "en": "Child's or dad/mom's name:",
+   "pt": "Nome da criança ou do papai/mamãe:"
+  },
+  "2. Elige su animalito avatar favorito:": {
+   "en": "2. Choose their favorite avatar animal:",
+   "pt": "2. Escolha o bichinho avatar favorito dele/dela:"
+  },
+  "3. Elige el color de su Cuaderno Vivo:": {
+   "en": "3. Choose the color of their Living Notebook:",
+   "pt": "3. Escolha a cor do Caderno Vivo dele/dela:"
+  },
+  "4. Grado escolar:": {
+   "en": "4. School grade:",
+   "pt": "4. Ano escolar:"
+  },
+  "Rosa & Violeta": {
+   "en": "Pink & Violet",
+   "pt": "Rosa & Violeta"
+  },
+  "Amarillo Sol & Miel": {
+   "en": "Sun Yellow & Honey",
+   "pt": "Amarelo Sol & Mel"
+  },
+  "Azul Cielo & Océano": {
+   "en": "Sky Blue & Ocean",
+   "pt": "Azul Céu & Oceano"
+  },
+  "Verde Menta & Selva": {
+   "en": "Mint Green & Jungle",
+   "pt": "Verde Menta & Selva"
+  },
+  "Morado Mágico & Estrellas": {
+   "en": "Magic Purple & Stars",
+   "pt": "Roxo Mágico & Estrelas"
+  },
+  "Naranja Melocotón & Dulce": {
+   "en": "Peach Orange & Sweet",
+   "pt": "Laranja Pêssego & Doce"
+  },
+  "Rojo Cereza & Corazón": {
+   "en": "Cherry Red & Heart",
+   "pt": "Vermelho Cereja & Coração"
+  },
+  "Perfil Seguro y Verificado": {
+   "en": "Safe and Verified Profile",
+   "pt": "Perfil Seguro e Verificado"
+  },
+  "Tu Cuenta Familiar": {
+   "en": "Your Family Account",
+   "pt": "Sua Conta Familiar"
+  },
+  "Modo Cuaderno Seguro": {
+   "en": "Safe Notebook Mode",
+   "pt": "Modo Caderno Seguro"
+  },
+  "📖 Página Abierta:": {
+   "en": "📖 Open Page:",
+   "pt": "📖 Página Aberta:"
+  },
+  "🏆 Medallas y Logros": {
+   "en": "🏆 Medals and Achievements",
+   "pt": "🏆 Medalhas e Conquistas"
+  },
+  "Estrellitas Mágicas": {
+   "en": "Magic Stars",
+   "pt": "Estrelinhas Mágicas"
+  },
+  "Gran Dibujante": {
+   "en": "Great Artist",
+   "pt": "Grande Desenhista"
+  },
+  "Músico de Granja": {
+   "en": "Farm Musician",
+   "pt": "Músico da Fazenda"
+  },
+  "Amigo Mágico": {
+   "en": "Magic Friend",
+   "pt": "Amigo Mágico"
+  },
+  "Amiga Estrella": {
+   "en": "Star Friend",
+   "pt": "Amiga Estrela"
+  },
+  "Búho Sabio": {
+   "en": "Wise Owl",
+   "pt": "Coruja Sábia"
+  },
+  "Escribir en mi Cuaderno": {
+   "en": "Write in my Notebook",
+   "pt": "Escrever no meu Caderno"
+  },
+  "✍️ Texto": {
+   "en": "✍️ Text",
+   "pt": "✍️ Texto"
+  },
+  "Centro de Control y Protección Parental": {
+   "en": "Parental Control and Protection Center",
+   "pt": "Centro de Controle e Proteção dos Pais"
+  },
+  "Tutor de {}": {
+   "en": "Guardian of {}",
+   "pt": "Responsável por {}"
+  },
+  "Alertas Código Rojo ({})": {
+   "en": "Red Code Alerts ({})",
+   "pt": "Alertas Código Vermelho ({})"
+  },
+  "Simulador de Pruebas": {
+   "en": "Test Simulator",
+   "pt": "Simulador de Testes"
+  },
+  "Tiempo de Pantalla": {
+   "en": "Screen Time",
+   "pt": "Tempo de Tela"
+  },
+  "Aprobación y Amigos": {
+   "en": "Approvals and Friends",
+   "pt": "Aprovações e Amigos"
+  },
+  "Lista Negra ({})": {
+   "en": "Blacklist ({})",
+   "pt": "Lista Negra ({})"
+  },
+  "Mensajes supervisados ({})": {
+   "en": "Supervised messages ({})",
+   "pt": "Mensagens supervisionadas ({})"
+  },
+  "Congelar por Seguridad": {
+   "en": "Freeze for Safety",
+   "pt": "Congelar por Segurança"
+  },
+  "Descongelar Cuenta": {
+   "en": "Unfreeze Account",
+   "pt": "Descongelar Conta"
+  },
+  "Sistema Código Rojo Activo y Supervisando en Servidor": {
+   "en": "Red Code System Active and Supervising on the Server",
+   "pt": "Sistema Código Vermelho Ativo e Supervisionando no Servidor"
+  },
+  "Ningún mensaje peligroso llega al menor. Los intentos de desviar a WhatsApp, pedir fotos privadas, citar a solas o pedir secretos quedan interceptados y congelados de inmediato con evidencia judicial.": {
+   "en": "No dangerous message ever reaches the child. Attempts to divert to WhatsApp, ask for private photos, arrange secret meetings or ask for secrets are intercepted and frozen immediately with legal evidence.",
+   "pt": "Nenhuma mensagem perigosa chega à criança. Tentativas de desviar para o WhatsApp, pedir fotos privadas, marcar encontros secretos ou pedir segredos são interceptadas e congeladas na hora, com evidência judicial."
+  },
+  "Cuenta de origen:": {
+   "en": "Origin account:",
+   "pt": "Conta de origem:"
+  },
+  "Contenido interceptado antes de llegar a {}:": {
+   "en": "Content intercepted before reaching {}:",
+   "pt": "Conteúdo interceptado antes de chegar a {}:"
+  },
+  "Texto interceptado antes de llegar al niño:": {
+   "en": "Text intercepted before reaching the child:",
+   "pt": "Texto interceptado antes de chegar à criança:"
+  },
+  "BLOQUEAR AHORA Y LISTA NEGRA": {
+   "en": "BLOCK NOW AND BLACKLIST",
+   "pt": "BLOQUEAR AGORA E LISTA NEGRA"
+  },
+  "BLOQUEAR AHORA Y ENVIAR A LISTA NEGRA": {
+   "en": "BLOCK NOW AND SEND TO BLACKLIST",
+   "pt": "BLOQUEAR AGORA E ENVIAR À LISTA NEGRA"
+  },
+  "Descargar Evidencia Cifrada": {
+   "en": "Download Encrypted Evidence",
+   "pt": "Baixar Evidência Criptografada"
+  },
+  "Guardar Evidencia Legal": {
+   "en": "Save Legal Evidence",
+   "pt": "Salvar Evidência Legal"
+  },
+  "Laboratorio de Pruebas de Filtro Código Rojo": {
+   "en": "Red Code Filter Test Lab",
+   "pt": "Laboratório de Testes do Filtro Código Vermelho"
+  },
+  "Prueba cualquier texto disfrazado, con espacios, leetspeak o números ocultos para ver cómo el motor de normalización en servidor detecta la amenaza al instante.": {
+   "en": "Try any disguised text, with spaces, leetspeak or hidden numbers, and watch how the server normalization engine detects the threat instantly.",
+   "pt": "Teste qualquer texto disfarçado, com espaços, leetspeak ou números ocultos e veja como o motor de normalização do servidor detecta a ameaça na hora."
+  },
+  "Escribe aquí una frase para probar el motor de seguridad...": {
+   "en": "Write a sentence here to test the safety engine...",
+   "pt": "Escreva aqui uma frase para testar o motor de segurança..."
+  },
+  "Evaluar Filtro": {
+   "en": "Test the Filter",
+   "pt": "Testar o Filtro"
+  },
+  "Pruebas rápidas:": {
+   "en": "Quick tests:",
+   "pt": "Testes rápidos:"
+  },
+  "1. WhatsApp disfrazado + teléfono": {
+   "en": "1. Disguised WhatsApp + phone",
+   "pt": "1. WhatsApp disfarçado + telefone"
+  },
+  "2. Cita a escondidas a solas": {
+   "en": "2. Secret meeting alone",
+   "pt": "2. Encontro secreto sozinhos"
+  },
+  "3. Fotos privadas + soborno": {
+   "en": "3. Private photos + bribe",
+   "pt": "3. Fotos privadas + suborno"
+  },
+  "4. Mensaje 100% Seguro": {
+   "en": "4. 100% Safe Message",
+   "pt": "4. Mensagem 100% Segura"
+  },
+  "Ejemplo Seguro": {
+   "en": "Safe Example",
+   "pt": "Exemplo Seguro"
+  },
+  "En simulación de prueba": {
+   "en": "In test simulation",
+   "pt": "Em simulação de teste"
+  },
+  "Cambiar límite diario de pantalla:": {
+   "en": "Change daily screen time limit:",
+   "pt": "Mudar o limite diário de tela:"
+  },
+  "Horarios y Límites Diarios": {
+   "en": "Daily Schedules and Limits",
+   "pt": "Horários e Limites Diários"
+  },
+  "Evita el uso excesivo estableciendo límites que pausan automáticamente la aplicación.": {
+   "en": "Avoid excessive use by setting limits that automatically pause the app.",
+   "pt": "Evite o uso excessivo definindo limites que pausam o aplicativo automaticamente."
+  },
+  "Con un solo toque puedes pausar la pantalla para que el niño descanse su vista o haga otra actividad.": {
+   "en": "With a single tap you can pause the screen so the child rests their eyes or does another activity.",
+   "pt": "Com um só toque você pode pausar a tela para a criança descansar a vista ou fazer outra atividade."
+  },
+  "Probar Pausar Pantalla": {
+   "en": "Test Pause Screen",
+   "pt": "Testar Pausar a Tela"
+  },
+  "Aprobación Estricta según la Edad": {
+   "en": "Strict Age-Based Approval",
+   "pt": "Aprovação Rigorosa conforme a Idade"
+  },
+  "Publicaciones en Revisión ({})": {
+   "en": "Posts Under Review ({})",
+   "pt": "Publicações em Revisão ({})"
+  },
+  "Revisa la imagen o el video completo antes de aprobar. Si infringe las reglas, no se compartirá.": {
+   "en": "Review the full image or video before approving. If it breaks the rules, it will not be shared.",
+   "pt": "Revise a imagem ou o vídeo completo antes de aprovar. Se violar as regras, não será compartilhado."
+  },
+  "Aprobar y publicar": {
+   "en": "Approve and post",
+   "pt": "Aprovar e publicar"
+  },
+  "🚫 No compartir": {
+   "en": "🚫 Do not share",
+   "pt": "🚫 Não compartilhar"
+  },
+  "Amigos Aprobados ({})": {
+   "en": "Approved Friends ({})",
+   "pt": "Amigos Aprovados ({})"
+  },
+  "Lista Negra Permanente": {
+   "en": "Permanent Blacklist",
+   "pt": "Lista Negra Permanente"
+  },
+  "Cuenta Bloqueada ({})": {
+   "en": "Blocked Account ({})",
+   "pt": "Conta Bloqueada ({})"
+  },
+  "No hay cuentas bloqueadas actualmente. La comunidad está segura.": {
+   "en": "There are no blocked accounts right now. The community is safe.",
+   "pt": "Não há contas bloqueadas no momento. A comunidade está segura."
+  },
+  "Cuentas expulsadas y vetadas permanentemente por Código Rojo. Sus contenidos han sido eliminados de toda la plataforma.": {
+   "en": "Accounts expelled and permanently banned by Red Code. Their content has been deleted from the whole platform.",
+   "pt": "Contas expulsas e banidas permanentemente pelo Código Vermelho. Seus conteúdos foram apagados de toda a plataforma."
+  },
+  "BLOQUEO DEFINITIVO": {
+   "en": "PERMANENT BLOCK",
+   "pt": "BLOQUEIO DEFINITIVO"
+  },
+  "Perfil Sospechoso Bloqueado": {
+   "en": "Suspicious Profile Blocked",
+   "pt": "Perfil Suspeito Bloqueado"
+  },
+  "Cuenta expulsada y bloqueada en Lista Negra": {
+   "en": "Account expelled and blocked on the Blacklist",
+   "pt": "Conta expulsa e bloqueada na Lista Negra"
+  },
+  "Supervisión parental de mensajes — solo para el tutor de {}": {
+   "en": "Parental message supervision — only for {}'s guardian",
+   "pt": "Supervisão de mensagens pelos pais — somente para o responsável por {}"
+  },
+  "Aquí lees las conversaciones completas de tu hijo o hija, tal cual pasaron por el filtro Código Rojo.": {
+   "en": "Here you read your son or daughter's complete conversations, exactly as they went through the Red Code filter.",
+   "pt": "Aqui você lê as conversas completas do seu filho ou filha, exatamente como passaram pelo filtro Código Vermelho."
+  },
+  "Es supervisión": {
+   "en": "It is",
+   "pt": "É uma supervisão"
+  },
+  "declarada": {
+   "en": "declared",
+   "pt": "declarada"
+  },
+  "Los mensajes peligrosos nunca entran a esta transcripción: quedan bloqueados y guardados como evidencia en la pestaña de Alertas.": {
+   "en": "Dangerous messages never enter this transcript: they stay blocked and saved as evidence in the Alerts tab.",
+   "pt": "As mensagens perigosas nunca entram nesta transcrição: ficam bloqueadas e salvas como evidência na aba de Alertas."
+  },
+  "Todavía no hay conversaciones para supervisar.": {
+   "en": "There are no conversations to supervise yet.",
+   "pt": "Ainda não há conversas para supervisionar."
+  },
+  "Esta conversación aún no tiene mensajes.": {
+   "en": "This conversation has no messages yet.",
+   "pt": "Esta conversa ainda não tem mensagens."
+  },
+  "Conversación con {} — {} mensajes revisados": {
+   "en": "Conversation with {} — {} checked messages",
+   "pt": "Conversa com {} — {} mensagens revisadas"
+  },
+  "Cada mensaje lleva la marca del filtro: ✓ = pasó la revisión del Código Rojo antes de entregarse.": {
+   "en": "Every message carries the filter's mark: ✓ = it passed the Red Code check before being delivered.",
+   "pt": "Cada mensagem leva a marca do filtro: ✓ = passou pela revisão do Código Vermelho antes de ser entregue."
+  },
+  "Revisado por Código Rojo ✓": {
+   "en": "Checked by Red Code ✓",
+   "pt": "Revisado pelo Código Vermelho ✓"
+  },
+  "Marcado para revisión": {
+   "en": "Flagged for review",
+   "pt": "Marcado para revisão"
+  },
+  "🖼️ Archivo multimedia compartido (pasó revisión)": {
+   "en": "🖼️ Shared media file (passed review)",
+   "pt": "🖼️ Arquivo de mídia compartilhado (passou pela revisão)"
+  },
+  "Alternar entre papá o mamá de ejemplo": {
+   "en": "Switch between the sample dad or mom",
+   "pt": "Alternar entre o papai ou a mamãe de exemplo"
+  },
+  "Beneficios activos:": {
+   "en": "Active benefits:",
+   "pt": "Benefícios ativos:"
+  },
+  "• Supervisión activa con el filtro Código Rojo.": {
+   "en": "• Active supervision with the Red Code filter.",
+   "pt": "• Supervisão ativa com o filtro Código Vermelho."
+  },
+  "• Publicaciones y fotos se guardan en la base de datos de Firebase.": {
+   "en": "• Posts and photos are saved in the Firebase database.",
+   "pt": "• Publicações e fotos são salvas no banco de dados do Firebase."
+  },
+  "• Tus conversaciones con amigos sincronizadas en tiempo real.": {
+   "en": "• Your conversations with friends synced in real time.",
+   "pt": "• Suas conversas com amigos sincronizadas em tempo real."
+  },
+  "Cero Chat Privado": {
+   "en": "Zero Private Chat",
+   "pt": "Zero Conversa Privada"
+  },
+  "1. Alerta Roja Instantánea 🚨": {
+   "en": "1. Instant Red Alert 🚨",
+   "pt": "1. Alerta Vermelho Instantâneo 🚨"
+  },
+  "2. Pausa Suave de Pantalla ⏱️": {
+   "en": "2. Gentle Screen Pause ⏱️",
+   "pt": "2. Pausa Suave de Tela ⏱️"
+  },
+  "3. Aprobación de Amigos 👥": {
+   "en": "3. Friend Approval 👥",
+   "pt": "3. Aprovação de Amigos 👥"
+  },
+  "Mensaje 100% seguro y limpio para la comunidad infantil.": {
+   "en": "100% safe and clean message for the kids community.",
+   "pt": "Mensagem 100% segura e limpa para a comunidade infantil."
+  },
+  "Si alguien intenta sacar al niño a WhatsApp o pedir secretos, el mensaje NUNCA llega y suena tu alarma.": {
+   "en": "If someone tries to take the child to WhatsApp or ask for secrets, the message NEVER arrives and your alarm goes off.",
+   "pt": "Se alguém tentar levar a criança para o WhatsApp ou pedir segredos, a mensagem NUNCA chega e seu alarme toca."
+  },
+  "Luna solo ve a amigos previamente revisados por ti. No hay buscadores públicos de niños.": {
+   "en": "Luna only sees friends previously checked by you. There are no public child search engines.",
+   "pt": "A Luna só vê amigos revisados antes por você. Não há buscadores públicos de crianças."
+  },
+  ", ningún niño puede ser contactado por desconocidos. Como padre o madre tutor:": {
+   "en": ", no child can be contacted by strangers. As a parent or guardian:",
+   "pt": ", nenhuma criança pode ser contatada por desconhecidos. Como pai ou mãe responsável:"
+  },
+  "Menor supervisado:": {
+   "en": "Supervised child:",
+   "pt": "Criança supervisionada:"
+  },
+  "Supervisado por cuenta de padre ligada": {
+   "en": "Supervised by a linked parent account",
+   "pt": "Supervisionado por uma conta de pai vinculada"
+  },
+  "Ingresa el PIN de seguridad del adulto para acceder a la supervisión y Código Rojo.": {
+   "en": "Enter the adult security PIN to access supervision and Red Code.",
+   "pt": "Digite o PIN de segurança do adulto para acessar a supervisão e o Código Vermelho."
+  },
+  "PIN de 4 dígitos": {
+   "en": "4-digit PIN",
+   "pt": "PIN de 4 dígitos"
+  },
+  "PIN incorrecto. Prueba con 1234.": {
+   "en": "Wrong PIN. Try 1234.",
+   "pt": "PIN incorreto. Tente 1234."
+  },
+  "(PIN por defecto: 1234)": {
+   "en": "(Default PIN: 1234)",
+   "pt": "(PIN padrão: 1234)"
+  },
+  "👉 Acceso rápido de demostración (PIN 1234)": {
+   "en": "👉 Quick demo access (PIN 1234)",
+   "pt": "👉 Acesso rápido de demonstração (PIN 1234)"
+  },
+  "¡ACTIVACIÓN CÓDIGO ROJO!": {
+   "en": "RED CODE ACTIVATION!",
+   "pt": "ATIVAÇÃO DO CÓDIGO VERMELHO!"
+  },
+  "ALARMA URGENTE DISPOSITIVO DEL PADRE": {
+   "en": "URGENT ALARM ON THE PARENT'S DEVICE",
+   "pt": "ALARME URGENTE NO APARELHO DO PAI"
+  },
+  "¡ALERTA CÓDIGO ROJO! Se detectó un intento crítico de contacto inseguro, evasión o extracción del menor.": {
+   "en": "RED CODE ALERT! A critical attempt of unsafe contact, evasion or extraction of the child was detected.",
+   "pt": "ALERTA CÓDIGO VERMELHO! Foi detectada uma tentativa crítica de contato inseguro, evasão ou extração da criança."
+  },
+  "Código Naranja: Se detectaron múltiples señales sospechosas. El mensaje queda bloqueado y se notifica a ambos padres.": {
+   "en": "Orange Code: Multiple suspicious signals were detected. The message stays blocked and both parents are notified.",
+   "pt": "Código Laranja: Vários sinais suspeitos foram detectados. A mensagem fica bloqueada e ambos os pais são avisados."
+  },
+  "Código Amarillo: Señal dudosa detectada. El mensaje queda retenido bajo revisión del padre antes de publicarse.": {
+   "en": "Yellow Code: A doubtful signal was detected. The message is held for the parent's review before being posted.",
+   "pt": "Código Amarelo: Sinal duvidoso detectado. A mensagem fica retida para revisão do pai antes de ser publicada."
+  },
+  "Texto vacío o seguro.": {
+   "en": "Empty or safe text.",
+   "pt": "Texto vazio ou seguro."
+  },
+  "EVIDENCIA FORENSE DIGITAL - CÓDIGO ROJO": {
+   "en": "DIGITAL FORENSIC EVIDENCE - RED CODE",
+   "pt": "EVIDÊNCIA FORENSE DIGITAL - CÓDIGO VERMELHO"
+  },
+  "Evidencia digital con hash SHA-256 preservada y reportada a la Fiscalía/Administración.": {
+   "en": "Digital evidence with SHA-256 hash preserved and reported to the Prosecutor's Office/Administration.",
+   "pt": "Evidência digital com hash SHA-256 preservada e reportada à Promotoria/Administração."
+  },
+  "Registro inmutable preservado para autoridad judicial / fiscalía de menores.": {
+   "en": "Immutable record preserved for the judicial authority / child prosecutor's office.",
+   "pt": "Registro imutável preservado para a autoridade judicial / promotoria da infância."
+  },
+  "Probar Alerta Roja de Ejemplo": {
+   "en": "Try a Sample Red Alert",
+   "pt": "Testar um Alerta Vermelho de Exemplo"
+  },
+  "Sacar al niño de la plataforma (WhatsApp/Llamada/Otra red)": {
+   "en": "Taking the child off the platform (WhatsApp/Call/Other network)",
+   "pt": "Tirar a criança da plataforma (WhatsApp/Ligação/Outra rede)"
+  },
+  "Pedir guardar secretos a los padres": {
+   "en": "Asking to keep secrets from parents",
+   "pt": "Pedir para guardar segredos dos pais"
+  },
+  "Citas a escondidas o encuentros solos": {
+   "en": "Secret meetings or meeting alone",
+   "pt": "Encontros secretos ou encontrar-se sozinhos"
+  },
+  "Pedir ubicación, dirección o datos privados": {
+   "en": "Asking for location, address or private data",
+   "pt": "Pedir localização, endereço ou dados privados"
+  },
+  "Solicitud de fotos privadas o íntimas": {
+   "en": "Request for private or intimate photos",
+   "pt": "Pedido de fotos privadas ou íntimas"
+  },
+  "Sobornos, regalos o dinero a cambio de algo": {
+   "en": "Bribes, gifts or money in exchange for something",
+   "pt": "Subornos, presentes ou dinheiro em troca de algo"
+  },
+  "Amenazas, coerción o infundir miedo": {
+   "en": "Threats, coercion or frightening",
+   "pt": "Ameaças, coerção ou causar medo"
+  },
+  "Malas palabras, insultos o lenguaje agresivo": {
+   "en": "Bad words, insults or aggressive language",
+   "pt": "Palavrões, insultos ou linguagem agressiva"
+  },
+  "Contenido no apto para niños (sexual o violento gráfico)": {
+   "en": "Content not suitable for children (sexual or graphic violence)",
+   "pt": "Conteúdo impróprio para crianças (sexual ou violência gráfica)"
+  },
+  "Intento de extracción a red externa y petición de secreto (Código Rojo Nivel Máximo).": {
+   "en": "Attempt to extract to an external network and request for secrecy (Maximum Red Code Level).",
+   "pt": "Tentativa de extração para rede externa e pedido de segredo (Nível Máximo do Código Vermelho)."
+  },
+  "Intento crítico de desviar a la menor a una aplicación externa con número telefónico y petición de secreto.": {
+   "en": "Critical attempt to divert the child to an external app with a phone number and a request for secrecy.",
+   "pt": "Tentativa crítica de desviar a criança para um aplicativo externo com número de telefone e pedido de segredo."
+  },
+  "Filtro Activo": {
+   "en": "Filter Active",
+   "pt": "Filtro Ativo"
+  },
+  "Protegido por Código Rojo": {
+   "en": "Protected by Red Code",
+   "pt": "Protegido pelo Código Vermelho"
+  },
+  "Control parental y Código Rojo": {
+   "en": "Parental control and Red Code",
+   "pt": "Controle dos pais e Código Vermelho"
+  },
+  "Zona de Juegos y Creatividad": {
+   "en": "Games and Creativity Zone",
+   "pt": "Zona de Jogos e Criatividade"
+  },
+  "Juegos Seguros • 100% Sin Compras ni Anuncios": {
+   "en": "Safe Games • 100% No Purchases or Ads",
+   "pt": "Jogos Seguros • 100% Sem Compras nem Anúncios"
+  },
+  "Juegos educativos pensados para divertirte, aprender y ganar estrellitas.": {
+   "en": "Educational games made for you to have fun, learn and earn little stars.",
+   "pt": "Jogos educativos feitos para você se divertir, aprender e ganhar estrelinhas."
+  },
+  "← Volver al Menú de Juegos": {
+   "en": "← Back to the Games Menu",
+   "pt": "← Voltar ao Menu de Jogos"
+  },
+  "Memorama": {
+   "en": "Memory Match",
+   "pt": "Jogo da Memória"
+  },
+  "Memorama de Animalitos": {
+   "en": "Little Animals Memory Match",
+   "pt": "Jogo da Memória dos Bichinhos"
+  },
+  "Encuentra parejas de zorritos y pandas.": {
+   "en": "Find pairs of little foxes and pandas.",
+   "pt": "Encontre pares de raposinhas e pandas."
+  },
+  "⭐ +5 Estrellas": {
+   "en": "⭐ +5 Stars",
+   "pt": "⭐ +5 Estrelas"
+  },
+  "¡Jugar! →": {
+   "en": "Play! →",
+   "pt": "Jogar! →"
+  },
+  "Atrapa las Estrellitas": {
+   "en": "Catch the Little Stars",
+   "pt": "Pegue as Estrelinhas"
+  },
+  "Atrapa las Estrellitas de Cluky": {
+   "en": "Catch Cluky's Little Stars",
+   "pt": "Pegue as Estrelinhas do Cluky"
+  },
+  "Mueve a Cluky para atrapar las estrellas que caen.": {
+   "en": "Move Cluky to catch the falling stars.",
+   "pt": "Mova o Cluky para pegar as estrelas que caem."
+  },
+  "¡Nuevo Videojuego!": {
+   "en": "New Video Game!",
+   "pt": "Novo Videogame!"
+  },
+  "Un videojuego": {
+   "en": "A video game",
+   "pt": "Um videogame"
+  },
+  "Arcade": {
+   "en": "Arcade",
+   "pt": "Arcade"
+  },
+  "🎮 Arcade": {
+   "en": "🎮 Arcade",
+   "pt": "🎮 Arcade"
+  },
+  "Pintorcito Mágico": {
+   "en": "Magic Little Painter",
+   "pt": "Pintorzinho Mágico"
+  },
+  "Dibuja y guarda en tu cuaderno con 1 clic.": {
+   "en": "Draw and save to your notebook with 1 click.",
+   "pt": "Desenhe e salve no seu caderno com 1 clique."
+  },
+  "🖌️ Arte": {
+   "en": "🖌️ Art",
+   "pt": "🖌️ Arte"
+  },
+  "¡Dibujar! →": {
+   "en": "Draw! →",
+   "pt": "Desenhar! →"
+  },
+  "Música Granja": {
+   "en": "Farm Music",
+   "pt": "Música da Fazenda"
+  },
+  "Música de la Granja": {
+   "en": "Farm Music",
+   "pt": "Música da Fazenda"
+  },
+  "Música de la Granja Cluky": {
+   "en": "Cluky Farm Music",
+   "pt": "Música da Fazenda do Cluky"
+  },
+  "Piano con sonidos reales de animalitos.": {
+   "en": "Piano with real little animal sounds.",
+   "pt": "Piano com sons reais de bichinhos."
+  },
+  "🎶 Piano": {
+   "en": "🎶 Piano",
+   "pt": "🎶 Piano"
+  },
+  "¡Tocar! →": {
+   "en": "Play! →",
+   "pt": "Tocar! →"
+  },
+  "Presiona cada tecla para escuchar las notas y los animalitos cantar": {
+   "en": "Press each key to hear the notes and the little animals sing",
+   "pt": "Aperte cada tecla para ouvir as notas e os bichinhos cantarem"
+  },
+  "Mover Derecha": {
+   "en": "Move Right",
+   "pt": "Mover para a Direita"
+  },
+  "Mover Izquierda": {
+   "en": "Move Left",
+   "pt": "Mover para a Esquerda"
+  },
+  "Mueve con el mouse, toque o botones": {
+   "en": "Move with the mouse, touch or buttons",
+   "pt": "Mova com o mouse, toque ou botões"
+  },
+  "¡GANASTE! ⭐⭐⭐": {
+   "en": "YOU WON! ⭐⭐⭐",
+   "pt": "VOCÊ GANHOU! ⭐⭐⭐"
+  },
+  "¡Ganaste! ⭐⭐⭐": {
+   "en": "You won! ⭐⭐⭐",
+   "pt": "Você ganhou! ⭐⭐⭐"
+  },
+  "¡Excelente memoria! Has ganado 5 estrellitas.": {
+   "en": "Excellent memory! You earned 5 little stars.",
+   "pt": "Memória excelente! Você ganhou 5 estrelinhas."
+  },
+  "¡Atrapaste 10 estrellas doradas con el zorrito Cluky!": {
+   "en": "You caught 10 golden stars with little fox Cluky!",
+   "pt": "Você pegou 10 estrelas douradas com a raposinha Cluky!"
+  },
+  "¡Jugar otra partida! 🚀": {
+   "en": "Play another round! 🚀",
+   "pt": "Jogar outra partida! 🚀"
+  },
+  "Reiniciar": {
+   "en": "Restart",
+   "pt": "Reiniciar"
+  },
+  "Borrar": {
+   "en": "Erase",
+   "pt": "Apagar"
+  },
+  "Descargar": {
+   "en": "Download",
+   "pt": "Baixar"
+  },
+  "Dibujo de Acuarela": {
+   "en": "Watercolor Drawing",
+   "pt": "Desenho de Aquarela"
+  },
+  "Panda con Acuarelas": {
+   "en": "Panda with Watercolors",
+   "pt": "Panda com Aquarelas"
+  },
+  "Dinosaurio Pintado": {
+   "en": "Painted Dinosaur",
+   "pt": "Dinossauro Pintado"
+  },
+  "🖌️ Ir a Pintar Nuevo Dibujo": {
+   "en": "🖌️ Go Paint a New Drawing",
+   "pt": "🖌️ Ir Pintar um Novo Desenho"
+  },
+  "Dibuja libremente y guarda en tu cuaderno con 1 clic": {
+   "en": "Draw freely and save to your notebook with 1 click",
+   "pt": "Desenhe livremente e salve no seu caderno com 1 clique"
+  },
+  "Pintados en el Pintorcito Mágico y guardados con 1 clic": {
+   "en": "Painted in the Magic Little Painter and saved with 1 click",
+   "pt": "Pintados no Pintorzinho Mágico e salvos com 1 clique"
+  },
+  "Zona de Aprendizaje": {
+   "en": "Learning Zone",
+   "pt": "Zona de Aprendizagem"
+  },
+  "Aprende Jugando • Sin Anuncios": {
+   "en": "Learn by Playing • No Ads",
+   "pt": "Aprenda Brincando • Sem Anúncios"
+  },
+  "Mi nivel:": {
+   "en": "My level:",
+   "pt": "Meu nível:"
+  },
+  "años": {
+   "en": "years old",
+   "pt": "anos"
+  },
+  "Traza Letras": {
+   "en": "Trace Letters",
+   "pt": "Trace as Letras"
+  },
+  "Palabras Mágicas": {
+   "en": "Magic Words",
+   "pt": "Palavras Mágicas"
+  },
+  "Cuento en Voz Alta": {
+   "en": "Read-Aloud Story",
+   "pt": "Conto em Voz Alta"
+  },
+  "Mates Divertidas": {
+   "en": "Fun Math",
+   "pt": "Matemática Divertida"
+  },
+  "Club de Talentos": {
+   "en": "Talent Club",
+   "pt": "Clube de Talentos"
+  },
+  "Escribir": {
+   "en": "Writing",
+   "pt": "Escrever"
+  },
+  "Leer": {
+   "en": "Reading",
+   "pt": "Ler"
+  },
+  "Lectura": {
+   "en": "Reading",
+   "pt": "Leitura"
+  },
+  "Matemáticas": {
+   "en": "Math",
+   "pt": "Matemática"
+  },
+  "Manualidades": {
+   "en": "Crafts",
+   "pt": "Artesanato"
+  },
+  "Mi Progreso": {
+   "en": "My Progress",
+   "pt": "Meu Progresso"
+  },
+  "← Volver a Aprender": {
+   "en": "← Back to Learning",
+   "pt": "← Voltar a Aprender"
+  },
+  "¡A jugar! →": {
+   "en": "Let's play! →",
+   "pt": "Vamos jogar! →"
+  },
+  "Aprende a escribir siguiendo las letras con tu dedo o el mouse.": {
+   "en": "Learn to write by tracing the letters with your finger or the mouse.",
+   "pt": "Aprenda a escrever traçando as letras com o dedo ou o mouse."
+  },
+  "Traza la letra con tu dedo o el mouse": {
+   "en": "Trace the letter with your finger or the mouse",
+   "pt": "Trace a letra com o dedo ou o mouse"
+  },
+  "Sigue la letra gigante de guía. Cuando termines, toca «¡Terminé!» y gana una estrellita.": {
+   "en": "Follow the giant guide letter. When you finish, tap \"Done!\" and earn a little star.",
+   "pt": "Siga a letra gigante de guia. Quando terminar, toque em «Terminei!» e ganhe uma estrelinha."
+  },
+  "¡Terminé!": {
+   "en": "Done!",
+   "pt": "Terminei!"
+  },
+  "Escuchar la letra": {
+   "en": "Hear the letter",
+   "pt": "Ouvir a letra"
+  },
+  "Escucharlo": {
+   "en": "Hear it",
+   "pt": "Ouvir"
+  },
+  "Completa sílabas y palabras. ¡Escúchalas en voz alta!": {
+   "en": "Complete syllables and words. Hear them out loud!",
+   "pt": "Complete sílabas e palavras. Ouça em voz alta!"
+  },
+  "Un cuento cortito que se lee solo, línea por línea.": {
+   "en": "A short story that reads itself, line by line.",
+   "pt": "Um continho que se lê sozinho, linha por linha."
+  },
+  "Cuentas con dibujos para contar.": {
+   "en": "Math problems with pictures to count.",
+   "pt": "Contas com desenhos para contar."
+  },
+  "Manualidades paso a paso enseñadas por otros niños.": {
+   "en": "Step-by-step crafts taught by other kids.",
+   "pt": "Artesanatos passo a passo ensinados por outras crianças."
+  },
+  "Toca cada línea y la plataforma la lee en voz alta contigo.": {
+   "en": "Tap each line and the platform reads it out loud with you.",
+   "pt": "Toque em cada linha e a plataforma lê em voz alta com você."
+  },
+  "Pregunta del cuento:": {
+   "en": "Story question:",
+   "pt": "Pergunta do conto:"
+  },
+  "¡Respuesta correcta! Ganaste una estrellita por leer el cuento. ⭐": {
+   "en": "Correct answer! You earned a little star for reading the story. ⭐",
+   "pt": "Resposta correta! Você ganhou uma estrelinha por ler o conto. ⭐"
+  },
+  "¡Muy bien! 🎉": {
+   "en": "Very good! 🎉",
+   "pt": "Muito bem! 🎉"
+  },
+  "¡Terminaste!": {
+   "en": "You finished!",
+   "pt": "Você terminou!"
+  },
+  "Sigue practicando, tú puedes.": {
+   "en": "Keep practicing, you can do it.",
+   "pt": "Continue praticando, você consegue."
+  },
+  "Ver mi resultado 🏆": {
+   "en": "See my result 🏆",
+   "pt": "Ver meu resultado 🏆"
+  },
+  "Siguiente →": {
+   "en": "Next →",
+   "pt": "Próximo →"
+  },
+  "Ver los pasos": {
+   "en": "See the steps",
+   "pt": "Ver os passos"
+  },
+  "Cerrar pasos": {
+   "en": "Close steps",
+   "pt": "Fechar os passos"
+  },
+  "¡Yo lo intenté! ⭐": {
+   "en": "I tried it! ⭐",
+   "pt": "Eu tentei! ⭐"
+  },
+  "✓ ¡Ya lo hice!": {
+   "en": "✓ I did it!",
+   "pt": "✓ Já fiz!"
+  },
+  "Aquí los niños enseñan a otros niños. En la versión en línea, cada tutorial nuevo pasa primero por la aprobación de un maestro o de los papás antes de publicarse.": {
+   "en": "Here kids teach other kids. In the online version, every new tutorial first goes through a teacher's or the parents' approval before being posted.",
+   "pt": "Aqui as crianças ensinam outras crianças. Na versão online, cada tutorial novo passa primeiro pela aprovação de um professor ou dos pais antes de ser publicado."
+  },
+  "El zorrito y la luna": {
+   "en": "The little fox and the moon",
+   "pt": "A raposinha e a lua"
+  },
+  "La semillita valiente": {
+   "en": "The brave little seed",
+   "pt": "A sementinha corajosa"
+  },
+  "El tren de los números": {
+   "en": "The numbers train",
+   "pt": "O trem dos números"
+  },
+  "¿Qué aprendió el zorrito?": {
+   "en": "What did the little fox learn?",
+   "pt": "O que a raposinha aprendeu?"
+  },
+  "¿Qué ayudó a la semillita a crecer?": {
+   "en": "What helped the little seed grow?",
+   "pt": "O que ajudou a sementinha a crescer?"
+  },
+  "¿Qué aprendían los niños con el tren?": {
+   "en": "What did the children learn with the train?",
+   "pt": "O que as crianças aprendiam com o trem?"
+  },
+  "Que los sueños se logran poco a poco": {
+   "en": "That dreams come true little by little",
+   "pt": "Que os sonhos se realizam pouquinho a pouquinho"
+  },
+  "Que la luna es de queso": {
+   "en": "That the moon is made of cheese",
+   "pt": "Que a lua é de queijo"
+  },
+  "Que no hay que dormir": {
+   "en": "That you don't have to sleep",
+   "pt": "Que não precisa dormir"
+  },
+  "El sol y la lluvia": {
+   "en": "The sun and the rain",
+   "pt": "O sol e a chuva"
+  },
+  "Un sombrero": {
+   "en": "A hat",
+   "pt": "Um chapéu"
+  },
+  "A sumar contando vagones": {
+   "en": "To add by counting wagons",
+   "pt": "A somar contando vagões"
+  },
+  "A volar": {
+   "en": "To fly",
+   "pt": "A voar"
+  },
+  "A cocinar": {
+   "en": "To cook",
+   "pt": "A cozinhar"
+  },
+  "Había una vez un zorrito pequeño que soñaba con tocar la luna.": {
+   "en": "Once upon a time there was a little fox who dreamed of touching the moon.",
+   "pt": "Era uma vez uma raposinha que sonhava em tocar a lua."
+  },
+  "Una noche subió a la colina más alta y estiró su patita.": {
+   "en": "One night he climbed the highest hill and stretched out his little paw.",
+   "pt": "Uma noite ela subiu a colina mais alta e esticou sua patinha."
+  },
+  "La luna brilló fuerte y el zorrito entendió algo bonito:": {
+   "en": "The moon shone bright and the little fox understood something beautiful:",
+   "pt": "A lua brilhou forte e a raposinha entendeu uma coisa bonita:"
+  },
+  "los sueños se alcanzan poquito a poquito, sin rendirse nunca.": {
+   "en": "dreams are reached little by little, never giving up.",
+   "pt": "os sonhos se alcançam pouquinho a pouquinho, sem nunca desistir."
+  },
+  "Una semillita cayó en la tierra y tuvo un poquito de miedo.": {
+   "en": "A little seed fell on the ground and was a little bit scared.",
+   "pt": "Uma sementinha caiu na terra e ficou com um pouquinho de medo."
+  },
+  "El sol la calentó y la lluvia la regó con cariño.": {
+   "en": "The sun warmed her and the rain watered her with love.",
+   "pt": "O sol a aqueceu e a chuva a regou com carinho."
+  },
+  "Un día, la semillita se estiró y sacó dos hojitas verdes.": {
+   "en": "One day, the little seed stretched and sprouted two green leaves.",
+   "pt": "Um dia, a sementinha se esticou e brotou duas folhinhas verdes."
+  },
+  "Con paciencia, se convirtió en la flor más alegre del jardín.": {
+   "en": "With patience, she became the happiest flower in the garden.",
+   "pt": "Com paciência, ela se tornou a flor mais alegre do jardim."
+  },
+  "El tren de los números salía cada mañana de la estación.": {
+   "en": "The numbers train left the station every morning.",
+   "pt": "O trem dos números saía da estação toda manhã."
+  },
+  "En el primer vagón viajaba el uno, muy elegante.": {
+   "en": "In the first wagon rode number one, very elegant.",
+   "pt": "No primeiro vagão viajava o um, muito elegante."
+  },
+  "Luego venían el dos, el tres y todos sus amigos contando.": {
+   "en": "Then came two, three and all their friends counting.",
+   "pt": "Depois vinham o dois, o três e todos os seus amigos contando."
+  },
+  "Y así, contando vagones, los niños aprendían a sumar.": {
+   "en": "And so, counting wagons, the children learned to add.",
+   "pt": "E assim, contando vagões, as crianças aprendiam a somar."
+  },
+  "Origami: Perrito de papel": {
+   "en": "Origami: Paper puppy",
+   "pt": "Origami: Cachorrinho de papel"
+  },
+  "Dibuja un zorrito paso a paso": {
+   "en": "Draw a little fox step by step",
+   "pt": "Desenhe uma raposinha passo a passo"
+  },
+  "Frutas de plastilina": {
+   "en": "Playdough fruits",
+   "pt": "Frutinhas de massinha"
+  },
+  "El avión de papel campeón": {
+   "en": "The champion paper plane",
+   "pt": "O avião de papel campeão"
+  },
+  "Tarjeta sorpresa para mamá o papá": {
+   "en": "Surprise card for mom or dad",
+   "pt": "Cartão surpresa para a mamãe ou o papai"
+  },
+  "Pulsera de tiritas de colores": {
+   "en": "Colored paper strip bracelet",
+   "pt": "Pulseira de tirinhas coloridas"
+  },
+  "Dobla la hoja en triángulo, punta con punta.": {
+   "en": "Fold the sheet into a triangle, corner to corner.",
+   "pt": "Dobre a folha em triângulo, ponta com ponta."
+  },
+  "Dobla las dos puntas de arriba hacia abajo: ¡esas son las orejas!": {
+   "en": "Fold the two top corners down: those are the ears!",
+   "pt": "Dobre as duas pontas de cima para baixo: são as orelhas!"
+  },
+  "Dobla la punta de abajo hacia atrás.": {
+   "en": "Fold the bottom corner backwards.",
+   "pt": "Dobre a ponta de baixo para trás."
+  },
+  "Dibuja los ojos, la nariz y la boca con un lápiz.": {
+   "en": "Draw the eyes, nose and mouth with a pencil.",
+   "pt": "Desenhe os olhos, o nariz e a boca com um lápis."
+  },
+  "¡Listo! Ya tienes tu perrito de papel.": {
+   "en": "Done! You have your paper puppy.",
+   "pt": "Pronto! Você já tem seu cachorrinho de papel."
+  },
+  "Dibuja un círculo grande para la cabeza.": {
+   "en": "Draw a big circle for the head.",
+   "pt": "Desenhe um círculo grande para a cabeça."
+  },
+  "Agrega dos triángulos arriba: las orejas.": {
+   "en": "Add two triangles on top: the ears.",
+   "pt": "Adicione dois triângulos em cima: as orelhas."
+  },
+  "Dibuja dos puntitos para los ojos y una nariz pequeña.": {
+   "en": "Draw two little dots for the eyes and a small nose.",
+   "pt": "Desenhe duas bolinhas para os olhos e um narizinho."
+  },
+  "Pinta de naranja la parte de arriba y de blanco la barbilla.": {
+   "en": "Paint the top part orange and the chin white.",
+   "pt": "Pinte de laranja a parte de cima e de branco o queixinho."
+  },
+  "Al final, dibuja su cola grande y esponjada.": {
+   "en": "At the end, draw its big fluffy tail.",
+   "pt": "No final, desenhe sua cauda grande e fofinha."
+  },
+  "Haz una bolita roja y aplánala un poquito: es la fresa.": {
+   "en": "Make a red little ball and flatten it a bit: it's the strawberry.",
+   "pt": "Faça uma bolinha vermelha e achate um pouquinho: é o morango."
+  },
+  "Con plastilina verde haz una estrellita para las hojas.": {
+   "en": "With green playdough make a little star for the leaves.",
+   "pt": "Com massinha verde faça uma estrelinha para as folhas."
+  },
+  "Pega las hojas arriba de la fresa.": {
+   "en": "Stick the leaves on top of the strawberry.",
+   "pt": "Cole as folhas em cima do morango."
+  },
+  "Haz puntitos con un palillo (¡con cuidado y ayuda de un adulto!).": {
+   "en": "Make little dots with a toothpick (carefully, with an adult's help!).",
+   "pt": "Faça bolinhas com um palito (com cuidado e ajuda de um adulto!)."
+  },
+  "Repite con otras frutas y arma tu frutero.": {
+   "en": "Repeat with other fruits and build your fruit bowl.",
+   "pt": "Repita com outras frutas e monte sua fruteira."
+  },
+  "Dobla la hoja por la mitad a lo largo y desdóblala.": {
+   "en": "Fold the sheet in half lengthwise and unfold it.",
+   "pt": "Dobre a folha ao meio no comprimento e desdobre."
+  },
+  "Dobla las esquinas de arriba hacia la línea del centro.": {
+   "en": "Fold the top corners toward the center line.",
+   "pt": "Dobre os cantos de cima em direção à linha do centro."
+  },
+  "Dobla otra vez los lados hacia el centro.": {
+   "en": "Fold the sides toward the center again.",
+   "pt": "Dobre os lados em direção ao centro de novo."
+  },
+  "Dobla por la mitad y forma las dos alas parejitas.": {
+   "en": "Fold it in half and form two even wings.",
+   "pt": "Dobre ao meio e forme as duas asinhas iguaizinhas."
+  },
+  "Lánzalo en un lugar abierto y seguro. ¡A volar!": {
+   "en": "Throw it in an open, safe place. Let's fly!",
+   "pt": "Lance em um lugar aberto e seguro. A voar!"
+  },
+  "Dobla la cartulina por la mitad.": {
+   "en": "Fold the cardstock in half.",
+   "pt": "Dobre a cartolina ao meio."
+  },
+  "En la portada dibuja un corazón grande.": {
+   "en": "On the cover draw a big heart.",
+   "pt": "Na capa desenhe um coração grande."
+  },
+  "Decora con calcomanías y puntitos de colores.": {
+   "en": "Decorate with stickers and colored dots.",
+   "pt": "Decore com adesivos e bolinhas coloridas."
+  },
+  "Entrégala con un abrazo fuerte.": {
+   "en": "Give it with a big hug.",
+   "pt": "Entregue com um abraço apertado."
+  },
+  "Corta tiritas de papel de muchos colores (pide ayuda con las tijeras).": {
+   "en": "Cut paper strips of many colors (ask for help with the scissors).",
+   "pt": "Corte tirinhas de papel de muitas cores (peça ajuda com a tesoura)."
+  },
+  "Pega la punta de la primera tirita formando un anillo.": {
+   "en": "Glue the end of the first strip making a ring.",
+   "pt": "Cole a ponta da primeira tirinha formando um anel."
+  },
+  "Pasa la segunda tirita por dentro del anillo y pégala.": {
+   "en": "Pass the second strip through the ring and glue it.",
+   "pt": "Passe a segunda tirinha por dentro do anel e cole."
+  },
+  "Sigue así, anillo por anillo, hasta que alcance tu muñeca.": {
+   "en": "Keep going, ring by ring, until it fits your wrist.",
+   "pt": "Continue assim, anel por anel, até alcançar seu pulso."
+  },
+  "Pega el último anillo con el primero. ¡Pulsera lista!": {
+   "en": "Glue the last ring to the first one. Bracelet ready!",
+   "pt": "Cole o último anel com o primeiro. Pulseira pronta!"
+  },
+  "Una hoja cuadrada de papel": {
+   "en": "A square sheet of paper",
+   "pt": "Uma folha quadrada de papel"
+  },
+  "Una hoja tamaño carta": {
+   "en": "A letter-size sheet",
+   "pt": "Uma folha tamanho carta"
+  },
+  "Cartulina, colores y calcomanías": {
+   "en": "Cardstock, colors and stickers",
+   "pt": "Cartolina, cores e adesivos"
+  },
+  "Hoja, lápiz y colores naranja, blanco y negro": {
+   "en": "Paper, pencil and orange, white and black colors",
+   "pt": "Folha, lápis e cores laranja, branco e preto"
+  },
+  "Tiras de papel de colores y pegamento en barra": {
+   "en": "Colored paper strips and a glue stick",
+   "pt": "Tiras de papel coloridas e cola em bastão"
+  },
+  "Plastilina roja, verde y café (con permiso de un adulto)": {
+   "en": "Red, green and brown playdough (with an adult's permission)",
+   "pt": "Massinha vermelha, verde e marrom (com permissão de um adulto)"
+  },
+  "🧺 Necesitas:": {
+   "en": "🧺 You need:",
+   "pt": "🧺 Você precisa de:"
+  },
+  "Enseña:": {
+   "en": "Taught by:",
+   "pt": "Ensina:"
+  },
+  "Ver detalles": {
+   "en": "See details",
+   "pt": "Ver detalhes"
+  },
+  "✕ Ocultar guía": {
+   "en": "✕ Hide guide",
+   "pt": "✕ Ocultar guia"
+  },
+  "Clips infantiles seguros y revisados": {
+   "en": "Safe, reviewed kids clips",
+   "pt": "Clipes infantis seguros e revisados"
+  },
+  "Audio Transcrito y Verificado:": {
+   "en": "Transcribed and Verified Audio:",
+   "pt": "Áudio Transcrito e Verificado:"
+  },
+  "El servidor analizó todo el sonido y letra de la canción. 100% seguro y limpio.": {
+   "en": "The server analyzed all the sound and lyrics of the song. 100% safe and clean.",
+   "pt": "O servidor analisou todo o som e a letra da música. 100% seguro e limpo."
+  },
+  "Baile Infantil": {
+   "en": "Kids Dance",
+   "pt": "Dança Infantil"
+  },
+  "Perrito Jugando": {
+   "en": "Playing Puppy",
+   "pt": "Cachorrinho Brincando"
+  },
+  "Perrito Feliz": {
+   "en": "Happy Puppy",
+   "pt": "Cachorrinho Feliz"
+  },
+  "Gatito Saltando": {
+   "en": "Jumping Kitty",
+   "pt": "Gatinho Pulando"
+  },
+  "Panda Comiendo": {
+   "en": "Eating Panda",
+   "pt": "Panda Comendo"
+  },
+  "Bloques de Construcción": {
+   "en": "Building Blocks",
+   "pt": "Blocos de Construção"
+  },
+  "Parque de los Dinosaurios": {
+   "en": "Dinosaur Park",
+   "pt": "Parque dos Dinossauros"
+  },
+  "Dinosaurio Bebé": {
+   "en": "Baby Dinosaur",
+   "pt": "Dinossauro Bebê"
+  },
+  "Arcoíris Alegre": {
+   "en": "Happy Rainbow",
+   "pt": "Arco-íris Alegre"
+  },
+  "Destello el Unicornio": {
+   "en": "Sparkle the Unicorn",
+   "pt": "Brilho, o Unicórnio"
+  },
+  "Amigo Imaginario": {
+   "en": "Imaginary Friend",
+   "pt": "Amigo Imaginário"
+  },
+  "✨ Imaginario": {
+   "en": "✨ Imaginary",
+   "pt": "✨ Imaginário"
+  },
+  "🦄 Amigo Imaginario de Ejemplo": {
+   "en": "🦄 Sample Imaginary Friend",
+   "pt": "🦄 Amigo Imaginário de Exemplo"
+  },
+  "🦉 Maestro Imaginario de Ejemplo": {
+   "en": "🦉 Sample Imaginary Teacher",
+   "pt": "🦉 Professor Imaginário de Exemplo"
+  },
+  "Prof. Búho Sabio (Maestro Imaginario 🦉)": {
+   "en": "Prof. Wise Owl (Imaginary Teacher 🦉)",
+   "pt": "Prof. Coruja Sábia (Professor Imaginário 🦉)"
+  },
+  "Zorrito": {
+   "en": "Little Fox",
+   "pt": "Raposinha"
+  },
+  "Perrito": {
+   "en": "Puppy",
+   "pt": "Cachorrinho"
+  },
+  "Gatito": {
+   "en": "Kitty",
+   "pt": "Gatinho"
+  },
+  "Pandita": {
+   "en": "Little Panda",
+   "pt": "Pandinha"
+  },
+  "Conejito": {
+   "en": "Little Bunny",
+   "pt": "Coelhinho"
+  },
+  "Leoncito": {
+   "en": "Little Lion",
+   "pt": "Leãozinho"
+  },
+  "Búho": {
+   "en": "Owl",
+   "pt": "Coruja"
+  },
+  "León": {
+   "en": "Lion",
+   "pt": "Leão"
+  },
+  "Conejo": {
+   "en": "Rabbit",
+   "pt": "Coelho"
+  },
+  "Koala": {
+   "en": "Koala",
+   "pt": "Coala"
+  },
+  "Pingüino": {
+   "en": "Penguin",
+   "pt": "Pinguim"
+  },
+  "Panda": {
+   "en": "Panda",
+   "pt": "Panda"
+  },
+  "Lápiz": {
+   "en": "Pencil",
+   "pt": "Lápis"
+  },
+  "Tenedor": {
+   "en": "Fork",
+   "pt": "Garfo"
+  },
+  "Zapato": {
+   "en": "Shoe",
+   "pt": "Sapato"
+  },
+  "Grande": {
+   "en": "Big",
+   "pt": "Grande"
+  },
+  "Grueso": {
+   "en": "Thick",
+   "pt": "Grosso"
+  },
+  "Medio": {
+   "en": "Medium",
+   "pt": "Médio"
+  },
+  "Fino": {
+   "en": "Thin",
+   "pt": "Fino"
+  },
+  "Frío": {
+   "en": "Cold",
+   "pt": "Frio"
+  },
+  "Listo": {
+   "en": "Ready",
+   "pt": "Pronto"
+  },
+  "Usuario": {
+   "en": "User",
+   "pt": "Usuário"
+  },
+  "Toca:": {
+   "en": "Play:",
+   "pt": "Toque:"
+  },
+  "¿Cuál es lo contrario de CALIENTE?": {
+   "en": "What is the opposite of HOT?",
+   "pt": "Qual é o contrário de QUENTE?"
+  },
+  "Frío es lo contrario de caliente": {
+   "en": "Cold is the opposite of hot",
+   "pt": "Frio é o contrário de quente"
+  },
+  "¿Con qué escribimos en el cuaderno?": {
+   "en": "What do we write with in the notebook?",
+   "pt": "Com o que escrevemos no caderno?"
+  },
+  "Escribimos con el lápiz": {
+   "en": "We write with the pencil",
+   "pt": "Escrevemos com o lápis"
+  },
+  "¿Cuál es un sinónimo de VELOZ?": {
+   "en": "What is a synonym for FAST?",
+   "pt": "Qual é um sinônimo de VELOZ?"
+  },
+  "¿Qué palabra significa lo mismo que CONTENTO?": {
+   "en": "What word means the same as HAPPY?",
+   "pt": "Que palavra significa o mesmo que CONTENTE?"
+  },
+  "¿Cómo se llama quien escribe cuentos?": {
+   "en": "What do you call someone who writes stories?",
+   "pt": "Como se chama quem escreve contos?"
+  },
+  "¿Qué significa GENEROSO?": {
+   "en": "What does GENEROUS mean?",
+   "pt": "O que significa GENEROSO?"
+  },
+  "Que comparte lo que tiene": {
+   "en": "Someone who shares what they have",
+   "pt": "Que compartilha o que tem"
+  },
+  "¿Cuál es un antónimo de VALIENTE?": {
+   "en": "What is an antonym of BRAVE?",
+   "pt": "Qual é um antônimo de VALENTE?"
+  },
+  "¿Qué palabra está bien escrita?": {
+   "en": "Which word is spelled correctly?",
+   "pt": "Que palavra está escrita corretamente?"
+  },
+  "Completa la palabra": {
+   "en": "Complete the word",
+   "pt": "Complete a palavra"
+  },
+  "Completa:": {
+   "en": "Complete:",
+   "pt": "Complete:"
+  },
+  "Volcán se escribe con V y acento en la A": {
+   "en": "Volcano is spelled with a V and an accent on the A",
+   "pt": "Vulcão se escreve com V e acento no A"
+  },
+  "Ayer yo fui al parque": {
+   "en": "Yesterday I went to the park",
+   "pt": "Ontem eu fui ao parque"
+  },
+  "Feliz significa lo mismo que contento": {
+   "en": "Happy means the same as glad",
+   "pt": "Feliz significa o mesmo que contente"
+  },
+  "Veloz y rápido significan lo mismo": {
+   "en": "Swift and fast mean the same thing",
+   "pt": "Veloz e rápido significam a mesma coisa"
+  },
+  "Quien escribe cuentos es un escritor": {
+   "en": "Someone who writes stories is a writer",
+   "pt": "Quem escreve contos é um escritor"
+  },
+  "Generoso es quien comparte lo que tiene": {
+   "en": "Generous is someone who shares what they have",
+   "pt": "Generoso é quem compartilha o que tem"
+  },
+  "Cobarde es lo contrario de valiente": {
+   "en": "Cowardly is the opposite of brave",
+   "pt": "Covarde é o contrário de valente"
+  },
+  "Una parte de cuatro es un cuarto": {
+   "en": "One part out of four is a quarter",
+   "pt": "Uma parte de quatro é um quarto"
+  },
+  "Si una pizza se parte en 4 partes iguales y te comes 1, ¿qué fracción te comiste?": {
+   "en": "If a pizza is cut into 4 equal parts and you eat 1, what fraction did you eat?",
+   "pt": "Se uma pizza é cortada em 4 partes iguais e você come 1, que fração você comeu?"
+  },
+  "¿Cuánto es {} + {}?": {
+   "en": "How much is {} + {}?",
+   "pt": "Quanto é {} + {}?"
+  },
+  "¿Cuánto es {} − {}?": {
+   "en": "How much is {} − {}?",
+   "pt": "Quanto é {} − {}?"
+  },
+  "¿Cuánto es {} × {}?": {
+   "en": "How much is {} × {}?",
+   "pt": "Quanto é {} × {}?"
+  },
+  "¿Cuánto es {} ÷ {}?": {
+   "en": "How much is {} ÷ {}?",
+   "pt": "Quanto é {} ÷ {}?"
+  },
+  "{} amigos aprobados": {
+   "en": "{} approved friends",
+   "pt": "{} amigos aprovados"
+  },
+  "{} activa": {
+   "en": "{} active",
+   "pt": "{} ativa"
+  },
+  "🚫 Foto • En revisión": {
+   "en": "🚫 Photo • Under review",
+   "pt": "🚫 Foto • Em revisão"
+  },
+  "🎬 Video • En revisión": {
+   "en": "🎬 Video • Under review",
+   "pt": "🎬 Vídeo • Em revisão"
+  },
+  "✨ GIF • En revisión": {
+   "en": "✨ GIF • Under review",
+   "pt": "✨ GIF • Em revisão"
+  },
+  "✍️ Texto • En revisión": {
+   "en": "✍️ Text • Under review",
+   "pt": "✍️ Texto • Em revisão"
+  },
+  "No hay fotos ni videos esperando aprobación. Cuando {} comparta una foto o video, aparecerá aquí primero, antes de que cualquier niño pueda verlo.": {
+   "en": "There are no photos or videos waiting for approval. When {} shares a photo or video, it will appear here first, before any child can see it.",
+   "pt": "Não há fotos nem vídeos aguardando aprovação. Quando {} compartilhar uma foto ou vídeo, aparecerá aqui primeiro, antes de qualquer criança poder ver."
+  },
+  "¡Hola! Soy {}. En ClukyBook somos amigos porque nuestros papás revisaron y autorizaron nuestra conexión. ¡Aquí no hay extraños ni mensajes escondidos!": {
+   "en": "Hi! I'm {}. On ClukyBook we are friends because our parents checked and authorized our connection. There are no strangers or hidden messages here!",
+   "pt": "Oi! Eu sou {}. No ClukyBook somos amigos porque nossos pais revisaram e autorizaram nossa conexão. Aqui não há desconhecidos nem mensagens escondidas!"
+  },
+  "¡Hola! Soy Pip, tu Amigo Imaginario de ejemplo 🦄✨. Estoy aquí para recordarte que en ClukyBook solo hablas con personas reales que tus papás aprobaron previamente.": {
+   "en": "Hi! I'm Pip, your Sample Imaginary Friend 🦄✨. I'm here to remind you that on ClukyBook you only talk with real people your parents approved beforehand.",
+   "pt": "Oi! Eu sou o Pip, seu Amigo Imaginário de exemplo 🦄✨. Estou aqui para te lembrar que no ClukyBook você só fala com pessoas reais que seus pais aprovaram antes."
+  },
+  "¡Hola! Recuerda que nunca debes compartir contraseñas ni secretos con extraños 🌟🦄": {
+   "en": "Hi! Remember you must never share passwords or secrets with strangers 🌟🦄",
+   "pt": "Oi! Lembre que você nunca deve compartilhar senhas nem segredos com desconhecidos 🌟🦄"
+  },
+  "¡Ya gané {} estrellitas en la Zona de Aprendizaje de ClukyBook! 📚⭐": {
+   "en": "I already earned {} little stars in the ClukyBook Learning Zone! 📚⭐",
+   "pt": "Já ganhei {} estrelinhas na Zona de Aprendizagem do ClukyBook! 📚⭐"
+  },
+  "¡Hice la manualidad \"{}\" del Club de Talentos de ClukyBook! 🎨✨": {
+   "en": "I made the \"{}\" craft from the ClukyBook Talent Club! 🎨✨",
+   "pt": "Eu fiz o artesanato \"{}\" do Clube de Talentos do ClukyBook! 🎨✨"
+  },
+  "[Sticker: {}]": {
+   "en": "[Sticker: {}]",
+   "pt": "[Sticker: {}]"
+  },
+  "¡Miren la obra de arte que pinté en el Pintorcito Mágico de ClukyBook! 🎨✨": {
+   "en": "Look at the artwork I painted in ClukyBook's Magic Little Painter! 🎨✨",
+   "pt": "Olhem a obra de arte que pintei no Pintorzinho Mágico do ClukyBook! 🎨✨"
+  },
+  "🎨 Mi dibujo del Pintorcito Mágico: ¡Un arcoíris con nubes felices en mi Cuaderno!": {
+   "en": "🎨 My Magic Little Painter drawing: A rainbow with happy clouds in my Notebook!",
+   "pt": "🎨 Meu desenho do Pintorzinho Mágico: Um arco-íris com nuvens felizes no meu Caderno!"
+  },
+  "¡Yo construí la torre más alta con bloques amarillos! 🚀": {
+   "en": "I built the tallest tower with yellow blocks! 🚀",
+   "pt": "Eu construí a torre mais alta com blocos amarelos! 🚀"
+  },
+  "¡Jugando todos juntos en el recreo con los bloques de colores! 🏰🎈": {
+   "en": "Playing all together at recess with the colored blocks! 🏰🎈",
+   "pt": "Brincando todos juntos no recreio com os blocos coloridos! 🏰🎈"
+  },
+  "¡Miren el panda que dibujé con acuarelas en la clase de arte! 🎨🐼": {
+   "en": "Look at the panda I drew with watercolors in art class! 🎨🐼",
+   "pt": "Olhem o panda que desenhei com aquarelas na aula de arte! 🎨🐼"
+  },
+  "🌸 Foto de Ejemplo: Mi perrito Toby oliendo una florecita. Protegida con 1 solo clic, sin datos de ubicación ni extraños. 🐶✨": {
+   "en": "🌸 Sample Photo: My puppy Toby smelling a little flower. Protected with 1 click, no location data or strangers. 🐶✨",
+   "pt": "🌸 Foto de Exemplo: Meu cachorrinho Toby cheirando uma florzinha. Protegida com 1 clique, sem dados de localização nem desconhecidos. 🐶✨"
+  },
+  "🌸 Foto de Ejemplo: Toby jugando con mariposas": {
+   "en": "🌸 Sample Photo: Toby playing with butterflies",
+   "pt": "🌸 Foto de Exemplo: Toby brincando com borboletas"
+  },
+  "🎬 Video de Ejemplo: El Baile del Zorrito Cluky 🦊🎵": {
+   "en": "🎬 Sample Video: The Cluky Little Fox Dance 🦊🎵",
+   "pt": "🎬 Vídeo de Exemplo: A Dança da Raposinha Cluky 🦊🎵"
+  },
+  "▶️ Mi video: ¡Tocando una canción alegre en el Piano de la Granja! 🎵🐄": {
+   "en": "▶️ My video: Playing a happy song on the Farm Piano! 🎵🐄",
+   "pt": "▶️ Meu vídeo: Tocando uma música alegre no Piano da Fazenda! 🎵🐄"
+  },
+  "🎵 ¡Un pasito a la izquierda, una vuelta al zorrito! 🐾✨": {
+   "en": "🎵 A little step to the left, a spin for the little fox! 🐾✨",
+   "pt": "🎵 Um passinho para a esquerda, uma voltinha para a raposinha! 🐾✨"
+  },
+  "¡Hola Luna! ¿Viste la tarea de ciencias de hoy? 🧪": {
+   "en": "Hi Luna! Did you see today's science homework? 🧪",
+   "pt": "Oi Luna! Você viu a tarefa de ciências de hoje? 🧪"
+  },
+  "¡Hola Luna! Me encanta tu dibujo del zorrito con acuarelas": {
+   "en": "Hi Luna! I love your little fox watercolor drawing",
+   "pt": "Oi Luna! Adoro seu desenho da raposinha com aquarelas"
+  },
+  "¡Sí Mateo! Ya preparé el dibujo de la planta para subirlo 🌻": {
+   "en": "Yes Mateo! I already got the plant drawing ready to upload it 🌻",
+   "pt": "Sim Mateo! Já preparei o desenho da planta para enviar 🌻"
+  },
+  "Me encantó el dibujo de gatito que subiste a tu cuaderno 🎨✨": {
+   "en": "I loved the kitty drawing you uploaded to your notebook 🎨✨",
+   "pt": "Adorei o desenho de gatinho que você enviou para o seu caderno 🎨✨"
+  },
+  "¡Estuvo súper divertido jugar juntos! 🥳": {
+   "en": "It was super fun playing together! 🥳",
+   "pt": "Foi super divertido brincar juntos! 🥳"
+  },
+  "¡Mañana jugamos otra vez en el recreo! 🌟": {
+   "en": "Tomorrow we play again at recess! 🌟",
+   "pt": "Amanhã brincamos de novo no recreio! 🌟"
+  },
+  "¡Te quedó precioso tu pandita Noa! ❤️": {
+   "en": "Your little panda Noa turned out beautiful! ❤️",
+   "pt": "Seu pandinha Noa ficou lindo! ❤️"
+  }
+ },
+ "fragments": {
+  "¿Cuánto es": {
+   "en": "How much is",
+   "pt": "Quanto é"
+  },
+  "amigos aprobados": {
+   "en": "approved friends",
+   "pt": "amigos aprovados"
+  },
+  "mensajes revisados": {
+   "en": "checked messages",
+   "pt": "mensagens revisadas"
+  },
+  "estrellitas": {
+   "en": "little stars",
+   "pt": "estrelinhas"
+  },
+  "Estrellitas": {
+   "en": "Little stars",
+   "pt": "Estrelinhas"
+  },
+  "en revisión": {
+   "en": "under review",
+   "pt": "em revisão"
+  },
+  "En revisión": {
+   "en": "Under review",
+   "pt": "Em revisão"
+  },
+  "aprobados por papá y mamá": {
+   "en": "approved by dad and mom",
+   "pt": "aprovados pelo papai e pela mamãe"
+  },
+  "con 1 clic": {
+   "en": "with 1 click",
+   "pt": "com 1 clique"
+  },
+  "con un solo clic": {
+   "en": "with a single click",
+   "pt": "com um só clique"
+  },
+  "Código Rojo": {
+   "en": "Red Code",
+   "pt": "Código Vermelho"
+  },
+  "Mi Cuaderno": {
+   "en": "My Notebook",
+   "pt": "Meu Caderno"
+  },
+  "Cuaderno Vivo": {
+   "en": "Living Notebook",
+   "pt": "Caderno Vivo"
+  },
+  "Panel de Padres": {
+   "en": "Parent Panel",
+   "pt": "Painel dos Pais"
+  },
+  "Zona de Aprendizaje": {
+   "en": "Learning Zone",
+   "pt": "Zona de Aprendizagem"
+  },
+  "Club de Talentos": {
+   "en": "Talent Club",
+   "pt": "Clube de Talentos"
+  },
+  "Hace un momento": {
+   "en": "Just now",
+   "pt": "Agora mesmo"
+  },
+  "Justo ahora": {
+   "en": "Just now",
+   "pt": "Agora mesmo"
+  }
+ }
+}

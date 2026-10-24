@@ -1,0 +1,170 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net: Default-deny all unspecified paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Connection Probe document
+    match /test/connection {
+      allow read: if true;
+    }
+
+    // Security Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Validation Blueprint: UserProfile
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['userId', 'role', 'firstName', 'avatar']) &&
+             data.keys().hasOnly(['userId', 'email', 'role', 'firstName', 'avatar', 'theme', 'friendCode', 'createdAt']) &&
+             data.userId == request.auth.uid &&
+             data.role in ['child', 'parent', 'teacher'] &&
+             data.firstName is string && data.firstName.size() >= 1 && data.firstName.size() <= 60 &&
+             data.avatar is string && data.avatar.size() <= 30 &&
+             (!('theme' in data) || (data.theme is string && data.theme.size() <= 30)) &&
+             (!('friendCode' in data) || (data.friendCode is string && data.friendCode.matches('^CK-[A-Z0-9]{10}$')));
+    }
+
+    // Validation Blueprint: Post
+    function isValidPost(data) {
+      return data.keys().hasAll(['id', 'authorId', 'authorName', 'authorAvatar', 'authorRole', 'type', 'content']) &&
+             data.keys().hasOnly(['id', 'authorId', 'authorName', 'authorAvatar', 'authorRole', 'type', 'title', 'content', 'mediaUrl', 'likes', 'commentsCount', 'isApprovedByParent', 'badge', 'category', 'createdAt']) &&
+             data.authorId == request.auth.uid &&
+             data.type in ['photo', 'video', 'gif', 'text', 'drawing'] &&
+             data.authorRole in ['child', 'teacher', 'parent'] &&
+             data.authorName is string && data.authorName.size() <= 80 &&
+             data.authorAvatar is string && data.authorAvatar.size() <= 30 &&
+             data.content is string && data.content.size() <= 3000 &&
+             (!('title' in data) || (data.title is string && data.title.size() <= 120)) &&
+             (!('likes' in data) || (data.likes is number && data.likes >= 0)) &&
+             (!('commentsCount' in data) || (data.commentsCount is number && data.commentsCount >= 0));
+    }
+
+    // Validation Blueprint: Comment
+    function isValidComment(data) {
+      return data.keys().hasAll(['id', 'postId', 'authorId', 'authorName', 'authorAvatar', 'text']) &&
+             data.keys().hasOnly(['id', 'postId', 'authorId', 'authorName', 'authorAvatar', 'text', 'createdAt']) &&
+             data.authorId == request.auth.uid &&
+             data.authorName is string && data.authorName.size() <= 80 &&
+             data.authorAvatar is string && data.authorAvatar.size() <= 30 &&
+             data.text is string && data.text.size() <= 1000;
+    }
+
+    // Validation Blueprint: Conversation
+    function isValidConversation(data) {
+      return data.keys().hasAll(['id', 'participants']) &&
+             data.keys().hasOnly(['id', 'participants', 'lastMessage', 'lastUpdated']) &&
+             data.participants is list && data.participants.size() == 2 &&
+             request.auth.uid in data.participants;
+    }
+
+    // Validation Blueprint: ChatMessage
+    function isValidChatMessage(data) {
+      return data.keys().hasAll(['id', 'conversationId', 'senderId', 'senderName', 'senderAvatar', 'text']) &&
+             data.keys().hasOnly(['id', 'conversationId', 'senderId', 'senderName', 'senderAvatar', 'text', 'mediaUrl', 'mediaType', 'mediaDuration', 'fileSizeKb', 'isSafe', 'createdAt']) &&
+             data.senderId == request.auth.uid &&
+             data.senderName is string && data.senderName.size() <= 80 &&
+             data.senderAvatar is string && data.senderAvatar.size() <= 30 &&
+             data.text is string && data.text.size() <= 1000;
+    }
+
+    // 1. Users collection
+    match /users/{userId} {
+      allow get: if isSignedIn() && (request.auth.uid == userId || resource.data.role == 'child');
+      allow list: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(userId) && userId == request.auth.uid && isValidUserProfile(incoming());
+      allow update: if isSignedIn() && isValidId(userId) && userId == request.auth.uid && isValidUserProfile(incoming()) &&
+                    incoming().userId == existing().userId;
+      allow delete: if isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Friend requests: only the sender creates; only the recipient responds.
+    match /friendRequests/{requestId} {
+      allow get: if isSignedIn() && (resource.data.fromUid == request.auth.uid || resource.data.toUid == request.auth.uid);
+      allow list: if isSignedIn() && (resource.data.fromUid == request.auth.uid || resource.data.toUid == request.auth.uid);
+      allow create: if isSignedIn() && incoming().fromUid == request.auth.uid &&
+                    incoming().toUid is string && incoming().toUid != request.auth.uid &&
+                    incoming().status == 'pending' && incoming().id == requestId &&
+                    incoming().fromName is string && incoming().fromName.size() <= 60 &&
+                    incoming().fromAvatar is string && incoming().fromAvatar.size() <= 30;
+      allow update: if isSignedIn() && existing().toUid == request.auth.uid &&
+                    incoming().fromUid == existing().fromUid && incoming().toUid == existing().toUid &&
+                    incoming().id == existing().id && existing().status == 'pending' &&
+                    incoming().status in ['accepted', 'declined'] &&
+                    incoming().diff(existing()).affectedKeys().hasOnly(['status', 'respondedAt']);
+      allow delete: if isSignedIn() && (existing().fromUid == request.auth.uid || existing().toUid == request.auth.uid);
+    }
+
+    // 2. Posts collection
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if isSignedIn() && isValidId(postId) && isValidPost(incoming());
+      allow update: if isSignedIn() && isValidId(postId) && (
+        // Author updating content
+        (incoming().authorId == request.auth.uid && existing().authorId == request.auth.uid && isValidPost(incoming())) ||
+        // Any signed-in user liking or incrementing comments count
+        (incoming().diff(existing()).affectedKeys().hasOnly(['likes']) && incoming().likes is number && incoming().likes >= 0) ||
+        (incoming().diff(existing()).affectedKeys().hasOnly(['commentsCount']) && incoming().commentsCount is number && incoming().commentsCount >= 0) ||
+        (incoming().diff(existing()).affectedKeys().hasOnly(['isApprovedByParent']))
+      );
+      allow delete: if isSignedIn() && isValidId(postId) && (existing().authorId == request.auth.uid);
+
+      // Comments subcollection
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if isSignedIn() && isValidId(commentId) && isValidComment(incoming());
+        allow update: if isSignedIn() && isValidId(commentId) && existing().authorId == request.auth.uid && isValidComment(incoming());
+        allow delete: if isSignedIn() && isValidId(commentId) && existing().authorId == request.auth.uid;
+      }
+    }
+
+    // 3. Conversations collection
+    match /conversations/{conversationId} {
+      allow get, list: if isSignedIn() && isValidId(conversationId) && request.auth.uid in resource.data.participants;
+      allow create: if isSignedIn() && isValidId(conversationId) && isValidConversation(incoming());
+      allow update: if isSignedIn() && isValidId(conversationId) && request.auth.uid in existing().participants &&
+                    incoming().diff(existing()).affectedKeys().hasOnly(['lastMessage', 'lastUpdated']);
+      allow delete: if isSignedIn() && isValidId(conversationId) && request.auth.uid in existing().participants;
+
+      // Messages subcollection
+      match /messages/{messageId} {
+        allow read: if isSignedIn() && isValidId(messageId) &&
+                    request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants;
+        allow create: if isSignedIn() && isValidId(messageId) &&
+                      request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants &&
+                      isValidChatMessage(incoming());
+        allow delete: if isSignedIn() && isValidId(messageId) && existing().senderId == request.auth.uid;
+      }
+    }
+
+    // 4. Calls collection (Real WebRTC Peer-to-Peer Signaling)
+    match /calls/{callId} {
+      allow read, write: if true;
+
+      match /callerCandidates/{candidateId} {
+        allow read, write: if true;
+      }
+
+      match /calleeCandidates/{candidateId} {
+        allow read, write: if true;
+      }
+    }
+  }
+}
