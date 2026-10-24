@@ -220,10 +220,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [activeConversationId, setActiveConversationId] = useState<string>('');
+  const [activeConversationId, setActiveConversationIdState] = useState<string>('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isScreenPaused, setIsScreenPaused] = useState<boolean>(false);
-  const [strictApprovalMode, setStrictApprovalMode] = useState<boolean>(true);
+  const [strictApprovalMode, setStrictApprovalModeState] = useState<boolean>(true);
   const [isHandModeActive, setIsHandModeActive] = useState<boolean>(false);
 
   const toggleHandMode = () => {
@@ -254,7 +254,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return () => unsub();
   }, [currentUser, childProfile.id]);
 
-  const [isSosModalOpen, setIsSosModalOpen] = useState<boolean>(false);
+  const [isSosModalOpen, setIsSosModalOpenState] = useState<boolean>(false);
   const [createPostType, setCreatePostType] = useState<'photo' | 'video' | 'gif' | 'text' | null>(null);
   const [activeEmergencyAlert, setActiveEmergencyAlert] = useState<RedCodeAlert | null>(null);
 
@@ -360,21 +360,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const updateChildTheme = (theme: NotebookTheme) => setChildProfile(prev => ({ ...prev, theme }));
   const updateChildAvatar = (avatar: AnimalAvatar) => setChildProfile(prev => ({ ...prev, avatar }));
   const toggleScreenPause = () => setIsScreenPaused(prev => !prev);
-  const setStrictApprovalMode = (val: boolean) => setStrictApprovalMode(val);
+  const setStrictApprovalMode = (val: boolean) => setStrictApprovalModeState(val);
   const openAuthModal = (mode: 'login' | 'signup' = 'login') => { setAuthModalInitialMode(mode); setIsAuthModalOpen(true); };
   const closeAuthModal = () => setIsAuthModalOpen(false);
   const loginWithGoogle = async () => await signInWithGoogle();
   const loginWithEmailPassword = async (e: string, p: string) => await logInWithEmail(e, p);
   const signupWithEmailPassword = async (e: string, p: string, n: string, r: Role, a: AnimalAvatar) => await registerWithEmail(e, p, n, r, a);
   const logout = async () => await logOut();
-  const setActiveConversationId = (id: string) => setActiveConversationId(id);
+  const setActiveConversationId = (id: string) => setActiveConversationIdState(id);
   const sendMessage = (convId: string, text: string, mediaUrl?: string, mediaType?: ChatMessageType) => ({ ok: true, message: "Enviado", alertTriggered: false });
   const startConversationWithFriend = (f: Friend) => {};
   const startCallWithFriend = (fid: string, nm: string, av: AnimalAvatar, type: CallType) => {};
   const acceptIncomingCall = () => {};
   const declineIncomingCall = () => {};
   const closeActiveCallModal = (s: number, t: CallType) => {};
-  const setIsSosModalOpen = (o: boolean) => setIsSosModalOpen(o);
+  const setIsSosModalOpen = (o: boolean) => setIsSosModalOpenState(o);
   const openCreatePostModal = (t: 'photo' | 'video' | 'gif' | 'text') => setCreatePostType(t);
   const closeCreatePostModal = () => setCreatePostType(null);
   const dismissEmergencyAlert = () => setActiveEmergencyAlert(null);
