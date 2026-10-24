@@ -289,6 +289,38 @@ export const FriendsView: React.FC = () => {
               </p>
             </div>
 
+            {/* Código propio visible dentro de Add a Friend para poder compartirlo fácilmente */}
+            <div className="mb-4 rounded-2xl border-2 border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-950/30 p-4">
+              <p className="text-sm font-black text-indigo-900 dark:text-indigo-200">Tu código de invitación</p>
+              {currentUser ? (
+                <>
+                  <p className="mt-2 break-all rounded-lg border border-indigo-200 bg-white px-3 py-2 text-center font-mono text-lg font-black tracking-wider text-indigo-800 dark:border-indigo-700 dark:bg-slate-900 dark:text-indigo-200">
+                    {visibleFriendCode}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={copyFriendCode}
+                    className="mt-3 w-full rounded-xl bg-indigo-600 px-4 py-2.5 font-black text-white hover:bg-indigo-700"
+                  >
+                    Copiar mi código para compartir
+                  </button>
+                  <p className="mt-2 text-xs text-indigo-700 dark:text-indigo-300">
+                    Envía este código por mensaje a tu amigo. Tu amigo debe abrir su cuenta, escribir tu código y pulsar “Enviar solicitud”.
+                  </p>
+                </>
+              ) : (
+                <div>
+                  <p className="mt-2 text-sm font-bold text-amber-700 dark:text-amber-300">Inicia sesión o crea una cuenta para obtener tu código personal.</p>
+                  <button type="button" onClick={() => openAuthModal('login')} className="mt-2 text-xs font-bold text-purple-600 underline">
+                    Iniciar sesión o crear cuenta
+                  </button>
+                </div>
+              )}
+              {requestMessage && !requestSent && (
+                <p role="status" className="mt-2 text-xs font-semibold text-slate-700 dark:text-slate-200">{requestMessage}</p>
+              )}
+            </div>
+
             {requestSent ? (
               <div className="p-6 text-center bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl border border-emerald-200 dark:border-emerald-800">
                 <Check className="w-12 h-12 text-emerald-500 mx-auto mb-2" />
