@@ -56,9 +56,6 @@ import {
   query,
   orderBy,
   limit,
-  where,
-  getDocs,
-  getDoc,
 } from 'firebase/firestore';
 
 interface AppContextType {
@@ -166,10 +163,6 @@ interface AppContextType {
   unfreezeChildAccount: () => void;
   approveFriend: (friendId: string) => void;
   addFriendRequest: (name: string, avatar: AnimalAvatar) => void;
-  sendFriendRequestByCode: (code: string) => Promise<{ ok: boolean; message: string }>;
-  respondToFriendRequest: (requestId: string, accept: boolean) => Promise<void>;
-  incomingFriendRequests: Array<{ id: string; fromName: string; fromAvatar: AnimalAvatar; fromUid: string }>;
-  myFriendCode: string;
   createChildProfile: (name: string, avatar: AnimalAvatar, theme: NotebookTheme, grade: string) => void;
 }
 
@@ -182,8 +175,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Firebase Auth user
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [myFriendCode, setMyFriendCode] = useState('');
-  const [incomingFriendRequests, setIncomingFriendRequests] = useState<Array<{ id: string; fromName: string; fromAvatar: AnimalAvatar; fromUid: string }>>([]);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
   const [authModalInitialMode, setAuthModalInitialMode] = useState<'login' | 'signup'>('login');
 
@@ -316,105 +307,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
     return () => unsubscribe();
   }, []);
-
-  // A cada sesión autenticada se asegura un código estable y se escuchan solicitudes reales.
-  useEffect(() => {
-    if (!currentUser) {
-      setMyFriendCode('');
-      setIncomingFriendRequests([]);
-      return;
-    }
-    let active = true;
-    const userRef = doc(db, 'users', currentUser.uid);
-    getDoc(userRef).then(async (snap) => {
-      if (!active) return;
-      const existingCode = snap.exists() ? snap.data().friendCode : undefined;
-      const code = typeof existingCode === 'string' && existingCode ? existingCode : `CK-${currentUser.uid.slice(-10).toUpperCase()}`;
-      setMyFriendCode(code);
-      if (!existingCode) {
-        await setDoc(userRef, {
-          userId: currentUser.uid,
-          email: currentUser.email || '',
-          role,
-          firstName: childProfile.firstName,
-          avatar: childProfile.avatar,
-          theme: childProfile.theme,
-          friendCode: code,
-          createdAt: new Date().toISOString(),
-        }, { merge: true });
-      }
-    }).catch((err) => console.error('No se pudo cargar el perfil de usuario:', err));
-
-    const requestsQuery = query(collection(db, 'friendRequests'), where('toUid', '==', currentUser.uid), where('status', '==', 'pending'));
-    const unsubscribe = onSnapshot(requestsQuery, (snapshot) => {
-      setIncomingFriendRequests(snapshot.docs.map((d) => {
-        const data = d.data();
-        return { id: d.id, fromName: String(data.fromName || 'Amigo'), fromAvatar: (data.fromAvatar || 'panda') as AnimalAvatar, fromUid: String(data.fromUid || '') };
-      }));
-    }, (err) => console.error('No se pudieron cargar solicitudes de amistad:', err));
-    return () => { active = false; unsubscribe(); };
-  }, [currentUser, role, childProfile.firstName, childProfile.avatar, childProfile.theme]);
-
-  // Los amigos reales aparecen en ambos perfiles cuando la solicitud se acepta.
-  useEffect(() => {
-    if (!currentUser) return;
-    let active = true;
-    const refreshAcceptedFriends = async () => {
-      try {
-        const [sent, received] = await Promise.all([
-          getDocs(query(collection(db, 'friendRequests'), where('fromUid', '==', currentUser.uid), where('status', '==', 'accepted'))),
-          getDocs(query(collection(db, 'friendRequests'), where('toUid', '==', currentUser.uid), where('status', '==', 'accepted'))),
-        ]);
-        const docs = [...sent.docs, ...received.docs];
-        const friendIds = [...new Set(docs.map((d) => {
-          const data = d.data();
-          return data.fromUid === currentUser.uid ? data.toUid : data.fromUid;
-        }).filter((id): id is string => typeof id === 'string' && id.length > 0))];
-        const realFriends: Friend[] = await Promise.all(friendIds.map(async (id) => {
-          const profileSnap = await getDoc(doc(db, 'users', id));
-          const data = profileSnap.exists() ? profileSnap.data() : {};
-          return { id, firstName: String(data.firstName || 'Amigo'), avatar: (data.avatar || 'panda') as AnimalAvatar, grade: '', relation: 'Amigo de Clayckey Bookly', status: 'approved', color: '#6366F1' };
-        }));
-        if (active) setFriends(realFriends);
-      } catch (err) { console.error('No se pudo actualizar la lista de amigos:', err); }
-    };
-    void refreshAcceptedFriends();
-    const qSent = query(collection(db, 'friendRequests'), where('fromUid', '==', currentUser.uid), where('status', '==', 'accepted'));
-    const qReceived = query(collection(db, 'friendRequests'), where('toUid', '==', currentUser.uid), where('status', '==', 'accepted'));
-    const unsubSent = onSnapshot(qSent, () => { void refreshAcceptedFriends(); }, (err) => console.error(err));
-    const unsubReceived = onSnapshot(qReceived, () => { void refreshAcceptedFriends(); }, (err) => console.error(err));
-    return () => { active = false; unsubSent(); unsubReceived(); };
-  }, [currentUser]);
-
-  // 2. Real-time sync for conversations and messages from Firebase.
-  useEffect(() => {
-    if (!currentUser) return;
-    const conversationsQuery = query(collection(db, 'conversations'), where('participants', 'array-contains', currentUser.uid));
-    const unsubscribe = onSnapshot(conversationsQuery, async (snapshot) => {
-      const rows = await Promise.all(snapshot.docs.map(async (d) => {
-        const data = d.data();
-        const friendId = (data.participants as string[]).find((id) => id !== currentUser.uid) || '';
-        let profile: any = {};
-        if (friendId) {
-          try { const profileSnap = await getDoc(doc(db, 'users', friendId)); if (profileSnap.exists()) profile = profileSnap.data(); } catch { /* profile is optional */ }
-        }
-        return { id: d.id, participants: data.participants || [currentUser.uid], friendId, friendName: profile.firstName || 'Amigo', friendAvatar: (profile.avatar || 'panda') as AnimalAvatar, lastMessage: data.lastMessage || '', lastUpdated: data.lastUpdated || '' } as Conversation;
-      }));
-      setConversations(rows);
-      if (rows.length && !rows.some((c) => c.id === activeConversationId)) setActiveConversationId(rows[0].id);
-    }, (err) => console.error('No se pudieron sincronizar conversaciones:', err));
-    return () => unsubscribe();
-  }, [currentUser]);
-
-  useEffect(() => {
-    if (!currentUser || !activeConversationId || activeConversationId.startsWith('conv-')) return;
-    const messagesQuery = query(collection(db, 'conversations', activeConversationId, 'messages'), orderBy('createdAt', 'asc'), limit(200));
-    const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
-      const remote = snapshot.docs.map((d) => ({ ...d.data(), id: d.id, conversationId: activeConversationId }) as ChatMessage);
-      setMessages((prev) => [...prev.filter((m) => m.conversationId !== activeConversationId), ...remote]);
-    }, (err) => console.error('No se pudieron sincronizar mensajes:', err));
-    return () => unsubscribe();
-  }, [currentUser, activeConversationId]);
 
   // 2. Real-time Firestore sync for posts
   useEffect(() => {
@@ -617,7 +509,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             firstName: res.user.displayName ? res.user.displayName.split(' ')[0] : childProfile.firstName,
             avatar: childProfile.avatar,
             theme: childProfile.theme,
-            friendCode: `CK-${res.user.uid.slice(-10).toUpperCase()}`,
             createdAt: new Date().toISOString(),
           },
           { merge: true }
@@ -656,7 +547,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           firstName: name,
           avatar,
           theme: childProfile.theme,
-          friendCode: `CK-${res.user.uid.slice(-10).toUpperCase()}`,
           createdAt: new Date().toISOString(),
         });
       } catch (err) {
@@ -914,7 +804,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
 
     // Message is safe!
-    const msgId = `msg-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    const msgId = `msg-${Date.now()}`;
     const newMsg: ChatMessage = {
       id: msgId,
       conversationId: convId,
@@ -949,10 +839,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     // Save to Firestore if connected
     if (currentUser) {
       const convDocRef = doc(db, 'conversations', convId);
-      updateDoc(convDocRef, {
-        lastMessage: previewText,
-        lastUpdated: new Date().toISOString(),
-      }).catch((err) => console.error('No se pudo actualizar la conversación:', err));
+      setDoc(
+        convDocRef,
+        {
+          id: convId,
+          participants: [currentUser.uid],
+          lastMessage: previewText,
+          lastUpdated: new Date().toISOString(),
+        },
+        { merge: true }
+      ).catch((err) => handleFirestoreError(err, OperationType.UPDATE, `conversations/${convId}`));
 
       setDoc(doc(db, 'conversations', convId, 'messages', msgId), {
         id: msgId,
@@ -988,13 +884,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       };
       setConversations((prev) => [newConv, ...prev]);
       setActiveConversationId(newConv.id);
-      if (currentUser && friend.id && friend.id !== currentUser.uid && !friend.id.startsWith('friend_') && !friend.id.startsWith('child_')) {
-        const participants = [currentUser.uid, friend.id].sort();
-        const realConversationId = `chat_${participants.join('_')}`;
-        setDoc(doc(db, 'conversations', realConversationId), {
-          id: realConversationId, participants, lastMessage: '', lastUpdated: new Date().toISOString(),
-        }, { merge: true }).then(() => setActiveConversationId(realConversationId)).catch((err) => console.error('No se pudo abrir el chat real:', err));
-      }
     } else {
       setActiveConversationId(existingConv.id);
     }
@@ -1183,50 +1072,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
   };
 
-  const sendFriendRequestByCode = async (rawCode: string): Promise<{ ok: boolean; message: string }> => {
-    if (!currentUser) return { ok: false, message: 'Inicia sesión con tu cuenta antes de invitar amigos.' };
-    const code = rawCode.trim().toUpperCase();
-    if (!code) return { ok: false, message: 'Escribe el código de amigo.' };
-    if (code === myFriendCode) return { ok: false, message: 'Ese es tu propio código.' };
-    try {
-      const matches = await getDocs(query(collection(db, 'users'), where('friendCode', '==', code), limit(2)));
-      if (matches.empty) return { ok: false, message: 'No encontramos ese código. Pídele a tu amigo que inicie sesión y copie su código.' };
-      const target = matches.docs[0];
-      if (target.id === currentUser.uid) return { ok: false, message: 'Ese es tu propio código.' };
-      const targetData = target.data();
-      const requestId = `${currentUser.uid}_${target.id}`;
-      const reverseId = `${target.id}_${currentUser.uid}`;
-      const existing = await getDoc(doc(db, 'friendRequests', requestId));
-      const reverse = await getDoc(doc(db, 'friendRequests', reverseId));
-      if (existing.exists() && existing.data().status === 'pending') return { ok: false, message: 'Ya enviaste una solicitud a esa persona.' };
-      if (reverse.exists() && reverse.data().status === 'pending') return { ok: false, message: 'Esta persona ya te envió una solicitud. Puedes aceptarla en Solicitudes recibidas.' };
-      await setDoc(doc(db, 'friendRequests', requestId), {
-        id: requestId, fromUid: currentUser.uid, fromName: childProfile.firstName || currentUser.displayName || 'Usuario',
-        fromAvatar: childProfile.avatar || 'panda', toUid: target.id, toName: targetData.firstName || 'Amigo', status: 'pending', createdAt: new Date().toISOString(),
-      });
-      return { ok: true, message: `Solicitud enviada a ${targetData.firstName || 'tu amigo'}. Cuando la acepte, podrán chatear.` };
-    } catch (err) {
-      console.error('Error enviando solicitud de amistad:', err);
-      return { ok: false, message: 'No se pudo enviar. Revisa que las reglas de Firestore estén publicadas y vuelve a intentarlo.' };
-    }
-  };
-
-  const respondToFriendRequest = async (requestId: string, accept: boolean): Promise<void> => {
-    if (!currentUser) throw new Error('Inicia sesión primero.');
-    const requestRef = doc(db, 'friendRequests', requestId);
-    const requestSnap = await getDoc(requestRef);
-    if (!requestSnap.exists() || requestSnap.data().toUid !== currentUser.uid) throw new Error('La solicitud ya no existe o no te pertenece.');
-    const request = requestSnap.data();
-    await updateDoc(requestRef, { status: accept ? 'accepted' : 'declined', respondedAt: new Date().toISOString() });
-    if (accept) {
-      const participants = [currentUser.uid, String(request.fromUid)].sort();
-      const conversationId = `chat_${participants.join('_')}`;
-      await setDoc(doc(db, 'conversations', conversationId), {
-        id: conversationId, participants, lastMessage: '¡Ahora son amigos! Saluda a tu amigo.', lastUpdated: new Date().toISOString(),
-      }, { merge: true });
-    }
-  };
-
   const addFriendRequest = (name: string, avatar: AnimalAvatar) => {
     sounds.playPop();
     const newFriend: Friend = {
@@ -1353,10 +1198,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         unfreezeChildAccount,
         approveFriend,
         addFriendRequest,
-        sendFriendRequestByCode,
-        respondToFriendRequest,
-        incomingFriendRequests,
-        myFriendCode,
         createChildProfile,
       }}
     >

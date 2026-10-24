@@ -33,13 +33,12 @@ service cloud.firestore {
     // Validation Blueprint: UserProfile
     function isValidUserProfile(data) {
       return data.keys().hasAll(['userId', 'role', 'firstName', 'avatar']) &&
-             data.keys().hasOnly(['userId', 'email', 'role', 'firstName', 'avatar', 'theme', 'friendCode', 'createdAt']) &&
+             data.keys().hasOnly(['userId', 'email', 'role', 'firstName', 'avatar', 'theme', 'createdAt']) &&
              data.userId == request.auth.uid &&
              data.role in ['child', 'parent', 'teacher'] &&
              data.firstName is string && data.firstName.size() >= 1 && data.firstName.size() <= 60 &&
              data.avatar is string && data.avatar.size() <= 30 &&
-             (!('theme' in data) || (data.theme is string && data.theme.size() <= 30)) &&
-             (!('friendCode' in data) || (data.friendCode is string && data.friendCode.matches('^CK-[A-Z0-9]{10}$')));
+             (!('theme' in data) || (data.theme is string && data.theme.size() <= 30));
     }
 
     // Validation Blueprint: Post
@@ -71,7 +70,7 @@ service cloud.firestore {
     function isValidConversation(data) {
       return data.keys().hasAll(['id', 'participants']) &&
              data.keys().hasOnly(['id', 'participants', 'lastMessage', 'lastUpdated']) &&
-             data.participants is list && data.participants.size() == 2 &&
+             data.participants is list && data.participants.size() >= 1 && data.participants.size() <= 20 &&
              request.auth.uid in data.participants;
     }
 
@@ -93,23 +92,6 @@ service cloud.firestore {
       allow update: if isSignedIn() && isValidId(userId) && userId == request.auth.uid && isValidUserProfile(incoming()) &&
                     incoming().userId == existing().userId;
       allow delete: if isSignedIn() && request.auth.uid == userId;
-    }
-
-    // Friend requests: only the sender creates; only the recipient responds.
-    match /friendRequests/{requestId} {
-      allow get: if isSignedIn() && (resource.data.fromUid == request.auth.uid || resource.data.toUid == request.auth.uid);
-      allow list: if isSignedIn() && (resource.data.fromUid == request.auth.uid || resource.data.toUid == request.auth.uid);
-      allow create: if isSignedIn() && incoming().fromUid == request.auth.uid &&
-                    incoming().toUid is string && incoming().toUid != request.auth.uid &&
-                    incoming().status == 'pending' && incoming().id == requestId &&
-                    incoming().fromName is string && incoming().fromName.size() <= 60 &&
-                    incoming().fromAvatar is string && incoming().fromAvatar.size() <= 30;
-      allow update: if isSignedIn() && existing().toUid == request.auth.uid &&
-                    incoming().fromUid == existing().fromUid && incoming().toUid == existing().toUid &&
-                    incoming().id == existing().id && existing().status == 'pending' &&
-                    incoming().status in ['accepted', 'declined'] &&
-                    incoming().diff(existing()).affectedKeys().hasOnly(['status', 'respondedAt']);
-      allow delete: if isSignedIn() && (existing().fromUid == request.auth.uid || existing().toUid == request.auth.uid);
     }
 
     // 2. Posts collection

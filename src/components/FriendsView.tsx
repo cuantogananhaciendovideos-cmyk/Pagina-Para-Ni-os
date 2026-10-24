@@ -6,38 +6,41 @@ import { AnimalAvatar, Friend } from '../types';
 import { sounds } from '../services/soundEffects';
 
 export const FriendsView: React.FC = () => {
-  const { friends, childProfile, currentUser, myFriendCode, incomingFriendRequests, sendFriendRequestByCode, respondToFriendRequest, startConversationWithFriend, startCallWithFriend, openAuthModal } = useApp();
+  const { friends, addFriendRequest, childProfile, currentUser, startConversationWithFriend, startCallWithFriend } = useApp();
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
   const [friendCodeInput, setFriendCodeInput] = useState('');
-  const [requestMessage, setRequestMessage] = useState('');
-  const [isSendingRequest, setIsSendingRequest] = useState(false);
+  const [friendNameInput, setFriendNameInput] = useState('');
   const [selectedAvatar, setSelectedAvatar] = useState<AnimalAvatar>('panda');
   const [requestSent, setRequestSent] = useState(false);
+  const [codeCopied, setCodeCopied] = useState(false);
+  // Stable invitation code derived from the signed-in Firebase UID.
+  const myFriendCode = currentUser
+    ? `CK-${currentUser.uid.replace(/[^a-zA-Z0-9]/g, '').slice(-10).toUpperCase().padStart(10, '0')}`
+    : '';
 
-  const handleSendRequest = async () => {
-    if (!currentUser) {
-      setRequestMessage('Inicia sesión o crea tu cuenta para tener un código y enviar solicitudes reales.');
-      return;
+  const copyFriendCode = async () => {
+    if (!myFriendCode) return;
+    try {
+      await navigator.clipboard.writeText(myFriendCode);
+      setCodeCopied(true);
+      window.setTimeout(() => setCodeCopied(false), 1800);
+    } catch {
+      window.prompt('Copia tu código de invitación:', myFriendCode);
     }
-    if (!friendCodeInput.trim()) {
-      setRequestMessage('Escribe el código de amigo que te compartió la otra persona.');
-      return;
-    }
-    setIsSendingRequest(true);
-    const result = await sendFriendRequestByCode(friendCodeInput);
-    setIsSendingRequest(false);
-    setRequestMessage(result.message);
-    setRequestSent(result.ok);
-    if (result.ok) {
-      sounds.playStarCelebration();
-      setTimeout(() => {
-        setRequestSent(false);
-        setShowAddModal(false);
-        setFriendCodeInput('');
-        setRequestMessage('');
-      }, 2400);
-    }
+  };
+
+  const handleSendRequest = () => {
+    if (!friendNameInput.trim()) return;
+    sounds.playStarCelebration();
+    addFriendRequest(friendNameInput.trim(), selectedAvatar);
+    setRequestSent(true);
+    setTimeout(() => {
+      setRequestSent(false);
+      setShowAddModal(false);
+      setFriendNameInput('');
+      setFriendCodeInput('');
+    }, 1500);
   };
 
   const avatars: AnimalAvatar[] = ['panda', 'rabbit', 'owl', 'lion', 'cat', 'dog', 'koala', 'penguin'];
@@ -68,31 +71,23 @@ export const FriendsView: React.FC = () => {
         </div>
       </div>
 
-      {currentUser && (
-        <div className="rounded-2xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/30 p-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+      {/* Personal invitation code: visible on the Friends screen for signed-in users */}
+      <div className="rounded-3xl p-5 bg-white dark:bg-slate-800 border-2 border-purple-200 dark:border-purple-800 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <p className="text-sm font-black text-indigo-900 dark:text-indigo-200">Tu código para invitar amigos</p>
-            <p className="text-xs text-indigo-700 dark:text-indigo-300">Compártelo solo con personas que conozcas.</p>
+            <h3 className="text-lg font-black text-slate-800 dark:text-white">Tu código para invitar amigos</h3>
+            <p className="text-sm text-slate-600 dark:text-slate-300">Comparte este código con la persona que quieras agregar.</p>
           </div>
-          <button type="button" onClick={() => { navigator.clipboard?.writeText(myFriendCode); setRequestMessage('Código copiado (si tu navegador permite copiar).'); }} className="rounded-xl bg-white dark:bg-slate-800 border border-indigo-200 dark:border-indigo-700 px-4 py-2 font-mono font-black text-indigo-700 dark:text-indigo-200">
-            {myFriendCode || 'Generando código…'} · Copiar
-          </button>
-        </div>
-      )}
-
-      {incomingFriendRequests.length > 0 && (
-        <div className="rounded-2xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/20 p-4 space-y-3">
-          <h3 className="font-black text-amber-900 dark:text-amber-200">Solicitudes de amistad recibidas ({incomingFriendRequests.length})</h3>
-          {incomingFriendRequests.map((request) => (
-            <div key={request.id} className="flex items-center gap-3 rounded-xl bg-white dark:bg-slate-900 p-3">
-              <AnimalAvatarIcon animal={request.fromAvatar} className="w-10 h-10" />
-              <div className="flex-1 min-w-0"><p className="font-bold text-sm text-slate-800 dark:text-white">{request.fromName}</p><p className="text-xs text-slate-500">Solicitud de cuenta registrada</p></div>
-              <button type="button" onClick={async () => { try { await respondToFriendRequest(request.id, true); setRequestMessage('Solicitud aceptada. El chat ya está creado.'); } catch (e) { setRequestMessage(e instanceof Error ? e.message : 'No se pudo aceptar.'); } }} className="px-3 py-2 rounded-lg bg-emerald-600 text-white text-xs font-bold">Aceptar</button>
-              <button type="button" onClick={async () => { try { await respondToFriendRequest(request.id, false); } catch (e) { setRequestMessage(e instanceof Error ? e.message : 'No se pudo rechazar.'); } }} className="px-3 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-white text-xs font-bold">Rechazar</button>
+          {currentUser ? (
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-lg font-black tracking-wider rounded-xl bg-purple-50 dark:bg-slate-900 border border-purple-200 dark:border-purple-700 px-4 py-2 text-purple-700 dark:text-purple-300">{myFriendCode}</span>
+              <button type="button" onClick={copyFriendCode} className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold">{codeCopied ? '¡Copiado!' : 'Copiar'}</button>
             </div>
-          ))}
+          ) : (
+            <p className="text-sm font-bold text-amber-700 dark:text-amber-300">Inicia sesión para ver tu código.</p>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Selected Friend / Imaginary Friend Advice Modal */}
       {selectedFriend && (
@@ -264,7 +259,7 @@ export const FriendsView: React.FC = () => {
                 Agregar Nuevo Amigo Seguro
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Usa el código de una cuenta real de Clayckey Bookly. La otra persona debe registrarse e iniciar sesión para recibir tu solicitud.
+                Para tu seguridad, esta solicitud llegará directo a tus papás para que la aprueben con un solo clic.
               </p>
             </div>
 
@@ -272,22 +267,61 @@ export const FriendsView: React.FC = () => {
               <div className="p-6 text-center bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl border border-emerald-200 dark:border-emerald-800">
                 <Check className="w-12 h-12 text-emerald-500 mx-auto mb-2" />
                 <h4 className="text-base font-bold text-emerald-700 dark:text-emerald-300">
-                  ¡Solicitud enviada!
+                  ¡Solicitud enviada a tus papás!
                 </h4>
                 <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1">
-                  Tu amigo debe aceptarla para abrir el chat.
+                  En cuanto la acepten, aparecerá en tus amigos.
                 </p>
               </div>
             ) : (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Código de amigo:</label>
-                  <input type="text" value={friendCodeInput} onChange={(e) => setFriendCodeInput(e.target.value.toUpperCase())} placeholder="Ej. CK-A1B2C3D4E5" className="w-full px-4 py-3 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-bold font-mono uppercase text-slate-800 dark:text-white focus:outline-hidden focus:border-purple-500" />
-                  {requestMessage && !requestSent && <p className="text-xs mt-2 text-rose-600 dark:text-rose-300">{requestMessage}</p>}
-                  {!currentUser && <button type="button" onClick={() => openAuthModal('login')} className="mt-2 text-xs font-bold text-purple-600 underline">Iniciar sesión o crear cuenta</button>}
+                  <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">
+                    Primer nombre de tu amigo/a:
+                  </label>
+                  <input
+                    type="text"
+                    value={friendNameInput}
+                    onChange={(e) => setFriendNameInput(e.target.value)}
+                    placeholder="Ej. Mateo, Sofía, Lucas..."
+                    className="w-full px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-800 dark:text-white focus:outline-hidden focus:border-purple-500"
+                  />
                 </div>
 
-                {requestMessage && requestSent && <p className="text-sm font-bold text-emerald-700 dark:text-emerald-300">{requestMessage}</p>}
+                <div>
+                  <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">
+                    Código de Amigo o Clase (opcional):
+                  </label>
+                  <input
+                    type="text"
+                    value={friendCodeInput}
+                    onChange={(e) => setFriendCodeInput(e.target.value)}
+                    placeholder="Ej. CLUKY-AMIGO-492"
+                    className="w-full px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-800 dark:text-white focus:outline-hidden focus:border-purple-500 font-mono uppercase"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-2">
+                    Elige su animalito favorito:
+                  </label>
+                  <div className="grid grid-cols-4 gap-2">
+                    {avatars.map((av) => (
+                      <button
+                        key={av}
+                        type="button"
+                        onClick={() => setSelectedAvatar(av)}
+                        className={`p-2 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${
+                          selectedAvatar === av
+                            ? 'border-purple-500 bg-purple-50 dark:bg-purple-950/40 scale-105'
+                            : 'border-slate-200 dark:border-slate-700 hover:scale-105'
+                        }`}
+                      >
+                        <AnimalAvatarIcon animal={av} className="w-8 h-8" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
                 <div className="flex gap-2 pt-2">
                   <button
@@ -300,10 +334,10 @@ export const FriendsView: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleSendRequest}
-                    disabled={isSendingRequest || !friendCodeInput.trim()}
+                    disabled={!friendNameInput.trim()}
                     className="flex-1 py-2.5 rounded-2xl bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white font-bold text-xs shadow-md cursor-pointer"
                   >
-                    {isSendingRequest ? 'Enviando…' : 'Enviar solicitud'}
+                    Pedir a Papá Aprobación
                   </button>
                 </div>
               </div>
