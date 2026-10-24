@@ -218,6 +218,18 @@
           "maxLength": 500000,
           "description": "Optional media or drawing"
         },
+        "mediaType": {
+          "type": "string",
+          "description": "Type of media attached (text, voice, video, photo)"
+        },
+        "mediaDuration": {
+          "type": "number",
+          "description": "Duration in seconds for voice/video"
+        },
+        "fileSizeKb": {
+          "type": "number",
+          "description": "Compressed size in KB"
+        },
         "isSafe": {
           "type": "boolean",
           "description": "RedCode evaluation outcome"
@@ -228,6 +240,26 @@
         }
       },
       "required": ["id", "conversationId", "senderId", "senderName", "senderAvatar", "text"]
+    },
+    "Call": {
+      "title": "Call",
+      "description": "WebRTC peer-to-peer call signaling document",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "callerId": { "type": "string" },
+        "callerName": { "type": "string" },
+        "callerAvatar": { "type": "string" },
+        "calleeId": { "type": "string" },
+        "calleeName": { "type": "string" },
+        "calleeAvatar": { "type": "string" },
+        "type": { "type": "string", "enum": ["voice", "video"] },
+        "status": { "type": "string", "enum": ["ringing", "connected", "ended", "declined"] },
+        "offer": { "type": "object" },
+        "answer": { "type": "object" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "callerId", "calleeId", "type", "status"]
     }
   },
   "firestore": {
@@ -250,6 +282,10 @@
     "/conversations/{conversationId}/messages/{messageId}": {
       "schema": "ChatMessage",
       "description": "Real-time chat messages inside a conversation"
+    },
+    "/calls/{callId}": {
+      "schema": "Call",
+      "description": "Real WebRTC signaling for peer-to-peer voice and video calls"
     }
   }
 }

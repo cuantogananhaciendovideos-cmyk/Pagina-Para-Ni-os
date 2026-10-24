@@ -27,7 +27,6 @@ import { THEME_CONFIGS } from '../services/themes';
 import { AnimalAvatar, NotebookTheme, Post } from '../types';
 import { SAFE_STICKERS_GIFS } from '../services/mockData';
 import { sounds } from '../services/soundEffects';
-import { GlobalSearch } from './GlobalSearch';
 
 export const NotebookProfileView: React.FC = () => {
   const {
@@ -67,7 +66,6 @@ export const NotebookProfileView: React.FC = () => {
   const myPosts = (posts || []).filter(
     (p) =>
       p &&
-      p.isApprovedByParent !== false &&
       p.authorName &&
       (p.authorName === currentFirstName ||
         p.authorName.toLowerCase().includes(currentFirstName.toLowerCase()) ||
@@ -116,11 +114,6 @@ export const NotebookProfileView: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col gap-4 sm:gap-6 select-none max-w-4xl mx-auto w-full pb-10">
-      {/* Search available from the child's profile as requested */}
-      <div className="w-full">
-        <GlobalSearch placement="profile" />
-      </div>
-
       {/* Visual Navigation Feedback Bar: Confirms page is open and lets user return with 1 click */}
       <div className="flex items-center justify-between bg-white/90 dark:bg-slate-800/90 backdrop-blur-md px-4 py-3 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 shadow-xs">
         <button

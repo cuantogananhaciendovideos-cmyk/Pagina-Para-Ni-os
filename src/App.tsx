@@ -1,12 +1,11 @@
 /**
- * ClukyBook For Kids
+ * Clayckey Bookly For Kids
  * Subnombre: For Kids
  * Red social y cuaderno vivo seguro para niños desde 5 años
  */
 
 import React from 'react';
 import { AppProvider, useApp } from './context/AppContext';
-import { LanguageProvider } from './i18n/LanguageContext';
 import { Header } from './components/Header';
 import { NavigationSidebar } from './components/NavigationSidebar';
 import { RightProfileSidebar } from './components/RightProfileSidebar';
@@ -16,7 +15,6 @@ import { ClassroomView } from './components/ClassroomView';
 import { FriendsView } from './components/FriendsView';
 import { MediaGalleryView } from './components/MediaGalleryView';
 import { GamesView } from './components/GamesView';
-import { LearningView } from './components/LearningView';
 import { ParentDashboard } from './components/ParentDashboard';
 import { TeacherView } from './components/TeacherView';
 import { CreatePostModal } from './components/CreatePostModal';
@@ -24,7 +22,9 @@ import { SosHelpModal } from './components/SosHelpModal';
 import { RedCodeAlertModal } from './components/RedCodeAlertModal';
 import { ConversationsView } from './components/ConversationsView';
 import { AuthModal } from './components/AuthModal';
-import { LittleWorldView } from './components/LittleWorldView';
+import { HandMagicController } from './components/HandMagicController';
+import { IncomingCallBanner } from './components/IncomingCallBanner';
+import { ActiveCallModal } from './components/ActiveCallModal';
 import { PauseCircle, PlayCircle, ShieldAlert, Sparkles, Moon } from 'lucide-react';
 import { sounds } from './services/soundEffects';
 
@@ -37,7 +37,13 @@ const MainLayout: React.FC = () => {
     childProfile,
     isDarkMode,
     isAuthModalOpen,
+    authModalInitialMode,
     closeAuthModal,
+    incomingCall,
+    acceptIncomingCall,
+    declineIncomingCall,
+    activeCallModalData,
+    closeActiveCallModal,
   } = useApp();
 
   return (
@@ -92,9 +98,7 @@ const MainLayout: React.FC = () => {
           {activeTab === 'friends' && <FriendsView />}
           {activeTab === 'photos' && <MediaGalleryView initialFilter="photos" />}
           {activeTab === 'videos' && <MediaGalleryView initialFilter="videos" />}
-          {activeTab === 'little-world' && <LittleWorldView />}
           {activeTab === 'games' && <GamesView />}
-          {activeTab === 'learn' && <LearningView />}
           {activeTab === 'parent-dashboard' && <ParentDashboard />}
           {activeTab === 'teacher-dashboard' && <TeacherView />}
         </section>
@@ -107,12 +111,43 @@ const MainLayout: React.FC = () => {
       <CreatePostModal />
       <SosHelpModal />
       <RedCodeAlertModal />
-      <AuthModal isOpen={isAuthModalOpen} onClose={closeAuthModal} />
+      <AuthModal isOpen={isAuthModalOpen} initialMode={authModalInitialMode} onClose={closeAuthModal} />
+
+      {/* Real WebRTC Incoming Call Banner (Rings across any tab/screen) */}
+      {incomingCall && (
+        <IncomingCallBanner
+          callerName={incomingCall.callerName}
+          callerAvatar={incomingCall.callerAvatar}
+          callType={incomingCall.type}
+          onAccept={acceptIncomingCall}
+          onDecline={declineIncomingCall}
+        />
+      )}
+
+      {/* Real WebRTC Active Voice or Video Call Modal */}
+      {activeCallModalData && (
+        <ActiveCallModal
+          isOpen={activeCallModalData.isOpen}
+          callType={activeCallModalData.type}
+          friendName={activeCallModalData.friendName}
+          friendAvatar={activeCallModalData.friendAvatar}
+          childName={childProfile.firstName}
+          childAvatar={childProfile.avatar}
+          calleeId={activeCallModalData.calleeId}
+          callerId={activeCallModalData.callerId}
+          callId={activeCallModalData.callId}
+          isIncoming={activeCallModalData.isIncoming}
+          onClose={closeActiveCallModal}
+        />
+      )}
+
+      {/* Hand Tracking Magic Wand System */}
+      <HandMagicController />
 
       {/* Minimalistic Kid Safe Footer */}
       <footer className="w-full py-4 text-center text-xs text-slate-400 dark:text-slate-500 select-none border-t border-slate-200/50 dark:border-slate-800/50">
         <div className="flex items-center justify-center gap-2 font-semibold">
-          <span>ClukyBook For Kids</span>
+          <span>Clayckey Bookly For Kids</span>
           <span>•</span>
           <span>El Cuaderno Vivo</span>
           <span>•</span>
@@ -125,10 +160,8 @@ const MainLayout: React.FC = () => {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <AppProvider>
-        <MainLayout />
-      </AppProvider>
-    </LanguageProvider>
+    <AppProvider>
+      <MainLayout />
+    </AppProvider>
   );
 }

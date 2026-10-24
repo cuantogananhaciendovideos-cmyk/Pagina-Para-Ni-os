@@ -13,18 +13,13 @@ import {
 import { useApp } from '../context/AppContext';
 import { SAFE_STICKERS_GIFS } from '../services/mockData';
 import { sounds } from '../services/soundEffects';
-import { uploadUserMedia } from '../services/firebase';
-import { evaluateRedCode } from '../services/safetyFilter';
 
 export const CreatePostModal: React.FC = () => {
   const { createPostType, closeCreatePostModal, publishPost, childProfile } = useApp();
 
   const [textInput, setTextInput] = useState('');
   const [selectedMediaUrl, setSelectedMediaUrl] = useState<string>('');
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
   const [filterWarning, setFilterWarning] = useState<string | null>(null);
-  const [pendingNotice, setPendingNotice] = useState<string | null>(null);
 
   if (!createPostType) return null;
 
@@ -41,72 +36,38 @@ export const CreatePostModal: React.FC = () => {
 
   const emojis = ['😊', '⭐', '🎨', '🚀', '🐱', '🐶', '🌈', '🎉', '💖', '📚'];
 
-  const handleSubmit = async () => {
-    if (isUploading) return;
-    setFilterWarning(null);
-    setIsUploading(true);
-    try {
-      let finalContent = textInput.trim();
-      if (!finalContent && createPostType === 'photo') finalContent = '¡Miren esta foto bonita en mi cuaderno! 📷';
-      if (!finalContent && createPostType === 'video') finalContent = '¡Miren este video divertido! 🎬';
-      if (!finalContent && createPostType === 'gif') finalContent = '¡Sticker animado favorito! ✨';
+  const handleSubmit = () => {
+    let finalContent = textInput.trim();
+    if (!finalContent && createPostType === 'photo') finalContent = '¡Miren esta foto bonita en mi cuaderno! 📷';
+    if (!finalContent && createPostType === 'video') finalContent = '¡Miren este video divertido! 🎬';
+    if (!finalContent && createPostType === 'gif') finalContent = '¡Sticker animado favorito! ✨';
 
-      // Run the existing safety filter before uploading any selected file.
-      if (selectedFile && evaluateRedCode(finalContent).level !== 'safe') {
-        const safety = publishPost({ type: createPostType, content: finalContent });
-        setFilterWarning(`Este contenido no se puede compartir porque infringe las reglas de la plataforma. ${safety.explanation}`);
-        return;
-      }
+    const mediaUrl = selectedMediaUrl || (
+      createPostType === 'photo' ? samplePhotos[0].url :
+      createPostType === 'video' ? sampleVideos[0].url :
+      createPostType === 'gif' ? SAFE_STICKERS_GIFS[0].url : undefined
+    );
 
-      let mediaUrl = selectedMediaUrl || (
-        createPostType === 'photo' ? samplePhotos[0].url :
-        createPostType === 'video' ? sampleVideos[0].url :
-        createPostType === 'gif' ? SAFE_STICKERS_GIFS[0].url : undefined
-      );
+    const safety = publishPost({
+      type: createPostType,
+      content: finalContent,
+      mediaUrl,
+    });
 
-      if (selectedFile) mediaUrl = await uploadUserMedia(selectedFile);
-
-      const safety = publishPost({ type: createPostType, content: finalContent, mediaUrl });
-      if (!safety.isSafe) {
-        setFilterWarning(`Este contenido no se puede compartir porque infringe las reglas de la plataforma. ${safety.explanation}`);
-        return;
-      }
-      if (safety.pendingApproval) setPendingNotice(safety.explanation);
-    } catch (error) {
-      setFilterWarning(error instanceof Error ? error.message : 'No se pudo subir el archivo. Verifica tu conexión y la configuración de Firebase Storage.');
-    } finally {
-      setIsUploading(false);
+    if (!safety.isSafe) {
+      setFilterWarning(safety.explanation);
     }
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-    const isVideo = createPostType === 'video';
-    const isGif = createPostType === 'gif';
-    const validType = isVideo
-      ? file.type.startsWith('video/')
-      : isGif
-        ? (file.type === 'image/gif' || file.name.toLowerCase().endsWith('.gif'))
-        : file.type.startsWith('image/') && file.type !== 'image/gif';
-
-    if (!validType) {
-      setFilterWarning(isVideo
-        ? 'Selecciona un archivo de video (MP4, WebM o formato compatible con tu navegador).'
-        : isGif ? 'Selecciona un archivo GIF animado (.gif).' : 'Selecciona una imagen válida (JPG, PNG, WebP, etc.).');
-      e.target.value = '';
-      return;
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedMediaUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
-
-    const maxBytes = isVideo ? 100 * 1024 * 1024 : isGif ? 20 * 1024 * 1024 : 15 * 1024 * 1024;
-    if (file.size > maxBytes) {
-      setFilterWarning(`El archivo es demasiado grande. El límite para este tipo de archivo es ${isVideo ? '100 MB' : isGif ? '20 MB' : '15 MB'}.`);
-      e.target.value = '';
-      return;
-    }
-    setFilterWarning(null);
-    setSelectedFile(file);
-    setSelectedMediaUrl(URL.createObjectURL(file));
   };
 
   return (
@@ -167,7 +128,7 @@ export const CreatePostModal: React.FC = () => {
                   <button
                     key={p.id}
                     type="button"
-                    onClick={() => { sounds.playPop(); setSelectedFile(null); setSelectedMediaUrl(p.url); }}
+                    onClick={() => { sounds.playPop(); setSelectedMediaUrl(p.url); }}
                     className={`rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
                       selectedMediaUrl === p.url ? 'border-rose-500 scale-105' : 'border-slate-200 opacity-80 hover:opacity-100'
                     }`}
@@ -180,8 +141,8 @@ export const CreatePostModal: React.FC = () => {
               {/* Direct upload */}
               <label className="flex items-center justify-center gap-2 p-3 rounded-2xl border-2 border-dashed border-rose-300 dark:border-rose-800 bg-rose-50/50 dark:bg-rose-950/20 cursor-pointer text-xs font-bold text-rose-700 dark:text-rose-300">
                 <Upload className="w-4 h-4" />
-                <span>O sube una foto desde tu dispositivo (máx. 15 MB)</span>
-                <input type="file" accept="image/png,image/jpeg,image/webp,image/avif" onChange={handleFileUpload} className="hidden" />
+                <span>O sube una foto desde tu dispositivo</span>
+                <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
               </label>
             </div>
           )}
@@ -196,7 +157,7 @@ export const CreatePostModal: React.FC = () => {
                   <button
                     key={g.id}
                     type="button"
-                    onClick={() => { sounds.playPop(); setSelectedFile(null); setSelectedMediaUrl(g.url); }}
+                    onClick={() => { sounds.playPop(); setSelectedMediaUrl(g.url); }}
                     className={`p-1.5 rounded-xl border-2 transition-all cursor-pointer ${
                       selectedMediaUrl === g.url ? 'border-purple-600 scale-105 bg-purple-50 dark:bg-purple-950/50' : 'border-slate-200 opacity-80 hover:opacity-100'
                     }`}
@@ -206,11 +167,6 @@ export const CreatePostModal: React.FC = () => {
                   </button>
                 ))}
               </div>
-              <label className="mt-3 flex items-center justify-center gap-2 p-3 rounded-2xl border-2 border-dashed border-purple-300 dark:border-purple-800 bg-purple-50/50 dark:bg-purple-950/20 cursor-pointer text-xs font-bold text-purple-700 dark:text-purple-300">
-                <Upload className="w-4 h-4" />
-                <span>O sube tu propio GIF animado (máx. 20 MB)</span>
-                <input type="file" accept="image/gif,.gif" onChange={handleFileUpload} className="hidden" />
-              </label>
             </div>
           )}
 
@@ -224,7 +180,7 @@ export const CreatePostModal: React.FC = () => {
                   <button
                     key={v.id}
                     type="button"
-                    onClick={() => { sounds.playPop(); setSelectedFile(null); setSelectedMediaUrl(v.url); }}
+                    onClick={() => { sounds.playPop(); setSelectedMediaUrl(v.url); }}
                     className={`rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
                       selectedMediaUrl === v.url ? 'border-sky-500 scale-105' : 'border-slate-200 opacity-80 hover:opacity-100'
                     }`}
@@ -234,20 +190,6 @@ export const CreatePostModal: React.FC = () => {
                   </button>
                 ))}
               </div>
-              <label className="flex items-center justify-center gap-2 p-3 rounded-2xl border-2 border-dashed border-sky-300 dark:border-sky-800 bg-sky-50/50 dark:bg-sky-950/20 cursor-pointer text-xs font-bold text-sky-700 dark:text-sky-300">
-                <Upload className="w-4 h-4" />
-                <span>Subir video desde tu dispositivo (máx. 100 MB)</span>
-                <input type="file" accept="video/*" onChange={handleFileUpload} className="hidden" />
-              </label>
-            </div>
-          )}
-
-          {selectedFile && (
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-3">
-              <p className="text-xs font-bold text-slate-700 dark:text-slate-200 mb-2">Archivo seleccionado: {selectedFile.name}</p>
-              {createPostType === 'video'
-                ? <video src={selectedMediaUrl} controls playsInline className="w-full max-h-48 rounded-xl bg-black" />
-                : <img src={selectedMediaUrl} alt="Vista previa del archivo seleccionado" className="w-full max-h-48 object-contain rounded-xl" />}
             </div>
           )}
 
@@ -284,23 +226,6 @@ export const CreatePostModal: React.FC = () => {
               <span>{filterWarning}</span>
             </div>
           )}
-
-          {/* Aviso: foto/video en revisión de un adulto (Regla de contenido, 2026-10-20) */}
-          {pendingNotice && (
-            <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 text-xs text-amber-800 dark:text-amber-200 flex flex-col gap-2">
-              <span className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                <span>🕐 {pendingNotice}</span>
-              </span>
-              <button
-                type="button"
-                onClick={() => { setPendingNotice(null); setFilterWarning(null); closeCreatePostModal(); }}
-                className="self-end px-4 py-1.5 rounded-xl bg-amber-500 text-white font-black text-xs cursor-pointer active:scale-95"
-              >
-                Entendido
-              </button>
-            </div>
-          )}
         </div>
 
         {/* Submit Button */}
@@ -315,11 +240,10 @@ export const CreatePostModal: React.FC = () => {
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={isUploading}
-            className="flex-1 py-3 rounded-2xl bg-indigo-600 disabled:opacity-60 disabled:cursor-wait hover:bg-indigo-700 text-white font-black text-xs shadow-md active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+            className="flex-1 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs shadow-md active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5"
           >
             <Check className="w-4 h-4" />
-            <span>{isUploading ? 'Subiendo archivo...' : '¡Publicar en mi Cuaderno!'}</span>
+            <span>¡Publicar en mi Cuaderno!</span>
           </button>
         </div>
       </div>

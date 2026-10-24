@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   Gamepad2,
-  Hand,
   Trophy,
   RotateCcw,
   Sparkles,
@@ -20,12 +19,10 @@ import { AnimalAvatarIcon } from './AnimalAvatarIcon';
 import { AnimalAvatar } from '../types';
 import { sounds } from '../services/soundEffects';
 import confetti from 'canvas-confetti';
-import { HandGestureController } from './HandGestureController';
 
 export const GamesView: React.FC = () => {
-  const { publishPost, childProfile } = useApp();
-  const [selectedGame, setSelectedGame] = useState<'hub' | 'memory' | 'paint' | 'music' | 'stars' | 'hands'>('hub');
-  const [handControlEnabled, setHandControlEnabled] = useState(false);
+  const { publishPost, childProfile, isHandModeActive, toggleHandMode } = useApp();
+  const [selectedGame, setSelectedGame] = useState<'hub' | 'memory' | 'paint' | 'music' | 'stars' | 'bubbles'>('hub');
 
   return (
     <div className="flex-1 flex flex-col gap-6 select-none max-w-4xl mx-auto w-full">
@@ -43,15 +40,6 @@ export const GamesView: React.FC = () => {
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => { sounds.playPop(); setHandControlEnabled(v => !v); }}
-            className={`px-4 py-2.5 rounded-2xl ${handControlEnabled ? 'bg-cyan-300 text-slate-900' : 'bg-white/15 text-white border border-white/50'} hover:bg-cyan-100 hover:text-cyan-900 font-black text-xs shadow-md cursor-pointer shrink-0`}
-            aria-pressed={handControlEnabled}
-          >
-            <Hand className="w-4 h-4 inline mr-1.5" />{handControlEnabled ? 'Disable Hands & Camera' : 'Game With Hands & Camera 🤏 🖐️📸'}
-          </button>
-
           {selectedGame !== 'hub' && (
             <button
               onClick={() => { sounds.playPop(); setSelectedGame('hub'); }}
@@ -63,16 +51,52 @@ export const GamesView: React.FC = () => {
         </div>
       </div>
 
-      {handControlEnabled && <HandGestureController onClose={() => setHandControlEnabled(false)} />}
-
       {/* Main Game Hub */}
       {selectedGame === 'hub' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-          {/* Game 1: Memorama */}
+        <div className="space-y-4">
+          {/* SPECIAL FEATURED GAME: ATRAVE BURBUJAS Y ESTRELLAS CON LA MANO */}
           <div
-            onClick={() => { sounds.playPop(); setSelectedGame('memory'); }}
-            className="bg-white/90 dark:bg-slate-800/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-700/80 shadow-xs flex flex-col justify-between hover:scale-105 active:scale-95 transition-all cursor-pointer group"
+            onClick={() => { sounds.playMagicChime(); setSelectedGame('bubbles'); }}
+            className="relative overflow-hidden rounded-3xl p-6 bg-gradient-to-r from-purple-600 via-pink-500 to-amber-500 text-white shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer group border-4 border-amber-300/40"
           >
+            <div className="absolute -right-8 -bottom-8 w-48 h-48 bg-white/10 rounded-full blur-xl group-hover:scale-125 transition-transform" />
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-3xl bg-white/20 backdrop-blur-md flex items-center justify-center text-4xl shadow-inner group-hover:rotate-12 transition-transform">
+                  🫧
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2.5 py-0.5 rounded-full bg-amber-300 text-slate-900 text-[10px] font-black uppercase tracking-wider shadow-xs">
+                      🪄 ¡Nuevo Modo Mágico!
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-white/25 text-white text-[10px] font-bold">
+                      Webcam o Mouse
+                    </span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black">
+                    Reventar Burbujas y Estrellas Mágicas
+                  </h3>
+                  <p className="text-xs sm:text-sm text-white/90 font-medium max-w-lg mt-0.5">
+                    ¡Pasa tu mano frente a la cámara como una varita mágica o usa tu mouse para reventar burbujas flotantes y atrapar estrellas!
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="px-5 py-3 rounded-2xl bg-white text-purple-700 font-black text-sm shadow-lg group-hover:bg-amber-100 transition-colors">
+                  ¡Jugar con la Mano! 🖐️✨
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            {/* Game 1: Memorama */}
+            <div
+              onClick={() => { sounds.playPop(); setSelectedGame('memory'); }}
+              className="bg-white/90 dark:bg-slate-800/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-700/80 shadow-xs flex flex-col justify-between hover:scale-105 active:scale-95 transition-all cursor-pointer group"
+            >
             <div>
               <div className="w-14 h-14 rounded-2xl bg-rose-100 dark:bg-rose-950/60 p-2 mb-3 flex items-center justify-center text-3xl group-hover:rotate-6 transition-transform">
                 🎴
@@ -83,14 +107,6 @@ export const GamesView: React.FC = () => {
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 Encuentra parejas de zorritos y pandas.
               </p>
-              <button
-                type="button"
-                onClick={(event) => { event.stopPropagation(); sounds.playPop(); setHandControlEnabled(v => !v); }}
-                aria-pressed={handControlEnabled}
-                className={`mt-3 w-full px-3 py-2 rounded-xl text-[10px] sm:text-xs font-black border transition-colors ${handControlEnabled ? 'bg-cyan-200 text-slate-900 border-cyan-400' : 'bg-cyan-50 text-cyan-800 border-cyan-200 hover:bg-cyan-100 dark:bg-cyan-950/40 dark:text-cyan-200 dark:border-cyan-800'}`}
-              >
-                🤏 🖐️📸 {handControlEnabled ? 'Disable Hands & Camera' : 'Game With Hands & Camera'}
-              </button>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
               <span className="text-[10px] font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-xl">
@@ -116,16 +132,8 @@ export const GamesView: React.FC = () => {
                 Atrapa las Estrellitas
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Mueve a Cluky para atrapar las estrellas que caen.
+                Mueve la canastita para atrapar las estrellas que caen.
               </p>
-              <button
-                type="button"
-                onClick={(event) => { event.stopPropagation(); sounds.playPop(); setHandControlEnabled(v => !v); }}
-                aria-pressed={handControlEnabled}
-                className={`mt-3 w-full px-3 py-2 rounded-xl text-[10px] sm:text-xs font-black border transition-colors ${handControlEnabled ? 'bg-cyan-200 text-slate-900 border-cyan-400' : 'bg-cyan-50 text-cyan-800 border-cyan-200 hover:bg-cyan-100 dark:bg-cyan-950/40 dark:text-cyan-200 dark:border-cyan-800'}`}
-              >
-                🤏 🖐️📸 {handControlEnabled ? 'Disable Hands & Camera' : 'Game With Hands & Camera'}
-              </button>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
               <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 px-2 py-0.5 rounded-xl">
@@ -150,14 +158,6 @@ export const GamesView: React.FC = () => {
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 Dibuja y guarda en tu cuaderno con 1 clic.
               </p>
-              <button
-                type="button"
-                onClick={(event) => { event.stopPropagation(); sounds.playPop(); setHandControlEnabled(v => !v); }}
-                aria-pressed={handControlEnabled}
-                className={`mt-3 w-full px-3 py-2 rounded-xl text-[10px] sm:text-xs font-black border transition-colors ${handControlEnabled ? 'bg-cyan-200 text-slate-900 border-cyan-400' : 'bg-cyan-50 text-cyan-800 border-cyan-200 hover:bg-cyan-100 dark:bg-cyan-950/40 dark:text-cyan-200 dark:border-cyan-800'}`}
-              >
-                🤏 🖐️📸 {handControlEnabled ? 'Disable Hands & Camera' : 'Game With Hands & Camera'}
-              </button>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
               <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-xl">
@@ -182,14 +182,6 @@ export const GamesView: React.FC = () => {
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                 Piano con sonidos reales de animalitos.
               </p>
-              <button
-                type="button"
-                onClick={(event) => { event.stopPropagation(); sounds.playPop(); setHandControlEnabled(v => !v); }}
-                aria-pressed={handControlEnabled}
-                className={`mt-3 w-full px-3 py-2 rounded-xl text-[10px] sm:text-xs font-black border transition-colors ${handControlEnabled ? 'bg-cyan-200 text-slate-900 border-cyan-400' : 'bg-cyan-50 text-cyan-800 border-cyan-200 hover:bg-cyan-100 dark:bg-cyan-950/40 dark:text-cyan-200 dark:border-cyan-800'}`}
-              >
-                🤏 🖐️📸 {handControlEnabled ? 'Disable Hands & Camera' : 'Game With Hands & Camera'}
-              </button>
             </div>
             <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
               <span className="text-[10px] font-bold text-amber-600 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded-xl">
@@ -198,35 +190,9 @@ export const GamesView: React.FC = () => {
               <span className="text-xs font-black text-amber-600">¡Tocar! →</span>
             </div>
           </div>
-
-          {/* Game 5: Control por gestos de la mano */}
-          <div
-            onClick={() => { sounds.playPop(); setSelectedGame('hands'); }}
-            className="bg-white/90 dark:bg-slate-800/90 rounded-3xl p-5 border-2 border-cyan-400 dark:border-cyan-600 shadow-md flex flex-col justify-between hover:scale-105 active:scale-95 transition-all cursor-pointer group bg-gradient-to-b from-cyan-50/50 to-transparent dark:from-cyan-950/20"
-          >
-            <div>
-              <div className="w-14 h-14 rounded-2xl bg-cyan-500 text-white p-2 mb-3 flex items-center justify-center text-3xl group-hover:rotate-6 transition-transform shadow-md shadow-cyan-400/40">
-                🖐️
-              </div>
-              <div className="inline-block px-2 py-0.5 rounded-full bg-cyan-100 text-cyan-800 text-[9px] font-black uppercase mb-1">
-                ¡Manos libres!
-              </div>
-              <h3 className="text-base font-black text-slate-800 dark:text-white">
-                Juega con tus Manos
-              </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Usa gestos frente a la cámara y apunta viendo los botones en pantalla.
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
-              <span className="text-[10px] font-bold text-cyan-700 bg-cyan-50 dark:bg-cyan-950/40 px-2 py-0.5 rounded-xl">
-                📷 Cámara
-              </span>
-              <span className="text-xs font-black text-cyan-700">¡Probar! →</span>
-            </div>
-          </div>
         </div>
-      )}
+      </div>
+    )}
 
       {/* GAME 1: MEMORAMA */}
       {selectedGame === 'memory' && <MemoryGame />}
@@ -240,24 +206,8 @@ export const GamesView: React.FC = () => {
       {/* GAME 4: MUSICA DE LA GRANJA */}
       {selectedGame === 'music' && <MusicGame />}
 
-      {/* GAME 5: CONTROL DE JUEGOS CON GESTOS */}
-      {selectedGame === 'hands' && (
-        <div className="w-full rounded-3xl overflow-hidden border-2 border-cyan-200 dark:border-cyan-800 bg-slate-950 shadow-xl">
-          <div className="p-4 bg-cyan-50 dark:bg-cyan-950/50">
-            <h3 className="text-lg font-black text-cyan-900 dark:text-cyan-100">🖐️ Juega con tus Manos</h3>
-            <p className="text-sm text-cyan-800 dark:text-cyan-200">
-              Permite el acceso a la cámara. Apunta con el índice y mantén el dedo sobre un botón durante un momento, o haz una pinza con los dedos.
-            </p>
-          </div>
-          <iframe
-            src="/Botones-Con-La-Mano-v2-EnLaCamara.html"
-            title="Controles de juego con gestos de la mano"
-            allow="camera; autoplay"
-            className="block w-full border-0 bg-slate-950"
-            style={{ height: 'min(78vh, 760px)', minHeight: '540px' }}
-          />
-        </div>
-      )}
+      {/* GAME 5: ATRAVAR BURBUJAS Y ESTRELLAS CON LA MANO / VARITA MÁGICA */}
+      {selectedGame === 'bubbles' && <MagicBubblesGame />}
     </div>
   );
 };
@@ -344,7 +294,7 @@ const StarCatcherGame: React.FC = () => {
         ctx.fill();
         ctx.restore();
 
-        // Check catch collision with Cluky basket at bottom (y = 300)
+        // Check catch collision with basket at bottom (y = 300)
         if (st.y >= 290 && st.y <= 330 && Math.abs(st.x - playerXRef.current) < 45) {
           sounds.playStarCelebration();
           localScore += 1;
@@ -366,7 +316,7 @@ const StarCatcherGame: React.FC = () => {
         }
       });
 
-      // Draw Cluky the fox catcher at playerXRef.current, y = 310
+      // Draw the catcher at playerXRef.current, y = 310
       const px = playerXRef.current;
       const py = 310;
 
@@ -434,7 +384,7 @@ const StarCatcherGame: React.FC = () => {
       <div className="flex items-center justify-between w-full max-w-lg mb-3">
         <div>
           <h3 className="text-xl font-black text-slate-800 dark:text-white flex items-center gap-1.5">
-            <span>Atrapa las Estrellitas de Cluky</span>
+            <span>Atrapa las Estrellitas de Clayckey</span>
             <span className="text-xs bg-amber-400 text-slate-900 px-2 py-0.5 rounded-full font-bold">Arcade</span>
           </h3>
           <p className="text-xs text-slate-500">Mueve con el mouse, toque o botones</p>
@@ -459,7 +409,7 @@ const StarCatcherGame: React.FC = () => {
         <div className="w-full max-w-lg p-6 rounded-3xl bg-amber-50 dark:bg-amber-950/40 border-2 border-amber-300 text-center animate-bounce mb-4">
           <h4 className="text-2xl font-black text-amber-700 dark:text-amber-300">¡GANASTE! ⭐⭐⭐</h4>
           <p className="text-xs text-amber-600 dark:text-amber-400 mt-1 mb-3">
-            ¡Atrapaste 10 estrellas doradas con el zorrito Cluky!
+            ¡Atrapaste 10 estrellas doradas con el equipo Clayckey Bookly!
           </p>
           <button
             onClick={startStarGame}
@@ -692,7 +642,7 @@ const PaintGame: React.FC = () => {
 
     publishPost({
       type: 'photo',
-      content: `¡Miren la obra de arte que pinté en el Pintorcito Mágico de ClukyBook! 🎨✨`,
+      content: `¡Miren la obra de arte que pinté en el Pintorcito Mágico de Clayckey Bookly! 🎨✨`,
       mediaUrl: dataUrl,
     });
 
@@ -798,7 +748,7 @@ const MusicGame: React.FC = () => {
   return (
     <div className="bg-white/90 dark:bg-slate-800/90 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-700/80 shadow-xs flex flex-col items-center">
       <div className="text-center mb-6">
-        <h3 className="text-xl font-black text-slate-800 dark:text-white">Música de la Granja Cluky</h3>
+        <h3 className="text-xl font-black text-slate-800 dark:text-white">Música de la Granja Clayckey</h3>
         <p className="text-xs text-slate-500 mt-1">Presiona cada tecla para escuchar las notas y los animalitos cantar</p>
       </div>
 
@@ -822,3 +772,424 @@ const MusicGame: React.FC = () => {
     </div>
   );
 };
+
+/* --- MINI VIDEOJUEGO DE BURBUJAS Y ESTRELLAS CON LA MANO (MAGIC BUBBLES POPPER) --- */
+interface BubbleItem {
+  id: number;
+  x: number;
+  y: number;
+  radius: number;
+  vx: number;
+  vy: number;
+  type: 'soap' | 'star' | 'rainbow';
+  color: string;
+  wobbleOffset: number;
+}
+
+interface BurstParticle {
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  color: string;
+  radius: number;
+  alpha: number;
+}
+
+const MagicBubblesGame: React.FC = () => {
+  const { isHandModeActive, toggleHandMode } = useApp();
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [score, setScore] = useState<number>(0);
+  const [combo, setCombo] = useState<number>(0);
+  const [comboText, setComboText] = useState<string | null>(null);
+  const [hasWon, setHasWon] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+
+  const bubblesRef = useRef<BubbleItem[]>([]);
+  const burstsRef = useRef<BurstParticle[]>([]);
+  const animFrameRef = useRef<number | null>(null);
+  const nextIdRef = useRef<number>(1);
+  const lastPopTimeRef = useRef<number>(0);
+
+  const spawnBubble = useCallback((canvasWidth: number, canvasHeight: number) => {
+    const types: Array<'soap' | 'star' | 'rainbow'> = ['soap', 'soap', 'star', 'soap', 'rainbow'];
+    const chosenType = types[Math.floor(Math.random() * types.length)];
+    const colors = ['#38BDF8', '#F472B6', '#A78BFA', '#34D399', '#FBBF24'];
+
+    const radius = chosenType === 'star' ? 28 : chosenType === 'rainbow' ? 32 : 22 + Math.random() * 14;
+
+    bubblesRef.current.push({
+      id: nextIdRef.current++,
+      x: 40 + Math.random() * (canvasWidth - 80),
+      y: canvasHeight + radius + 10,
+      radius,
+      vx: (Math.random() - 0.5) * 0.8,
+      vy: -(1.4 + Math.random() * 1.6),
+      type: chosenType,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      wobbleOffset: Math.random() * Math.PI * 2,
+    });
+  }, []);
+
+  const popBubbleAt = useCallback((x: number, y: number) => {
+    const bubbles = bubblesRef.current;
+    let poppedAny = false;
+
+    for (let i = bubbles.length - 1; i >= 0; i--) {
+      const b = bubbles[i];
+      const dist = Math.hypot(b.x - x, b.y - y);
+
+      // If cursor/finger is inside bubble
+      if (dist <= b.radius + 10) {
+        poppedAny = true;
+        // Audio effect
+        if (b.type === 'star') {
+          sounds.playStarCelebration();
+        } else {
+          sounds.playBubblePop();
+        }
+
+        // Spawn burst water droplets / sparkles
+        for (let p = 0; p < 8; p++) {
+          const angle = (p * Math.PI) / 4;
+          const speed = 1.5 + Math.random() * 3.5;
+          burstsRef.current.push({
+            id: nextIdRef.current++,
+            x: b.x,
+            y: b.y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            color: b.type === 'star' ? '#FBBF24' : b.color,
+            radius: 2 + Math.random() * 3.5,
+            alpha: 1,
+          });
+        }
+
+        // Update score
+        const pts = b.type === 'star' ? 2 : b.type === 'rainbow' ? 3 : 1;
+        setScore((s) => {
+          const newScore = s + pts;
+          if (newScore >= 20) {
+            setHasWon(true);
+            confetti({ particleCount: 130, spread: 80, origin: { y: 0.6 } });
+          }
+          return newScore;
+        });
+
+        // Combo check (if popped within 1.2s)
+        const now = performance.now();
+        if (now - lastPopTimeRef.current < 1200) {
+          setCombo((c) => {
+            const nextCombo = c + 1;
+            if (nextCombo >= 3) {
+              setComboText(`¡Super Combo x${nextCombo}! 🔥`);
+              setTimeout(() => setComboText(null), 1000);
+            }
+            return nextCombo;
+          });
+        } else {
+          setCombo(1);
+        }
+        lastPopTimeRef.current = now;
+
+        // Remove popped bubble
+        bubbles.splice(i, 1);
+        break; // pop one per frame proximity
+      }
+    }
+  }, []);
+
+  const restartGame = () => {
+    sounds.playPop();
+    setScore(0);
+    setCombo(0);
+    setComboText(null);
+    setHasWon(false);
+    setIsPlaying(true);
+    bubblesRef.current = [];
+    burstsRef.current = [];
+  };
+
+  // Main canvas animation
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let frameCount = 0;
+
+    const loop = () => {
+      frameCount++;
+
+      // Spawning bubbles
+      if (bubblesRef.current.length < 8 && frameCount % 45 === 0) {
+        spawnBubble(canvas.width, canvas.height);
+      }
+
+      // Draw background: magical sky with bubbles gradient
+      const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      grad.addColorStop(0, '#1E1B4B');
+      grad.addColorStop(0.5, '#2E1065');
+      grad.addColorStop(1, '#0F172A');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Background stars
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      for (let i = 0; i < 24; i++) {
+        const sx = (i * 47) % canvas.width;
+        const sy = (i * 73) % canvas.height;
+        ctx.fillRect(sx, sy, 1.5, 1.5);
+      }
+
+      // Update and draw burst particles
+      for (let i = burstsRef.current.length - 1; i >= 0; i--) {
+        const bp = burstsRef.current[i];
+        bp.x += bp.vx;
+        bp.y += bp.vy;
+        bp.alpha -= 0.04;
+        if (bp.alpha <= 0) {
+          burstsRef.current.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = bp.alpha;
+        ctx.fillStyle = bp.color;
+        ctx.beginPath();
+        ctx.arc(bp.x, bp.y, bp.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Update and draw floating bubbles
+      for (let i = bubblesRef.current.length - 1; i >= 0; i--) {
+        const b = bubblesRef.current[i];
+        b.y += b.vy;
+        b.x += Math.sin((frameCount * 0.04) + b.wobbleOffset) * 0.8;
+
+        // Remove if off-screen top
+        if (b.y < -b.radius - 20) {
+          bubblesRef.current.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.translate(b.x, b.y);
+
+        if (b.type === 'star') {
+          // Outer bubble
+          ctx.beginPath();
+          ctx.arc(0, 0, b.radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(251, 191, 36, 0.2)';
+          ctx.fill();
+          ctx.strokeStyle = '#FBBF24';
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+
+          // Golden Star in center
+          ctx.fillStyle = '#FDE047';
+          ctx.beginPath();
+          for (let p = 0; p < 5; p++) {
+            ctx.lineTo(
+              Math.cos(((18 + p * 72) * Math.PI) / 180) * (b.radius * 0.65),
+              -Math.sin(((18 + p * 72) * Math.PI) / 180) * (b.radius * 0.65)
+            );
+            ctx.lineTo(
+              Math.cos(((54 + p * 72) * Math.PI) / 180) * (b.radius * 0.3),
+              -Math.sin(((54 + p * 72) * Math.PI) / 180) * (b.radius * 0.3)
+            );
+          }
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          // Soap bubble translucent gradient
+          const bubbleGrad = ctx.createRadialGradient(
+            -b.radius * 0.3,
+            -b.radius * 0.3,
+            b.radius * 0.1,
+            0,
+            0,
+            b.radius
+          );
+          bubbleGrad.addColorStop(0, 'rgba(255, 255, 255, 0.55)');
+          bubbleGrad.addColorStop(0.5, `${b.color}33`);
+          bubbleGrad.addColorStop(1, `${b.color}88`);
+
+          ctx.beginPath();
+          ctx.arc(0, 0, b.radius, 0, Math.PI * 2);
+          ctx.fillStyle = bubbleGrad;
+          ctx.fill();
+
+          // Bubble outline
+          ctx.strokeStyle = b.color;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // Bubble glossy highlight reflection
+          ctx.beginPath();
+          ctx.arc(-b.radius * 0.35, -b.radius * 0.35, b.radius * 0.3, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+          ctx.fill();
+        }
+
+        ctx.restore();
+      }
+
+      animFrameRef.current = requestAnimationFrame(loop);
+    };
+
+    animFrameRef.current = requestAnimationFrame(loop);
+
+    return () => {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
+  }, [isPlaying, spawnBubble]);
+
+  // Handle pointer / mouse movements on the canvas
+  const handlePointer = (clientX: number, clientY: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    popBubbleAt(x, y);
+  };
+
+  // Also hook into global mousemove so if the magic wand is active anywhere over the canvas it pops!
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      if (
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom
+      ) {
+        handlePointer(e.clientX, e.clientY);
+      }
+    };
+
+    window.addEventListener('mousemove', handleGlobalMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleGlobalMouseMove);
+    };
+  }, [popBubbleAt]);
+
+  return (
+    <div className="bg-white/90 dark:bg-slate-800/90 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-700/80 shadow-xs flex flex-col items-center">
+      {/* Game Header */}
+      <div className="flex flex-wrap items-center justify-between w-full max-w-xl mb-4 gap-3">
+        <div>
+          <h3 className="text-xl font-black text-slate-800 dark:text-white flex items-center gap-2">
+            <span>🫧 Atrapa Burbujas y Estrellas Mágicas</span>
+          </h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            ¡Pasa tu dedo frente a la cámara o usa tu mouse para reventarlas!
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {/* Direct Hand Mode Webcam button inside the game */}
+          <button
+            onClick={toggleHandMode}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-2xl font-black text-xs transition-all shadow-xs cursor-pointer ${
+              isHandModeActive
+                ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white animate-pulse'
+                : 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 hover:bg-purple-200'
+            }`}
+          >
+            <span>🖐️</span>
+            <span>{isHandModeActive ? 'Varita Mágica Activa' : 'Activar Cámara'}</span>
+          </button>
+
+          {/* Score Counter */}
+          <div className="px-3 py-1.5 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-black text-xs flex items-center gap-1">
+            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+            <span>{score} / 20</span>
+          </div>
+
+          <button
+            onClick={restartGame}
+            className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5" /> Reiniciar
+          </button>
+        </div>
+      </div>
+
+      {/* Combo banner */}
+      {comboText && (
+        <div className="mb-2 px-4 py-1 rounded-full bg-gradient-to-r from-pink-500 to-amber-500 text-white font-black text-xs shadow-md animate-bounce">
+          {comboText}
+        </div>
+      )}
+
+      {/* Victory modal banner */}
+      {hasWon && (
+        <div className="w-full max-w-xl p-5 rounded-3xl bg-amber-50 dark:bg-amber-950/50 border-2 border-amber-300 text-center animate-bounce mb-4">
+          <h4 className="text-2xl font-black text-amber-700 dark:text-amber-300">¡SÚPER MAGO! 🪄⭐⭐⭐</h4>
+          <p className="text-xs text-amber-600 dark:text-amber-400 mt-1 mb-3">
+            ¡Reventaste 20 elementos flotantes como un auténtico mago de Clayckey Bookly!
+          </p>
+          <button
+            onClick={restartGame}
+            className="px-6 py-2.5 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-black text-xs shadow-md cursor-pointer"
+          >
+            ¡Jugar otra ronda de burbujas! 🚀
+          </button>
+        </div>
+      )}
+
+      {/* Game Canvas */}
+      <div className="relative rounded-3xl overflow-hidden border-4 border-purple-400 dark:border-purple-600 shadow-2xl bg-slate-950">
+        <canvas
+          ref={canvasRef}
+          width={540}
+          height={380}
+          onMouseMove={(e) => handlePointer(e.clientX, e.clientY)}
+          onTouchMove={(e) => {
+            if (e.touches.length > 0) {
+              handlePointer(e.touches[0].clientX, e.touches[0].clientY);
+            }
+          }}
+          onClick={(e) => handlePointer(e.clientX, e.clientY)}
+          className="cursor-pointer touch-none block"
+        />
+
+        {/* Hand gesture reminder badge overlay inside game */}
+        {!isHandModeActive && (
+          <div className="absolute bottom-3 inset-x-4 bg-slate-900/80 backdrop-blur-md rounded-2xl p-2.5 flex items-center justify-between text-xs text-white border border-purple-400/40">
+            <div className="flex items-center gap-2">
+              <span className="text-xl">🪄</span>
+              <span className="text-[11px] font-bold">
+                ¿Quieres reventarlas con tu mano frente a la webcam?
+              </span>
+            </div>
+            <button
+              onClick={toggleHandMode}
+              className="px-3 py-1 rounded-xl bg-purple-500 hover:bg-purple-600 font-extrabold text-[11px] shadow-sm cursor-pointer"
+            >
+              ¡Activar Mano!
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className="mt-4 flex items-center justify-center gap-4 text-xs font-semibold text-slate-500 dark:text-slate-400">
+        <span className="flex items-center gap-1">🫧 Burbujas = +1 pto</span>
+        <span>•</span>
+        <span className="flex items-center gap-1">⭐ Estrellas Doradas = +2 ptos</span>
+        <span>•</span>
+        <span className="flex items-center gap-1">🌈 Burbujas Arcoíris = +3 ptos</span>
+      </div>
+    </div>
+  );
+};
+

@@ -7,11 +7,9 @@ import {
   Image as ImageIcon,
   Video,
   Gamepad2,
-  Lightbulb,
   ShieldAlert,
   Sparkles,
   MessageCircle,
-  Store,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
@@ -96,15 +94,6 @@ export const NavigationSidebar: React.FC = () => {
       iconColor: 'text-amber-600 dark:text-amber-400',
     },
     {
-      id: 'little-world',
-      label: 'Little World',
-      icon: Store,
-      bgColor: 'bg-emerald-100/80 hover:bg-emerald-200/90 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/60',
-      activeColor: 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md shadow-emerald-400/30',
-      textColor: 'text-emerald-800 dark:text-emerald-300',
-      iconColor: 'text-emerald-600 dark:text-emerald-400',
-    },
-    {
       id: 'games',
       label: 'Juegos',
       icon: Gamepad2,
@@ -112,15 +101,6 @@ export const NavigationSidebar: React.FC = () => {
       activeColor: 'bg-gradient-to-r from-indigo-500 to-blue-600 text-white shadow-md shadow-indigo-400/30',
       textColor: 'text-indigo-900 dark:text-indigo-300',
       iconColor: 'text-indigo-600 dark:text-indigo-400',
-    },
-    {
-      id: 'learn',
-      label: 'Aprender',
-      icon: Lightbulb,
-      bgColor: 'bg-teal-100/80 hover:bg-teal-200/90 dark:bg-teal-950/40 dark:hover:bg-teal-900/60',
-      activeColor: 'bg-gradient-to-r from-teal-500 to-emerald-600 text-white shadow-md shadow-teal-400/30',
-      textColor: 'text-teal-900 dark:text-teal-300',
-      iconColor: 'text-teal-600 dark:text-teal-400',
     },
   ];
 
@@ -179,7 +159,7 @@ export const NavigationSidebar: React.FC = () => {
 
         {/* Cute Sleeping Kitten Illustration in bottom left - Exactly as shown in the mockup image */}
         <div className="hidden lg:flex items-center justify-center pt-4 pb-1">
-          <div className="relative group cursor-pointer" title="¡Miau! ClukyBook es seguro para ti">
+          <div className="relative group cursor-pointer" title="¡Miau! Clayckey Bookly es seguro para ti">
             <svg viewBox="0 0 80 50" fill="none" className="w-20 h-12 opacity-80 group-hover:opacity-100 transition-opacity">
               {/* Cute sleeping kitten body */}
               <ellipse cx="40" cy="30" rx="26" ry="16" fill="#FCE7F3" stroke="#F472B6" strokeWidth="1.5" />

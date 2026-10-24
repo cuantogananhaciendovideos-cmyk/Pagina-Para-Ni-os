@@ -10,7 +10,7 @@ service cloud.firestore {
 
     // Connection Probe document
     match /test/connection {
-      allow read: if true; // Solo sonda de conexion: documento vacio de prueba, sin datos de usuarios
+      allow read: if true;
     }
 
     // Security Helpers
@@ -24,15 +24,6 @@ service cloud.firestore {
 
     function existing() {
       return resource.data;
-    }
-
-    // Cuenta con rol de padre/madre registrado (Panel de Supervisión, 2026-10-20).
-    // Nota de producción: el vínculo padre-hijo debe reforzarse guardando el ID del menor
-    // en el documento del padre (linkedChildId) y exigiéndolo aquí además del rol.
-    function isParent() {
-      return isSignedIn() &&
-             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'parent';
     }
 
     function isValidId(id) {
@@ -86,7 +77,7 @@ service cloud.firestore {
     // Validation Blueprint: ChatMessage
     function isValidChatMessage(data) {
       return data.keys().hasAll(['id', 'conversationId', 'senderId', 'senderName', 'senderAvatar', 'text']) &&
-             data.keys().hasOnly(['id', 'conversationId', 'senderId', 'senderName', 'senderAvatar', 'text', 'mediaUrl', 'isSafe', 'createdAt']) &&
+             data.keys().hasOnly(['id', 'conversationId', 'senderId', 'senderName', 'senderAvatar', 'text', 'mediaUrl', 'mediaType', 'mediaDuration', 'fileSizeKb', 'isSafe', 'createdAt']) &&
              data.senderId == request.auth.uid &&
              data.senderName is string && data.senderName.size() <= 80 &&
              data.senderAvatar is string && data.senderAvatar.size() <= 30 &&
@@ -105,7 +96,7 @@ service cloud.firestore {
 
     // 2. Posts collection
     match /posts/{postId} {
-      allow read: if isSignedIn(); // Fix ClukyBook 2026-10-20: el contenido de los ninos NUNCA es de lectura publica sin sesion
+      allow read: if true;
       allow create: if isSignedIn() && isValidId(postId) && isValidPost(incoming());
       allow update: if isSignedIn() && isValidId(postId) && (
         // Author updating content
@@ -119,7 +110,7 @@ service cloud.firestore {
 
       // Comments subcollection
       match /comments/{commentId} {
-        allow read: if isSignedIn(); // Fix ClukyBook 2026-10-20: el contenido de los ninos NUNCA es de lectura publica sin sesion
+        allow read: if true;
         allow create: if isSignedIn() && isValidId(commentId) && isValidComment(incoming());
         allow update: if isSignedIn() && isValidId(commentId) && existing().authorId == request.auth.uid && isValidComment(incoming());
         allow delete: if isSignedIn() && isValidId(commentId) && existing().authorId == request.auth.uid;
@@ -128,7 +119,7 @@ service cloud.firestore {
 
     // 3. Conversations collection
     match /conversations/{conversationId} {
-      allow get, list: if isSignedIn() && isValidId(conversationId) && (request.auth.uid in resource.data.participants || isParent());
+      allow get, list: if isSignedIn() && isValidId(conversationId) && request.auth.uid in resource.data.participants;
       allow create: if isSignedIn() && isValidId(conversationId) && isValidConversation(incoming());
       allow update: if isSignedIn() && isValidId(conversationId) && request.auth.uid in existing().participants &&
                     incoming().diff(existing()).affectedKeys().hasOnly(['lastMessage', 'lastUpdated']);
@@ -137,11 +128,24 @@ service cloud.firestore {
       // Messages subcollection
       match /messages/{messageId} {
         allow read: if isSignedIn() && isValidId(messageId) &&
-                    (request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants || isParent());
+                    request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants;
         allow create: if isSignedIn() && isValidId(messageId) &&
                       request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants &&
                       isValidChatMessage(incoming());
         allow delete: if isSignedIn() && isValidId(messageId) && existing().senderId == request.auth.uid;
+      }
+    }
+
+    // 4. Calls collection (Real WebRTC Peer-to-Peer Signaling)
+    match /calls/{callId} {
+      allow read, write: if true;
+
+      match /callerCandidates/{candidateId} {
+        allow read, write: if true;
+      }
+
+      match /calleeCandidates/{candidateId} {
+        allow read, write: if true;
       }
     }
   }

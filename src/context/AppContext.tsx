@@ -4,6 +4,7 @@ import {
   AnimalAvatar,
   BlacklistEntry,
   ChatMessage,
+  ChatMessageType,
   ChildProfile,
   ClassTask,
   Comment,
@@ -41,11 +42,16 @@ import {
   User,
 } from '../services/firebase';
 import {
+  webrtcService,
+  WebRTCService,
+  WebRTCCallData,
+  CallType,
+} from '../services/webrtcService';
+import {
   collection,
   doc,
   setDoc,
   updateDoc,
-  deleteDoc,
   onSnapshot,
   query,
   orderBy,
@@ -73,10 +79,16 @@ interface AppContextType {
   strictApprovalMode: boolean;
   setStrictApprovalMode: (enabled: boolean) => void;
 
+  // Hand Tracking Magic Mode (Webcam & Magic Wand)
+  isHandModeActive: boolean;
+  toggleHandMode: () => void;
+  setHandModeActive: (active: boolean) => void;
+
   // Firebase Auth State & Actions
   currentUser: User | null;
   isAuthModalOpen: boolean;
-  openAuthModal: () => void;
+  authModalInitialMode: 'login' | 'signup';
+  openAuthModal: (mode?: 'login' | 'signup') => void;
   closeAuthModal: () => void;
   loginWithGoogle: () => Promise<{ user: User | null; error: string | null }>;
   loginWithEmailPassword: (email: string, pass: string) => Promise<{ user: User | null; error: string | null }>;
@@ -94,8 +106,37 @@ interface AppContextType {
   activeConversationId: string;
   setActiveConversationId: (id: string) => void;
   messages: ChatMessage[];
-  sendMessage: (convId: string, text: string, mediaUrl?: string) => RedCodeResult;
+  sendMessage: (
+    convId: string,
+    text: string,
+    mediaUrl?: string,
+    mediaType?: ChatMessageType,
+    mediaDuration?: number,
+    fileSizeKb?: number
+  ) => RedCodeResult;
   startConversationWithFriend: (friend: Friend) => void;
+
+  // WebRTC Real Calls
+  incomingCall: WebRTCCallData | null;
+  activeCallModalData: {
+    isOpen: boolean;
+    type: CallType;
+    friendName: string;
+    friendAvatar: AnimalAvatar;
+    calleeId?: string;
+    callerId?: string;
+    callId?: string;
+    isIncoming?: boolean;
+  } | null;
+  startCallWithFriend: (
+    friendId: string,
+    friendName: string,
+    friendAvatar: AnimalAvatar,
+    type: CallType
+  ) => void;
+  acceptIncomingCall: () => void;
+  declineIncomingCall: () => void;
+  closeActiveCallModal: (durationSec: number, type: CallType) => void;
 
   // Modals
   isSosModalOpen: boolean;
@@ -121,8 +162,6 @@ interface AppContextType {
   handleFreezeChildAccount: () => void;
   unfreezeChildAccount: () => void;
   approveFriend: (friendId: string) => void;
-  approvePost: (postId: string) => void;
-  rejectPost: (postId: string) => void;
   addFriendRequest: (name: string, avatar: AnimalAvatar) => void;
   createChildProfile: (name: string, avatar: AnimalAvatar, theme: NotebookTheme, grade: string) => void;
 }
@@ -137,6 +176,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Firebase Auth user
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
+  const [authModalInitialMode, setAuthModalInitialMode] = useState<'login' | 'signup'>('login');
 
   // Dark Mode
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
@@ -211,6 +251,39 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Parental flags
   const [isScreenPaused, setIsScreenPaused] = useState<boolean>(false);
   const [strictApprovalMode, setStrictApprovalMode] = useState<boolean>(true);
+
+  // Hand Tracking Magic Mode (Webcam & Magic Wand)
+  const [isHandModeActive, setIsHandModeActive] = useState<boolean>(false);
+
+  const toggleHandMode = () => {
+    setIsHandModeActive((prev) => !prev);
+  };
+
+  const setHandModeActive = (active: boolean) => {
+    setIsHandModeActive(active);
+  };
+
+  // WebRTC Real Calling States & Signaling
+  const [incomingCall, setIncomingCall] = useState<WebRTCCallData | null>(null);
+  const [activeCallModalData, setActiveCallModalData] = useState<{
+    isOpen: boolean;
+    type: CallType;
+    friendName: string;
+    friendAvatar: AnimalAvatar;
+    calleeId?: string;
+    callerId?: string;
+    callId?: string;
+    isIncoming?: boolean;
+  } | null>(null);
+
+  // Real-time listener for incoming WebRTC calls on Firestore
+  useEffect(() => {
+    const targetUserId = currentUser ? currentUser.uid : childProfile.id;
+    const unsub = WebRTCService.listenForIncomingCalls(targetUserId, (callData) => {
+      setIncomingCall(callData);
+    });
+    return () => unsub();
+  }, [currentUser, childProfile.id]);
 
   // Modals
   const [isSosModalOpen, setIsSosModalOpen] = useState<boolean>(false);
@@ -411,8 +484,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   // Auth Functions
-  const openAuthModal = () => {
+  const openAuthModal = (mode: 'login' | 'signup' = 'login') => {
     sounds.playPop();
+    setAuthModalInitialMode(mode);
     setIsAuthModalOpen(true);
   };
 
@@ -547,15 +621,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return safety;
     }
 
-    // Safe to publish.
-    // REGLA DE CONTENIDO (Memento, 2026-10-20): las fotos, videos y GIFs de un niño
-    // NO se ven hasta que un adulto los apruebe (modo de aprobación estricta activo).
-    // Así, ningún contenido visual no apto llega a mostrarse: la revisión es ANTES de publicar.
-    const needsApproval =
-      strictApprovalMode &&
-      role === 'child' &&
-      (postData.type === 'photo' || postData.type === 'video' || postData.type === 'gif');
-    if (needsApproval) sounds.playPop(); else sounds.playStarCelebration();
+    // Safe to publish
+    sounds.playStarCelebration();
     const postId = `post-${Date.now()}`;
     const newPost: Post = {
       id: postId,
@@ -569,13 +636,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       likes: 1,
       isLiked: true,
       commentsCount: 0,
-      isApprovedByParent: !needsApproval,
+      isApprovedByParent: true,
       badge: role === 'teacher' ? 'Maestra Verificada' : 'Mi Cuaderno',
       category: role === 'teacher' ? 'class' : 'friends',
     };
 
     setPosts((prev) => [newPost, ...prev]);
-    if (!needsApproval) closeCreatePostModal();
+    closeCreatePostModal();
 
     // Persist to Firestore if user is authenticated or connected
     if (currentUser) {
@@ -590,7 +657,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         mediaUrl: postData.mediaUrl || '',
         likes: 1,
         commentsCount: 0,
-        isApprovedByParent: !needsApproval,
+        isApprovedByParent: true,
         badge: role === 'teacher' ? 'Maestra Verificada' : 'Mi Cuaderno',
         category: role === 'teacher' ? 'class' : 'friends',
         createdAt: new Date().toISOString(),
@@ -600,13 +667,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       );
     }
 
-    return {
-      ...safety,
-      pendingApproval: needsApproval,
-      explanation: needsApproval
-        ? 'Tu foto/video quedó en revisión: un adulto debe aprobarlo antes de que se vea en ClukyBook.'
-        : safety.explanation,
-    };
+    return safety;
   };
 
   // Comment submission with Código Rojo check & Firebase persistence
@@ -702,7 +763,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   // Safe Kid Messenger: Send Message with safety filter & Firebase persistence
-  const sendMessage = (convId: string, text: string, mediaUrl?: string): RedCodeResult => {
+  const sendMessage = (
+    convId: string,
+    text: string,
+    mediaUrl?: string,
+    mediaType?: ChatMessageType,
+    mediaDuration?: number,
+    fileSizeKb?: number
+  ): RedCodeResult => {
     const safety = evaluateRedCode(text);
 
     if (safety.level === 'red') {
@@ -716,7 +784,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         senderAvatar: childProfile.avatar,
         level: 'red',
         categories: safety.categories,
-        detectedText: text,
+        detectedText: text || (mediaType === 'voice' ? '[Mensaje de Voz]' : '[Video Clip]'),
         explanation: safety.explanation,
         evidenceHash: `SHA256-CHAT-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
         status: 'active',
@@ -726,25 +794,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return safety;
     }
 
-    if (safety.level === 'orange' || safety.level === 'yellow') {
-      // Regla de contenido (2026-10-20): malas palabras o señales dudosas tampoco se entregan;
-      // quedan registradas para revisión de los padres, igual que en las publicaciones.
-      const reviewAlert: RedCodeAlert = {
-        id: `alert-${Date.now()}`,
-        timestamp: 'Justo ahora en chat',
-        childId: childProfile.id,
-        childName: childProfile.firstName,
-        senderAccount: `chat_${childProfile.firstName.toLowerCase()}`,
-        senderAvatar: childProfile.avatar,
-        level: safety.level,
-        categories: safety.categories,
-        detectedText: text,
-        explanation: safety.explanation,
-        evidenceHash: `SHA256-CHAT-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-        status: 'reviewed',
-      };
-      setRedAlerts((prev) => [reviewAlert, ...prev]);
-      return safety;
+    // Determine preview text for chat list
+    let previewText = text;
+    if (!previewText) {
+      if (mediaType === 'voice') previewText = `🎙️ Mensaje de voz (${mediaDuration || 0}s)`;
+      else if (mediaType === 'video') previewText = `📹 Mini videoclip (${mediaDuration || 0}s)`;
+      else if (mediaType === 'photo') previewText = '📷 Foto';
+      else previewText = 'Archivo adjunto';
     }
 
     // Message is safe!
@@ -758,6 +814,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       senderRole: role,
       text,
       mediaUrl,
+      mediaType: mediaType || (mediaUrl ? 'photo' : 'text'),
+      mediaDuration,
+      fileSizeKb,
       isSafe: true,
       createdAt: new Date().toISOString(),
     };
@@ -770,7 +829,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         c.id === convId
           ? {
               ...c,
-              lastMessage: text,
+              lastMessage: previewText,
               lastUpdated: 'Justo ahora',
             }
           : c
@@ -785,7 +844,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         {
           id: convId,
           participants: [currentUser.uid],
-          lastMessage: text,
+          lastMessage: previewText,
           lastUpdated: new Date().toISOString(),
         },
         { merge: true }
@@ -799,6 +858,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         senderAvatar: childProfile.avatar,
         text,
         mediaUrl: mediaUrl || '',
+        mediaType: newMsg.mediaType,
+        mediaDuration: mediaDuration || 0,
+        fileSizeKb: fileSizeKb || 0,
         isSafe: true,
         createdAt: new Date().toISOString(),
       }).catch((err) => handleFirestoreError(err, OperationType.CREATE, `conversations/${convId}/messages/${msgId}`));
@@ -826,6 +888,69 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setActiveConversationId(existingConv.id);
     }
     setActiveTab('messages');
+  };
+
+  // Real WebRTC Calls Management
+  const startCallWithFriend = (
+    friendId: string,
+    friendName: string,
+    friendAvatar: AnimalAvatar,
+    type: CallType
+  ) => {
+    sounds.playPop();
+    setActiveCallModalData({
+      isOpen: true,
+      type,
+      friendName,
+      friendAvatar,
+      calleeId: friendId,
+      callerId: currentUser ? currentUser.uid : childProfile.id,
+      isIncoming: false,
+    });
+  };
+
+  const acceptIncomingCall = () => {
+    if (!incomingCall) return;
+    setActiveCallModalData({
+      isOpen: true,
+      type: incomingCall.type,
+      friendName: incomingCall.callerName,
+      friendAvatar: incomingCall.callerAvatar,
+      calleeId: incomingCall.calleeId,
+      callerId: incomingCall.callerId,
+      callId: incomingCall.id,
+      isIncoming: true,
+    });
+    setIncomingCall(null);
+  };
+
+  const declineIncomingCall = () => {
+    if (!incomingCall) return;
+    webrtcService.endCall(incomingCall.id, 'declined');
+    setIncomingCall(null);
+  };
+
+  const closeActiveCallModal = (durationSec: number, type: CallType) => {
+    const data = activeCallModalData;
+    setActiveCallModalData(null);
+    if (!data) return;
+
+    if (activeConversationId) {
+      if (durationSec > 0) {
+        const mins = Math.floor(durationSec / 60);
+        const secs = durationSec % 60;
+        const timeStr = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+        const callLabel =
+          type === 'video'
+            ? `📹 Videollamada finalizada (${timeStr})`
+            : `📞 Llamada de voz finalizada (${timeStr})`;
+        sendMessage(activeConversationId, callLabel, '', 'text');
+      } else {
+        const cancelLabel =
+          type === 'video' ? '📹 Videollamada cancelada' : '📞 Llamada perdida';
+        sendMessage(activeConversationId, cancelLabel, '', 'text');
+      }
+    }
   };
 
   // Submit Homework with 1-click & star confetti celebration
@@ -940,25 +1065,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setIsScreenPaused((prev) => !prev);
   };
 
-  // Aprobación de publicaciones en revisión (Regla de contenido, 2026-10-20)
-  const approvePost = (postId: string) => {
-    setPosts((prev) => prev.map((p) => (p.id === postId ? { ...p, isApprovedByParent: true } : p)));
-    if (currentUser) {
-      updateDoc(doc(db, 'posts', postId), { isApprovedByParent: true }).catch((err) =>
-        handleFirestoreError(err, OperationType.UPDATE, `posts/${postId}`)
-      );
-    }
-  };
-
-  const rejectPost = (postId: string) => {
-    setPosts((prev) => prev.filter((p) => p.id !== postId));
-    if (currentUser) {
-      deleteDoc(doc(db, 'posts', postId)).catch((err) =>
-        handleFirestoreError(err, OperationType.DELETE, `posts/${postId}`)
-      );
-    }
-  };
-
   const approveFriend = (friendId: string) => {
     sounds.playStarCelebration();
     setFriends((prev) =>
@@ -1042,10 +1148,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         toggleScreenPause,
         strictApprovalMode,
         setStrictApprovalMode,
+        isHandModeActive,
+        toggleHandMode,
+        setHandModeActive,
 
         // Auth
         currentUser,
         isAuthModalOpen,
+        authModalInitialMode,
         openAuthModal,
         closeAuthModal,
         loginWithGoogle: loginWithGoogleAction,
@@ -1060,6 +1170,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         messages,
         sendMessage,
         startConversationWithFriend,
+
+        // WebRTC Real Calls
+        incomingCall,
+        activeCallModalData,
+        startCallWithFriend,
+        acceptIncomingCall,
+        declineIncomingCall,
+        closeActiveCallModal,
 
         // Modals & Safety
         isSosModalOpen,
@@ -1079,8 +1197,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         handleFreezeChildAccount,
         unfreezeChildAccount,
         approveFriend,
-        approvePost,
-        rejectPost,
         addFriendRequest,
         createChildProfile,
       }}

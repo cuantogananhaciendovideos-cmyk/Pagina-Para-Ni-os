@@ -10,7 +10,7 @@ interface MediaGalleryViewProps {
 }
 
 export const MediaGalleryView: React.FC<MediaGalleryViewProps> = ({ initialFilter = 'all' }) => {
-  const { openCreatePostModal, posts } = useApp();
+  const { openCreatePostModal } = useApp();
   const [filter, setFilter] = useState<'photos' | 'videos' | 'gifs' | 'all'>(initialFilter);
   const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
@@ -29,10 +29,10 @@ export const MediaGalleryView: React.FC<MediaGalleryViewProps> = ({ initialFilte
     {
       id: 'media-example-video',
       type: 'videos',
-      title: '🎬 Video de Ejemplo: El Baile del Zorrito Cluky 🦊🎵',
+      title: '🎬 Video de Ejemplo: El Baile de Clayckey Bookly 🎵',
       url: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=800&q=80',
       duration: '0:25',
-      author: 'Cluky Mascot',
+      author: 'Clayckey Bookly Mascot',
       likes: 52,
       isExample: true,
       tag: 'Video de Ejemplo • Audio Revisado',
@@ -72,21 +72,7 @@ export const MediaGalleryView: React.FC<MediaGalleryViewProps> = ({ initialFilte
     },
   ];
 
-  const uploadedItems = posts
-    .filter((post) => Boolean(post.mediaUrl) && ['photo', 'video', 'gif'].includes(post.type))
-    .map((post) => ({
-      id: post.id,
-      type: post.type === 'photo' ? 'photos' : post.type === 'video' ? 'videos' : 'gifs',
-      title: post.content || 'Archivo compartido',
-      url: post.mediaUrl as string,
-      author: post.authorName,
-      likes: post.likes || 0,
-      isUploaded: true,
-      isExample: false,
-    }));
-
-  const allGalleryItems = [...uploadedItems, ...galleryItems.map((item) => ({ ...item, isUploaded: false }))];
-  const filteredItems = allGalleryItems.filter((item) => {
+  const filteredItems = galleryItems.filter((item) => {
     if (filter === 'all') return true;
     return item.type === filter;
   });
@@ -156,7 +142,7 @@ export const MediaGalleryView: React.FC<MediaGalleryViewProps> = ({ initialFilte
               : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100'
           }`}
         >
-          📷 Fotos ({allGalleryItems.filter((i) => i.type === 'photos').length})
+          📷 Fotos ({galleryItems.filter((i) => i.type === 'photos').length})
         </button>
         <button
           onClick={() => { sounds.playPop(); setFilter('videos'); }}
@@ -166,7 +152,7 @@ export const MediaGalleryView: React.FC<MediaGalleryViewProps> = ({ initialFilte
               : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100'
           }`}
         >
-          ▶️ Videos ({allGalleryItems.filter((i) => i.type === 'videos').length})
+          ▶️ Videos ({galleryItems.filter((i) => i.type === 'videos').length})
         </button>
         <button
           onClick={() => { sounds.playPop(); setFilter('gifs'); }}
@@ -176,7 +162,7 @@ export const MediaGalleryView: React.FC<MediaGalleryViewProps> = ({ initialFilte
               : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100'
           }`}
         >
-          👾 GIFs Divertidos ({allGalleryItems.filter((i) => i.type === 'gifs').length + SAFE_STICKERS_GIFS.length})
+          👾 GIFs Divertidos ({SAFE_STICKERS_GIFS.length})
         </button>
       </div>
 
@@ -213,7 +199,7 @@ export const MediaGalleryView: React.FC<MediaGalleryViewProps> = ({ initialFilte
       )}
 
       {/* Media Grid */}
-      {(filter !== 'gifs' || uploadedItems.some((item) => item.type === 'gifs')) && (
+      {filter !== 'gifs' && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {filteredItems.map((item) => (
             <div
@@ -225,22 +211,11 @@ export const MediaGalleryView: React.FC<MediaGalleryViewProps> = ({ initialFilte
               }`}
             >
               <div className="relative h-48 bg-slate-100 dark:bg-slate-900 overflow-hidden">
-                {item.isUploaded && item.type === 'videos' ? (
-                  <video
-                    src={item.url}
-                    controls
-                    playsInline
-                    preload="metadata"
-                    aria-label={item.title}
-                    className="w-full h-full object-contain bg-black"
-                  />
-                ) : (
-                  <img
-                    src={item.url}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                  />
-                )}
+                <img
+                  src={item.url}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
 
                 {item.tag && (
                   <span className="absolute top-2 left-2 px-2.5 py-1 rounded-full bg-indigo-600/90 text-white text-[10px] font-black shadow-md flex items-center gap-1">
@@ -249,7 +224,7 @@ export const MediaGalleryView: React.FC<MediaGalleryViewProps> = ({ initialFilte
                   </span>
                 )}
 
-                {item.type === 'videos' && !item.isUploaded && (
+                {item.type === 'videos' && (
                   <button
                     onClick={() => handleOpenVideo(item.id)}
                     className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-sky-500/90 text-white flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform cursor-pointer"
@@ -288,7 +263,7 @@ export const MediaGalleryView: React.FC<MediaGalleryViewProps> = ({ initialFilte
             <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
               <div className="flex items-center gap-2">
                 <Video className="w-5 h-5 text-sky-400" />
-                <span className="text-sm font-black">Video de Ejemplo: El Baile del Zorrito Cluky 🦊🎵</span>
+                <span className="text-sm font-black">Video de Ejemplo: El Baile de Clayckey Bookly 🎵</span>
               </div>
               <button
                 onClick={() => setPlayingVideoId(null)}

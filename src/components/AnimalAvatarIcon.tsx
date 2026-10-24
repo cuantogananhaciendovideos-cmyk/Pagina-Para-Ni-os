@@ -2,20 +2,34 @@ import React from 'react';
 import { AnimalAvatar } from '../types';
 
 interface AnimalAvatarIconProps {
-  animal: AnimalAvatar | string;
+  animal?: AnimalAvatar | string;
+  avatar?: AnimalAvatar | string;
   className?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | string;
   hasBow?: boolean;
 }
 
+const SIZE_MAP: Record<string, string> = {
+  xs: 'w-6 h-6',
+  sm: 'w-8 h-8',
+  md: 'w-10 h-10',
+  lg: 'w-16 h-16',
+};
+
 export const AnimalAvatarIcon: React.FC<AnimalAvatarIconProps> = ({
   animal,
-  className = 'w-12 h-12',
+  avatar,
+  className,
+  size,
   hasBow = false,
 }) => {
-  switch (animal) {
+  const chosenAnimal = (animal || avatar || 'fox') as AnimalAvatar;
+  const computedClassName = className || (size && SIZE_MAP[size]) || 'w-12 h-12';
+
+  switch (chosenAnimal) {
     case 'fox':
       return (
-        <svg viewBox="0 0 100 100" fill="none" className={className}>
+        <svg viewBox="0 0 100 100" fill="none" className={computedClassName}>
           {/* Ears */}
           <polygon points="18,15 38,40 12,42" fill="#E26D38" />
           <polygon points="21,22 34,39 16,40" fill="#FFE5D9" />
@@ -66,7 +80,7 @@ export const AnimalAvatarIcon: React.FC<AnimalAvatarIconProps> = ({
 
     case 'panda':
       return (
-        <svg viewBox="0 0 100 100" fill="none" className={className}>
+        <svg viewBox="0 0 100 100" fill="none" className={computedClassName}>
           {/* Ears */}
           <circle cx="22" cy="24" r="13" fill="#2B2D42" />
           <circle cx="78" cy="24" r="13" fill="#2B2D42" />
@@ -96,7 +110,7 @@ export const AnimalAvatarIcon: React.FC<AnimalAvatarIconProps> = ({
 
     case 'rabbit':
       return (
-        <svg viewBox="0 0 100 100" fill="none" className={className}>
+        <svg viewBox="0 0 100 100" fill="none" className={computedClassName}>
           {/* Long Ears */}
           <ellipse cx="32" cy="22" rx="8" ry="20" fill="#E0E7FF" transform="rotate(-10 32 22)" />
           <ellipse cx="32" cy="22" rx="5" ry="14" fill="#FFAFCC" transform="rotate(-10 32 22)" />
@@ -124,7 +138,7 @@ export const AnimalAvatarIcon: React.FC<AnimalAvatarIconProps> = ({
 
     case 'owl':
       return (
-        <svg viewBox="0 0 100 100" fill="none" className={className}>
+        <svg viewBox="0 0 100 100" fill="none" className={computedClassName}>
           {/* Body/Head */}
           <ellipse cx="50" cy="52" rx="36" ry="34" fill="#C28E58" />
           {/* Feather Tufts on Ears */}
@@ -151,7 +165,7 @@ export const AnimalAvatarIcon: React.FC<AnimalAvatarIconProps> = ({
 
     case 'lion':
       return (
-        <svg viewBox="0 0 100 100" fill="none" className={className}>
+        <svg viewBox="0 0 100 100" fill="none" className={computedClassName}>
           {/* Mane */}
           <circle cx="50" cy="52" r="38" fill="#F97316" />
           {/* Head */}
@@ -171,7 +185,7 @@ export const AnimalAvatarIcon: React.FC<AnimalAvatarIconProps> = ({
 
     case 'cat':
       return (
-        <svg viewBox="0 0 100 100" fill="none" className={className}>
+        <svg viewBox="0 0 100 100" fill="none" className={computedClassName}>
           {/* Ears */}
           <polygon points="20,18 42,38 16,44" fill="#F472B6" />
           <polygon points="23,24 38,38 19,42" fill="#FCE7F3" />
@@ -197,7 +211,7 @@ export const AnimalAvatarIcon: React.FC<AnimalAvatarIconProps> = ({
 
     case 'dog':
       return (
-        <svg viewBox="0 0 100 100" fill="none" className={className}>
+        <svg viewBox="0 0 100 100" fill="none" className={computedClassName}>
           {/* Floppy Ears */}
           <ellipse cx="20" cy="46" rx="10" ry="20" fill="#92400E" transform="rotate(-15 20 46)" />
           <ellipse cx="80" cy="46" rx="10" ry="20" fill="#92400E" transform="rotate(15 80 46)" />
@@ -219,7 +233,7 @@ export const AnimalAvatarIcon: React.FC<AnimalAvatarIconProps> = ({
 
     case 'koala':
       return (
-        <svg viewBox="0 0 100 100" fill="none" className={className}>
+        <svg viewBox="0 0 100 100" fill="none" className={computedClassName}>
           {/* Fluffy Big Ears */}
           <circle cx="20" cy="32" r="16" fill="#94A3B8" />
           <circle cx="20" cy="32" r="10" fill="#E2E8F0" />
@@ -238,7 +252,7 @@ export const AnimalAvatarIcon: React.FC<AnimalAvatarIconProps> = ({
     case 'penguin':
     default:
       return (
-        <svg viewBox="0 0 100 100" fill="none" className={className}>
+        <svg viewBox="0 0 100 100" fill="none" className={computedClassName}>
           {/* Body */}
           <ellipse cx="50" cy="54" rx="34" ry="32" fill="#1E293B" />
           {/* White Belly */}

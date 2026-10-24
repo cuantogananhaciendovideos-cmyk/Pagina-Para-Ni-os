@@ -18,6 +18,7 @@ import { sounds } from '../services/soundEffects';
 
 interface AuthModalProps {
   isOpen: boolean;
+  initialMode?: 'login' | 'signup';
   onClose: () => void;
 }
 
@@ -33,7 +34,7 @@ const AVATAR_OPTIONS: { id: AnimalAvatar; name: string }[] = [
   { id: 'penguin', name: 'Pingüino' },
 ];
 
-export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, initialMode = 'login', onClose }) => {
   const {
     currentUser,
     loginWithGoogle,
@@ -43,7 +44,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     childProfile,
   } = useApp();
 
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [mode, setMode] = useState<'login' | 'signup'>(initialMode);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setMode(initialMode);
+    }
+  }, [isOpen, initialMode]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -66,7 +73,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       setErrorMsg(result.error);
     } else {
       sounds.playStarCelebration();
-      setSuccessMsg('¡Bienvenido a Cluky Book! Sesión iniciada con éxito 🌟');
+      setSuccessMsg('¡Bienvenido a Clayckey Bookly! Sesión iniciada con éxito 🌟');
       setTimeout(() => {
         onClose();
       }, 1200);
@@ -137,8 +144,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           >
             <X className="w-5 h-5 text-white" />
           </button>
-          <div className="w-14 h-14 mx-auto mb-2 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-inner">
-            <Lock className="w-7 h-7 text-white" />
+          <div className="w-14 h-14 mx-auto mb-2 rounded-2xl overflow-hidden shadow-inner ring-2 ring-white/60 bg-white/20">
+            <img
+              src="https://i.ibb.co/4R7SnLWD/Bebe-Arletita.png"
+              alt="Clayckey Bookly Logo"
+              className="w-full h-full object-cover"
+            />
           </div>
           <h2 className="text-2xl font-black tracking-wide">
             {currentUser ? 'Tu Cuenta Familiar' : mode === 'login' ? 'Iniciar Sesión' : 'Crear Cuenta Segura'}
@@ -156,7 +167,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             /* Logged in state */
             <div className="text-center space-y-4">
               <div className="inline-block p-1 bg-amber-200 dark:bg-amber-600 rounded-full">
-                <AnimalAvatarIcon animal={childProfile.avatar} className="w-14 h-14" />
+                <AnimalAvatarIcon animal={childProfile.avatar} className="w-16 h-16" />
               </div>
               <div>
                 <h3 className="text-xl font-black text-slate-800 dark:text-white">

@@ -146,7 +146,7 @@ export const FeedView: React.FC = () => {
       </div>
 
       {/* FEED POST 1: Exactly as in user mockup (Kids playing with colorful blocks) */}
-      {posts.filter((p) => p.isApprovedByParent !== false).map((post, index) => {
+      {posts.map((post, index) => {
         const postComments = comments.filter((c) => c.postId === post.id);
         const isCommentOpen = activeCommentPostId === post.id;
 
@@ -213,7 +213,7 @@ export const FeedView: React.FC = () => {
                 <div className="rounded-2xl overflow-hidden mb-3.5 border border-slate-100 dark:border-slate-700/60 shadow-inner max-h-80 bg-slate-100 dark:bg-slate-900">
                   <img
                     src={post.mediaUrl}
-                    alt="Contenido seguro de ClukyBook"
+                    alt="Contenido seguro de Clayckey Bookly"
                     className="w-full h-full object-cover max-h-72 hover:scale-[1.01] transition-transform"
                     loading="lazy"
                   />

@@ -97,7 +97,7 @@ export const INITIAL_FRIENDS: Friend[] = [
     status: 'approved',
     color: '#EC4899',
     isImaginary: true,
-    tipMessage: '¡Hola! Soy Pip, tu Amigo Imaginario de ejemplo 🦄✨. Estoy aquí para recordarte que en ClukyBook solo hablas con personas reales que tus papás aprobaron previamente.',
+    tipMessage: '¡Hola! Soy Pip, tu Amigo Imaginario de ejemplo 🦄✨. Estoy aquí para recordarte que en Clayckey Bookly solo hablas con personas reales que tus papás aprobaron previamente.',
   },
 ];
 

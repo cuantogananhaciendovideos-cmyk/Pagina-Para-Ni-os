@@ -16,7 +16,6 @@ import {
   Flame,
   ShieldCheck,
   Eye,
-  MessageCircle,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { AnimalAvatarIcon } from './AnimalAvatarIcon';
@@ -36,28 +35,14 @@ export const ParentDashboard: React.FC = () => {
     handleFreezeChildAccount,
     unfreezeChildAccount,
     testRedCodeSim,
-    conversations,
-    messages,
-    posts,
-    approvePost,
-    rejectPost,
   } = useApp();
 
-  const [activeSubTab, setActiveSubTab] = useState<'alerts' | 'messages' | 'simulator' | 'time' | 'approvals' | 'blacklist'>('alerts');
+  const [activeSubTab, setActiveSubTab] = useState<'alerts' | 'simulator' | 'time' | 'approvals' | 'blacklist'>('alerts');
   const [parentName, setParentName] = useState<'Papá Carlos' | 'Mamá Mariana'>('Papá Carlos');
   const [showParentTour, setShowParentTour] = useState(true);
   const [testInput, setTestInput] = useState('');
   const [testResult, setTestResult] = useState<ReturnType<typeof testRedCodeSim> | null>(null);
   const [selectedEvidenceAlert, setSelectedEvidenceAlert] = useState<string | null>(null);
-  const [selectedConvId, setSelectedConvId] = useState<string | null>(null);
-
-  // --- Supervisión de mensajes (agregado 2026-10-20) ---
-  const activeSupConv = conversations.find((c) => c.id === selectedConvId) || conversations[0];
-  const supMessages = activeSupConv ? messages.filter((m) => m.conversationId === activeSupConv.id) : [];
-  const fmtMsgTime = (raw: string) => {
-    const d = new Date(raw);
-    return isNaN(d.getTime()) ? raw : d.toLocaleString('es-MX', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
-  };
 
   const handleRunSimTest = () => {
     if (!testInput.trim()) return;
@@ -71,7 +56,7 @@ export const ParentDashboard: React.FC = () => {
     if (!alert) return;
 
     const data = {
-      plataforma: 'ClukyBook For Kids',
+      plataforma: 'Clayckey Bookly For Kids',
       tipo: 'EVIDENCIA FORENSE DIGITAL - CÓDIGO ROJO',
       fecha_hora_utc: new Date().toISOString(),
       timestamp_local: alert.timestamp,
@@ -90,7 +75,7 @@ export const ParentDashboard: React.FC = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Evidencia_ClukyBook_${alert.evidenceHash}.json`;
+    a.download = `Evidencia_ClayckeyBookly_${alert.evidenceHash}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -190,7 +175,7 @@ export const ParentDashboard: React.FC = () => {
           </div>
 
           <p className="text-xs text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
-            En <strong>ClukyBook For Kids</strong>, ningún niño puede ser contactado por desconocidos. Como padre o madre tutor:
+            En <strong>Clayckey Bookly For Kids</strong>, ningún niño puede ser contactado por desconocidos. Como padre o madre tutor:
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -257,18 +242,6 @@ export const ParentDashboard: React.FC = () => {
         </button>
 
         <button
-          onClick={() => { sounds.playPop(); setActiveSubTab('messages'); }}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-            activeSubTab === 'messages'
-              ? 'bg-purple-600 text-white shadow-xs'
-              : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
-          }`}
-        >
-          <MessageCircle className="w-4 h-4 text-sky-400" />
-          <span>Mensajes supervisados ({messages.length})</span>
-        </button>
-
-        <button
           onClick={() => { sounds.playPop(); setActiveSubTab('simulator'); }}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             activeSubTab === 'simulator'
@@ -316,90 +289,6 @@ export const ParentDashboard: React.FC = () => {
           <span>Lista Negra ({blacklist.length})</span>
         </button>
       </div>
-
-
-      {/* TAB: MENSAJES SUPERVISADOS (agregado 2026-10-20) */}
-      {activeSubTab === 'messages' && (
-        <div className="space-y-4">
-          <div className="bg-sky-50 dark:bg-sky-950/40 p-4 rounded-3xl border border-sky-200 dark:border-sky-900/60 flex items-start gap-3">
-            <Eye className="w-6 h-6 text-sky-600 shrink-0 mt-0.5" />
-            <div>
-              <h4 className="text-sm font-black text-sky-800 dark:text-sky-200">
-                Supervisión parental de mensajes — solo para el tutor de {childProfile.firstName}
-              </h4>
-              <p className="text-xs text-sky-700 dark:text-sky-300 mt-0.5 leading-relaxed">
-                Aquí lees las conversaciones completas de tu hijo o hija, tal cual pasaron por el filtro Código Rojo.
-                Es supervisión <strong>declarada</strong>: {childProfile.firstName} sabe que esta mensajería está supervisada
-                (la propia pantalla de Mensajes lo dice). Los mensajes peligrosos nunca entran a esta transcripción:
-                quedan bloqueados y guardados como evidencia en la pestaña de Alertas.
-              </p>
-            </div>
-          </div>
-
-          {conversations.length === 0 ? (
-            <div className="bg-white/90 dark:bg-slate-800/90 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-700/80 text-center">
-              <MessageCircle className="w-10 h-10 text-slate-300 mx-auto mb-2" />
-              <p className="text-sm font-bold text-slate-500 dark:text-slate-400">Todavía no hay conversaciones para supervisar.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
-              {/* Lista de conversaciones */}
-              <div className="bg-white/90 dark:bg-slate-800/90 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 p-3 space-y-2">
-                {conversations.map((conv) => (
-                  <button
-                    key={conv.id}
-                    onClick={() => { sounds.playPop(); setSelectedConvId(conv.id); }}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-2xl text-left cursor-pointer transition-all active:scale-[0.98] ${
-                      activeSupConv?.id === conv.id
-                        ? 'bg-purple-600 text-white shadow-md'
-                        : 'bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
-                    }`}
-                  >
-                    <AnimalAvatarIcon animal={conv.friendAvatar} className="w-9 h-9 shrink-0" />
-                    <span className="min-w-0">
-                      <span className="block text-xs font-black truncate">{conv.friendName}</span>
-                      <span className={`block text-[11px] truncate ${activeSupConv?.id === conv.id ? 'text-purple-200' : 'text-slate-400'}`}>{conv.lastMessage}</span>
-                    </span>
-                  </button>
-                ))}
-              </div>
-
-              {/* Transcripción completa */}
-              <div className="md:col-span-2 bg-white/90 dark:bg-slate-800/90 rounded-3xl border border-slate-200/80 dark:border-slate-700/80 p-4">
-                <h4 className="text-sm font-black text-slate-700 dark:text-slate-200 mb-1 flex items-center gap-2">
-                  <MessageCircle className="w-4 h-4 text-sky-500" />
-                  Conversación con {activeSupConv?.friendName} — {supMessages.length} mensajes revisados
-                </h4>
-                <p className="text-[11px] text-slate-400 mb-4">Cada mensaje lleva la marca del filtro: ✓ = pasó la revisión del Código Rojo antes de entregarse.</p>
-                {supMessages.length === 0 ? (
-                  <p className="text-xs font-bold text-slate-400 text-center py-6">Esta conversación aún no tiene mensajes.</p>
-                ) : (
-                  <div className="space-y-2.5 max-h-[480px] overflow-y-auto pr-1">
-                    {supMessages.map((msg) => {
-                      const isChild = msg.senderName === childProfile.firstName;
-                      return (
-                        <div key={msg.id} className={`flex gap-2 ${isChild ? 'flex-row-reverse' : ''}`}>
-                          <AnimalAvatarIcon animal={msg.senderAvatar} className="w-7 h-7 shrink-0 mt-0.5" />
-                          <div className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl ${isChild ? 'bg-purple-100 dark:bg-purple-950/50' : 'bg-slate-100 dark:bg-slate-700/60'}`}>
-                            <p className="text-[10px] font-black text-slate-500 dark:text-slate-400 mb-0.5">
-                              {msg.senderName} • {fmtMsgTime(msg.createdAt)}
-                            </p>
-                            {msg.text && <p className="text-sm text-slate-700 dark:text-slate-200 leading-snug">{msg.text}</p>}
-                            {msg.mediaUrl && <p className="text-xs font-bold text-sky-600 dark:text-sky-300 mt-1">🖼️ Archivo multimedia compartido (pasó revisión)</p>}
-                            <p className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1">
-                              <ShieldCheck className="w-3 h-3" /> {msg.isSafe ? 'Revisado por Código Rojo ✓' : 'Marcado para revisión'}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
 
       {/* TAB 1: ALERTAS CÓDIGO ROJO */}
       {activeSubTab === 'alerts' && (
@@ -659,52 +548,6 @@ export const ParentDashboard: React.FC = () => {
               />
             </button>
           </div>
-
-          {/* Publicaciones en revisión (Regla de contenido, 2026-10-20) */}
-          <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-            Publicaciones en Revisión ({posts.filter((p) => p.isApprovedByParent === false).length})
-          </h4>
-          {posts.filter((p) => p.isApprovedByParent === false).length === 0 ? (
-            <p className="text-xs font-semibold text-slate-400 bg-slate-50 dark:bg-slate-900/50 rounded-2xl px-4 py-3">
-              No hay fotos ni videos esperando aprobación. Cuando {childProfile.firstName} comparta una foto o video, aparecerá aquí primero, antes de que cualquier niño pueda verlo.
-            </p>
-          ) : (
-            <div className="space-y-3">
-              {posts.filter((p) => p.isApprovedByParent === false).map((p) => (
-                <div key={p.id} className="flex flex-col sm:flex-row gap-3 p-3.5 rounded-2xl border-2 border-amber-300 dark:border-amber-700 bg-amber-50/60 dark:bg-amber-950/20">
-                  {p.mediaUrl ? (
-                    <img src={p.mediaUrl} alt="Contenido en revisión" className="w-full sm:w-28 h-28 object-cover rounded-xl shrink-0" />
-                  ) : (
-                    <div className="w-full sm:w-28 h-28 rounded-xl bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-4xl shrink-0">🖼️</div>
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-black text-slate-700 dark:text-slate-200 flex items-center gap-2">
-                      {p.authorName}
-                      <span className="px-2 py-0.5 rounded-lg bg-amber-400 text-slate-900 text-[10px] font-black uppercase">
-                        {p.type === 'photo' ? '📷 Foto' : p.type === 'video' ? '🎬 Video' : p.type === 'gif' ? '✨ GIF' : '✍️ Texto'} • En revisión
-                      </span>
-                    </p>
-                    <p className="text-sm text-slate-600 dark:text-slate-300 mt-1 leading-snug">{p.content}</p>
-                    <p className="text-[11px] text-slate-400 mt-1">Revisa la imagen o el video completo antes de aprobar. Si infringe las reglas, no se compartirá.</p>
-                    <div className="flex gap-2 mt-2.5">
-                      <button
-                        onClick={() => { sounds.playStarCelebration(); approvePost(p.id); }}
-                        className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs cursor-pointer shadow-md active:scale-95 flex items-center gap-1.5"
-                      >
-                        <CheckCircle className="w-4 h-4" /> Aprobar y publicar
-                      </button>
-                      <button
-                        onClick={() => { sounds.playPop(); rejectPost(p.id); }}
-                        className="px-4 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-black text-xs cursor-pointer shadow-md active:scale-95"
-                      >
-                        🚫 No compartir
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
 
           <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">
             Amigos Aprobados ({friends.length})

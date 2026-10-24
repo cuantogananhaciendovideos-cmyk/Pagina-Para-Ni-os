@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app';
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
   getAuth,
   GoogleAuthProvider,
@@ -33,24 +32,6 @@ export const app = initializeApp(firebaseConfig);
 // CRITICAL: Must use firestoreDatabaseId from firebaseConfig
 export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
 export const auth = getAuth(app);
-export const storage = getStorage(app);
-
-/**
- * Uploads a user-selected media file to Firebase Storage.
- * Files are kept out of Firestore documents so videos do not exceed Firestore's
- * document-size limit. Requires a signed-in Firebase user and matching Storage rules.
- */
-export async function uploadUserMedia(file: File): Promise<string> {
-  const user = auth.currentUser;
-  if (!user) {
-    throw new Error('Inicia sesión para guardar fotos, videos o GIFs en línea.');
-  }
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(-100) || 'media';
-  const path = `users/${user.uid}/media/${Date.now()}-${safeName}`;
-  const destination = storageRef(storage, path);
-  await uploadBytes(destination, file, { contentType: file.type || 'application/octet-stream' });
-  return getDownloadURL(destination);
-}
 export const googleProvider = new GoogleAuthProvider();
 
 // Error Handling Specification matching FirestoreErrorInfo
@@ -98,9 +79,8 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
     operationType,
     path,
   };
-  console.warn('Firestore Operation Notice: ', JSON.stringify(errInfo));
-  // Return formatted error without abruptly throwing when offline or unauthenticated
-  return errInfo;
+  console.error('Firestore Error: ', JSON.stringify(errInfo));
+  throw new Error(JSON.stringify(errInfo));
 }
 
 // Connection Validation

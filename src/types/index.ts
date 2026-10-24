@@ -36,9 +36,7 @@ export type ThreatCategory =
   | 'pedir_datos_personales' 
   | 'pedir_fotos' 
   | 'regalos_sobornos' 
-  | 'amenazas_miedo'
-  | 'lenguaje_ofensivo'
-  | 'contenido_no_apto';
+  | 'amenazas_miedo';
 
 export interface RedCodeResult {
   isSafe: boolean;
@@ -48,7 +46,6 @@ export interface RedCodeResult {
   normalizedText: string;
   explanation: string;
   actionTaken: 'published' | 'retained_for_parent' | 'blocked_and_notified' | 'frozen_and_emergency_alarm';
-  pendingApproval?: boolean;
 }
 
 export interface RedCodeAlert {
@@ -127,6 +124,8 @@ export interface BlacklistEntry {
   evidenceHash: string;
 }
 
+export type ChatMessageType = 'text' | 'voice' | 'video' | 'photo';
+
 export interface ChatMessage {
   id: string;
   conversationId: string;
@@ -136,6 +135,9 @@ export interface ChatMessage {
   senderRole?: 'child' | 'parent' | 'teacher';
   text: string;
   mediaUrl?: string;
+  mediaType?: ChatMessageType;
+  mediaDuration?: number;
+  fileSizeKb?: number;
   isSafe: boolean;
   createdAt: string;
 }

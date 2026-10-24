@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Users, UserPlus, ShieldCheck, Heart, Sparkles, Check, MessageCircle } from 'lucide-react';
+import { Users, UserPlus, ShieldCheck, Heart, Sparkles, Check, MessageCircle, Phone, Video } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { AnimalAvatarIcon } from './AnimalAvatarIcon';
 import { AnimalAvatar, Friend } from '../types';
 import { sounds } from '../services/soundEffects';
 
 export const FriendsView: React.FC = () => {
-  const { friends, addFriendRequest, childProfile, startConversationWithFriend } = useApp();
+  const { friends, addFriendRequest, childProfile, startConversationWithFriend, startCallWithFriend } = useApp();
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
   const [friendCodeInput, setFriendCodeInput] = useState('');
@@ -74,24 +74,53 @@ export const FriendsView: React.FC = () => {
 
             <div className="p-3.5 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800 text-xs text-purple-900 dark:text-purple-200 font-medium leading-relaxed mb-4 text-left">
               {selectedFriend.tipMessage || (
-                `¡Hola! Soy ${selectedFriend.firstName}. En ClukyBook somos amigos porque nuestros papás revisaron y autorizaron nuestra conexión. ¡Aquí no hay extraños ni mensajes escondidos!`
+                `¡Hola! Soy ${selectedFriend.firstName}. En Clayckey Bookly somos amigos porque nuestros papás revisaron y autorizaron nuestra conexión. ¡Aquí no hay extraños ni mensajes escondidos!`
               )}
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2">
               <button
                 onClick={() => {
                   startConversationWithFriend(selectedFriend);
                   setSelectedFriend(null);
                 }}
-                className="flex-1 py-2.5 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold text-xs cursor-pointer shadow-md flex items-center justify-center gap-1.5 transition active:scale-95"
+                className="w-full py-2.5 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold text-xs cursor-pointer shadow-md flex items-center justify-center gap-1.5 transition active:scale-95"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>Chatear Seguro 💬</span>
               </button>
+
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    sounds.playPop();
+                    startCallWithFriend(selectedFriend.id, selectedFriend.firstName, selectedFriend.avatar, 'voice');
+                    setSelectedFriend(null);
+                  }}
+                  className="flex-1 py-2 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs cursor-pointer shadow-sm flex items-center justify-center gap-1.5 transition active:scale-95"
+                >
+                  <Phone className="w-3.5 h-3.5 fill-current" />
+                  <span>Llamar</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    sounds.playPop();
+                    startCallWithFriend(selectedFriend.id, selectedFriend.firstName, selectedFriend.avatar, 'video');
+                    setSelectedFriend(null);
+                  }}
+                  className="flex-1 py-2 rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold text-xs cursor-pointer shadow-sm flex items-center justify-center gap-1.5 transition active:scale-95"
+                >
+                  <Video className="w-3.5 h-3.5" />
+                  <span>Videollamada</span>
+                </button>
+              </div>
+
               <button
                 onClick={() => setSelectedFriend(null)}
-                className="py-2.5 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs cursor-pointer"
+                className="w-full py-2 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs cursor-pointer"
               >
                 Cerrar
               </button>
@@ -134,17 +163,47 @@ export const FriendsView: React.FC = () => {
             </span>
 
             <div className="mt-2.5 w-full flex flex-col gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-700">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  startConversationWithFriend(friend);
-                }}
-                className="w-full py-1.5 px-2 rounded-xl bg-purple-100 hover:bg-purple-200 dark:bg-purple-950/60 dark:hover:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-bold flex items-center justify-center gap-1 transition"
-              >
-                <MessageCircle className="w-3.5 h-3.5" />
-                <span>Chatear 💬</span>
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    startConversationWithFriend(friend);
+                  }}
+                  className="flex-1 py-1.5 px-2 rounded-xl bg-purple-100 hover:bg-purple-200 dark:bg-purple-950/60 dark:hover:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-bold flex items-center justify-center gap-1 transition"
+                  title="Chatear"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>Chat</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    sounds.playPop();
+                    startCallWithFriend(friend.id, friend.firstName, friend.avatar, 'voice');
+                  }}
+                  className="p-1.5 rounded-xl bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 transition"
+                  title={`Llamar a ${friend.firstName}`}
+                >
+                  <Phone className="w-3.5 h-3.5 fill-current" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    sounds.playPop();
+                    startCallWithFriend(friend.id, friend.firstName, friend.avatar, 'video');
+                  }}
+                  className="p-1.5 rounded-xl bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 transition"
+                  title={`Videollamada con ${friend.firstName}`}
+                >
+                  <Video className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
               <div className="flex items-center justify-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 py-0.5 rounded-lg">
                 <ShieldCheck className="w-3 h-3" />
                 <span>{friend.isImaginary ? 'Ejemplo Seguro' : 'Aprobado'}</span>
